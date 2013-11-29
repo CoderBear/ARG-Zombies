@@ -1,0 +1,53 @@
+fileFormatVersion: 2
+guid: a21b3960e70154565bfadf5187c17f93
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - userPCPrefab: {instanceID: 0}
+  - enemyPCPrefab: {instanceID: 0}
+  - scriptInventory: {instanceID: 0}
+  - Audio: {instanceID: 0}
+  - userPC: {instanceID: 0}
+  - enemyPC: {instanceID: 0}
+  - enemyPCScript: {instanceID: 0}
+  - bullet: {instanceID: 0}
+  - texHPc1: {instanceID: 0}
+  - texHPc2: {instanceID: 0}
+  - texHPc3: {instanceID: 0}
+  - texHPm1: {instanceID: 0}
+  - texHPm2: {instanceID: 0}
+  - texHPm3: {instanceID: 0}
+  - texMana1: {instanceID: 0}
+  - texMana2: {instanceID: 0}
+  - texMana3: {instanceID: 0}
+  - texBottomBar: {instanceID: 0}
+  - swipeImage: {instanceID: 0}
+  - swipeParticles: {instanceID: 0}
+  - swipeParticles2: {instanceID: 0}
+  - texAttack: {instanceID: 0}
+  - texAttackP: {instanceID: 0}
+  - texHit: {instanceID: 0}
+  - texHitP: {instanceID: 0}
+  - texBrace: {instanceID: 0}
+  - texBraceP: {instanceID: 0}
+  - texConcentrate: {instanceID: 0}
+  - texConcentrateP: {instanceID: 0}
+  - texRecover: {instanceID: 0}
+  - texRecoverP: {instanceID: 0}
+  - texSpecial: {instanceID: 0}
+  - texSpecialP: {instanceID: 0}
+  - texInventory: {instanceID: 0}
+  - texInventoryP: {instanceID: 0}
+  - texRunAway: {instanceID: 0}
+  - texRunAwayP: {instanceID: 0}
+  - texNamePlate: {instanceID: 0}
+  - texNamePlate2: {instanceID: 0}
+  - texTV: {instanceID: 0}
+  - texLoading1: {instanceID: 0}
+  - texLoading2: {instanceID: 0}
+  - texLoading3: {instanceID: 0}
+  - texLootB: {instanceID: 0}
+  - texLootIcon: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

@@ -1,0 +1,152 @@
+fileFormatVersion: 2
+guid: 799da387ab29241cd83542d3114e2d04
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: Bone08
+    100002: Bone22
+    100004: Bone03
+    100006: Bone02
+    100008: Cap_3
+    100010: Particle View 01
+    100012: IK Chain03
+    100014: Bone20
+    100016: casca
+    100018: Bone07
+    100020: Bone14
+    100022: IK Chain01
+    100024: Bone17
+    100026: Bone11
+    100028: Bone12
+    100030: Cap_2
+    100032: Suport_arma_st
+    100034: Particle View 01 1
+    100036: Bone18
+    100038: Bone04
+    100040: weapons
+    100042: IK Chain02
+    100044: Bone05
+    100046: Bone01
+    100048: man_master
+    100050: Bone15
+    100052: Bone09
+    100054: IK Chain04
+    100056: Bone13
+    100058: Bone10
+    100060: Bone16
+    100062: Bone19
+    100064: Suport_arma_Dr
+    100066: Bone21
+    100068: om_01
+    100070: //RootNode
+    100072: Cap_1
+    100074: Bone06
+    400000: Bone08
+    400002: Bone22
+    400004: Bone03
+    400006: Bone02
+    400008: Cap_3
+    400010: Particle View 01
+    400012: IK Chain03
+    400014: Bone20
+    400016: casca
+    400018: Bone07
+    400020: Bone14
+    400022: IK Chain01
+    400024: Bone17
+    400026: Bone11
+    400028: Bone12
+    400030: Cap_2
+    400032: Suport_arma_st
+    400034: Particle View 01 1
+    400036: Bone18
+    400038: Bone04
+    400040: weapons
+    400042: IK Chain02
+    400044: Bone05
+    400046: Bone01
+    400048: man_master
+    400050: Bone15
+    400052: Bone09
+    400054: IK Chain04
+    400056: Bone13
+    400058: Bone10
+    400060: Bone16
+    400062: Bone19
+    400064: Suport_arma_Dr
+    400066: Bone21
+    400068: om_01
+    400070: //RootNode
+    400072: Cap_1
+    400074: Bone06
+    2300000: Cap_3
+    2300002: casca
+    2300004: Cap_2
+    2300006: weapons
+    2300008: Cap_1
+    3300000: Cap_3
+    3300002: casca
+    3300004: Cap_2
+    3300006: weapons
+    3300008: Cap_1
+    4300000: Cap_2
+    4300002: casca
+    4300004: Cap_1
+    4300006: Cap_3
+    4300008: weapons
+    4300010: om_01
+    7400000: mastery
+    11100000: //RootNode
+    13700000: om_01
+  materials:
+    importMaterials: 1
+    materialName: 3
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 

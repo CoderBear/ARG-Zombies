@@ -1,0 +1,152 @@
+fileFormatVersion: 2
+guid: 9102b34c98fc840e48fce7838599d0ea
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: Bone19
+    100002: Bone02
+    100004: Bone04
+    100006: Bone18
+    100008: IK Chain03
+    100010: Bone01
+    100012: Bone10
+    100014: om_01
+    100016: Bone13
+    100018: Bone05
+    100020: Suport_arma_st
+    100022: Bone11
+    100024: Bone06
+    100026: IK Chain02
+    100028: Bone12
+    100030: Gun
+    100032: Bone22
+    100034: IK Chain04
+    100036: Bone07
+    100038: Bone16
+    100040: Bone17
+    100042: man_master
+    100044: Bone14
+    100046: Particle View 01
+    100048: Bone20
+    100050: Suport_arma_Dr
+    100052: Bone15
+    100054: Bone09
+    100056: Bone08
+    100058: IK Chain01
+    100060: Bone03
+    100062: //RootNode
+    100064: Bone21
+    400000: Bone19
+    400002: Bone02
+    400004: Bone04
+    400006: Bone18
+    400008: IK Chain03
+    400010: Bone01
+    400012: Bone10
+    400014: om_01
+    400016: Bone13
+    400018: Bone05
+    400020: Suport_arma_st
+    400022: Bone11
+    400024: Bone06
+    400026: IK Chain02
+    400028: Bone12
+    400030: Gun
+    400032: Bone22
+    400034: IK Chain04
+    400036: Bone07
+    400038: Bone16
+    400040: Bone17
+    400042: man_master
+    400044: Bone14
+    400046: Particle View 01
+    400048: Bone20
+    400050: Suport_arma_Dr
+    400052: Bone15
+    400054: Bone09
+    400056: Bone08
+    400058: IK Chain01
+    400060: Bone03
+    400062: //RootNode
+    400064: Bone21
+    2300000: Gun
+    3300000: Gun
+    4300000: om_01
+    4300002: Gun
+    7400000: Take 001
+    7400002: CoveringFire
+    11100000: //RootNode
+    13700000: om_01
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations:
+    - name: CoveringFire
+      takeName: 
+      firstFrame: 1
+      lastFrame: 80
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 

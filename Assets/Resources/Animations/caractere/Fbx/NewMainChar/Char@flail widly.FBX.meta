@@ -1,0 +1,154 @@
+fileFormatVersion: 2
+guid: e3947ed041112496ea7b1218929d735b
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: Bone11
+    100002: Bone19
+    100004: Bone09
+    100006: Bone18
+    100008: Bone14
+    100010: Bone12
+    100012: Bone03
+    100014: Bone01
+    100016: Bone17
+    100018: man_master
+    100020: Bone16
+    100022: casca
+    100024: Bone04
+    100026: Bone15
+    100028: Bone07
+    100030: Bone08
+    100032: //RootNode
+    100034: Suport_arma_st
+    100036: Bone22
+    100038: IK Chain04
+    100040: Bone13
+    100042: IK Chain02
+    100044: Particle View 01 1
+    100046: weapons
+    100048: Bone02
+    100050: om_01
+    100052: Particle View 01
+    100054: Particle View 01 2
+    100056: Suport_arma_Dr
+    100058: Bone20
+    100060: Bone05
+    100062: Cap_1
+    100064: Cap_2
+    100066: Bone21
+    100068: IK Chain01
+    100070: Bone10
+    100072: Bone06
+    100074: IK Chain03
+    100076: Cap_3
+    400000: Bone11
+    400002: Bone19
+    400004: Bone09
+    400006: Bone18
+    400008: Bone14
+    400010: Bone12
+    400012: Bone03
+    400014: Bone01
+    400016: Bone17
+    400018: man_master
+    400020: Bone16
+    400022: casca
+    400024: Bone04
+    400026: Bone15
+    400028: Bone07
+    400030: Bone08
+    400032: //RootNode
+    400034: Suport_arma_st
+    400036: Bone22
+    400038: IK Chain04
+    400040: Bone13
+    400042: IK Chain02
+    400044: Particle View 01 1
+    400046: weapons
+    400048: Bone02
+    400050: om_01
+    400052: Particle View 01
+    400054: Particle View 01 2
+    400056: Suport_arma_Dr
+    400058: Bone20
+    400060: Bone05
+    400062: Cap_1
+    400064: Cap_2
+    400066: Bone21
+    400068: IK Chain01
+    400070: Bone10
+    400072: Bone06
+    400074: IK Chain03
+    400076: Cap_3
+    2300000: casca
+    2300002: weapons
+    2300004: Cap_1
+    2300006: Cap_2
+    2300008: Cap_3
+    3300000: casca
+    3300002: weapons
+    3300004: Cap_1
+    3300006: Cap_2
+    3300008: Cap_3
+    4300000: om_01
+    4300002: casca
+    4300004: Cap_1
+    4300006: Cap_2
+    4300008: Cap_3
+    4300010: weapons
+    7400000: flail wildly
+    11100000: //RootNode
+    13700000: om_01
+  materials:
+    importMaterials: 1
+    materialName: 3
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 

@@ -1,0 +1,5 @@
+###########
+## Unity
+###########
+*.unitypackage
+*.txt
