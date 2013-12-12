@@ -28,6 +28,7 @@ public class Login : MonoBehaviour {
 		} else {
 			if (loginReader.text == "right") {
 				problem.text = "logged in";
+				Application.LoadLevel ("mainMenu");
 			} else {
 				problem.text = "invalid user/pass";
 			}

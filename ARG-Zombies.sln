@@ -7,8 +7,6 @@ Project("{1AF3CADD-3FEC-BD48-4ECD-143A7368E239}") = "ARG-Zombies", "Assembly-CSh
 EndProject
 Project("{1AF3CADD-3FEC-BD48-4ECD-143A7368E239}") = "ARG-Zombies", "Assembly-CSharp-Editor.csproj", "{B17BAFA1-9E3E-A27E-BBEB-84471DBA6AF9}"
 EndProject
-Project("{1AF3CADD-3FEC-BD48-4ECD-143A7368E239}") = "ARG-Zombies", "Assembly-UnityScript.unityproj", "{79D57273-6130-AA19-F8AB-915E2B0DDE04}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,15 +25,11 @@ Global
 		{B17BAFA1-9E3E-A27E-BBEB-84471DBA6AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B17BAFA1-9E3E-A27E-BBEB-84471DBA6AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B17BAFA1-9E3E-A27E-BBEB-84471DBA6AF9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79D57273-6130-AA19-F8AB-915E2B0DDE04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79D57273-6130-AA19-F8AB-915E2B0DDE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79D57273-6130-AA19-F8AB-915E2B0DDE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79D57273-6130-AA19-F8AB-915E2B0DDE04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
+																																GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -53,4 +47,5 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
+
 EndGlobal

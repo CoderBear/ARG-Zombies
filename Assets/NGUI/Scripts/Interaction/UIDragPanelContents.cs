@@ -10,7 +10,6 @@ using System.Collections;
 /// Allows dragging of the specified scroll view by mouse or touch.
 /// </summary>
 
-[ExecuteInEditMode]
 [AddComponentMenu("NGUI/Interaction/Drag Scroll View")]
 public class UIDragScrollView : MonoBehaviour
 {
@@ -23,24 +22,37 @@ public class UIDragScrollView : MonoBehaviour
 	// Legacy functionality, kept for backwards compatibility. Use 'scrollView' instead.
 	[HideInInspector][SerializeField] UIScrollView draggablePanel;
 
+	Transform mTrans;
+	UIScrollView mScroll;
+	bool mAutoFind = false;
+
 	/// <summary>
 	/// Automatically find the scroll view if possible.
 	/// </summary>
 
-	void Start ()
+	void OnEnable ()
 	{
+		mTrans = transform;
+
 		// Auto-upgrade
-		if (draggablePanel != null)
+		if (scrollView == null && draggablePanel != null)
 		{
 			scrollView = draggablePanel;
 			draggablePanel = null;
-#if UNITY_EDITOR
-			UnityEditor.EditorUtility.SetDirty(this);
-#endif
 		}
 
+		// If the scroll view is on a parent, don't try to remember it (as we want it to be dynamic in case of re-parenting)
+		UIScrollView sv = NGUITools.FindInParents<UIScrollView>(mTrans);
+		
 		if (scrollView == null)
-			scrollView = NGUITools.FindInParents<UIScrollView>(gameObject);
+		{
+			scrollView = sv;
+			mAutoFind = true;
+		}
+		else if (scrollView == sv)
+		{
+			mAutoFind = true;
+		}
 	}
 
 	/// <summary>
@@ -49,8 +61,11 @@ public class UIDragScrollView : MonoBehaviour
 
 	void OnPress (bool pressed)
 	{
-		if (enabled && NGUITools.GetActive(gameObject) && scrollView != null)
+		if (scrollView && enabled && NGUITools.GetActive(gameObject))
+		{
 			scrollView.Press(pressed);
+			if (!pressed && mAutoFind) scrollView = NGUITools.FindInParents<UIScrollView>(mTrans);
+		}
 	}
 
 	/// <summary>
@@ -59,7 +74,7 @@ public class UIDragScrollView : MonoBehaviour
 
 	void OnDrag (Vector2 delta)
 	{
-		if (enabled && NGUITools.GetActive(gameObject) && scrollView != null)
+		if (scrollView && enabled && NGUITools.GetActive(gameObject))
 			scrollView.Drag();
 	}
 
@@ -69,7 +84,7 @@ public class UIDragScrollView : MonoBehaviour
 
 	void OnScroll (float delta)
 	{
-		if (enabled && NGUITools.GetActive(gameObject) && scrollView != null)
+		if (scrollView && enabled && NGUITools.GetActive(gameObject))
 			scrollView.Scroll(delta);
 	}
 }

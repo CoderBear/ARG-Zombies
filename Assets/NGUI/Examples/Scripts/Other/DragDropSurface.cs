@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright Â© 2011-2013 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -10,23 +10,23 @@ using UnityEngine;
 /// and if so -- create its prefab on the surface, then destroy the object.
 /// </summary>
 
-[AddComponentMenu("NGUI/Examples/Drag and Drop Surface")]
-public class DragDropSurface : MonoBehaviour
+[AddComponentMenu("NGUI/Examples/Drag and Drop Surface (Example)")]
+public class ExampleDragDropSurface : MonoBehaviour
 {
 	public bool rotatePlacedObject = false;
 
-	void OnDrop (GameObject go)
-	{
-		DragDropItem ddo = go.GetComponent<DragDropItem>();
-		
-		if (ddo != null)
-		{
-			GameObject child = NGUITools.AddChild(gameObject, ddo.prefab);
+	//void OnDrop (GameObject go)
+	//{
+	//    ExampleDragDropItem ddo = go.GetComponent<ExampleDragDropItem>();
 
-			Transform trans = child.transform;
-			trans.position = UICamera.lastHit.point;
-			if (rotatePlacedObject) trans.rotation = Quaternion.LookRotation(UICamera.lastHit.normal) * Quaternion.Euler(90f, 0f, 0f);
-			Destroy(go);
-		}
-	}
+	//    if (ddo != null)
+	//    {
+	//        GameObject child = NGUITools.AddChild(gameObject, ddo.prefab);
+
+	//        Transform trans = child.transform;
+	//        trans.position = UICamera.lastHit.point;
+	//        if (rotatePlacedObject) trans.rotation = Quaternion.LookRotation(UICamera.lastHit.normal) * Quaternion.Euler(90f, 0f, 0f);
+	//        Destroy(go);
+	//    }
+	//}
 }
