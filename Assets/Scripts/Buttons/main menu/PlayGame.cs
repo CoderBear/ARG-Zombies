@@ -9,5 +9,6 @@ public class PlayGame : MonoBehaviour {
 	}
 
 	void OnClick() {
+		Application.LoadLevel ("gameMap");
 	}
 }

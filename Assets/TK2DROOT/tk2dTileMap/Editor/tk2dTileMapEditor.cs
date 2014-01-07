@@ -290,12 +290,19 @@ public class tk2dTileMapEditor : Editor, ITileMapEditorHost
 		{
 			GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
+#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+			tileMap.data.useSortingLayers = GUILayout.Toggle(tileMap.data.useSortingLayers, "Sorting Layers", EditorStyles.miniButton, GUILayout.ExpandWidth(false));
+#endif
 			tileMap.data.layersFixedZ = GUILayout.Toggle(tileMap.data.layersFixedZ, "Fixed Z", EditorStyles.miniButton, GUILayout.ExpandWidth(false));
 			if (GUILayout.Button("Add Layer", EditorStyles.miniButton, GUILayout.ExpandWidth(false)))
 			{
 				editorData.layer = tk2dEditor.TileMap.TileMapUtility.AddNewLayer(tileMap);
 			}
 			GUILayout.EndHorizontal();
+		}
+
+		if (tileMap.data.useSortingLayers) {
+			EditorGUILayout.HelpBox("Unity Sorting Layers take precedence over z sorting. Please ensure your sprites / prefabs are on the correct layers for them to sort properly - they don't automatically inherit the sorting layer/order of the parent.", MessageType.Warning);		
 		}
 
 		string zValueLabel = tileMap.data.layersFixedZ ? "Z Value" : "Z Offset";
@@ -374,7 +381,19 @@ public class tk2dTileMapEditor : Editor, ITileMapEditorHost
 				if (!tileMap.data.layersFixedZ)
 					tileMap.data.Layers[layer].z = Mathf.Max(0, tileMap.data.Layers[layer].z);
 				
-				tileMap.data.Layers[layer].unityLayer = EditorGUILayout.LayerField("Layer", tileMap.data.Layers[layer].unityLayer);
+				tileMap.data.Layers[layer].unityLayer = EditorGUILayout.LayerField("Unity Layer", tileMap.data.Layers[layer].unityLayer);
+
+#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+				// Unity sorting layers
+				if (tileMap.data.useSortingLayers) {
+					tk2dGuiUtility.BeginChangeCheck();
+					tileMap.data.Layers[layer].sortingLayerName = tk2dEditorUtility.SortingLayerNamePopup("Sorting Layer", tileMap.data.Layers[layer].sortingLayerName);
+					tileMap.data.Layers[layer].sortingOrder = EditorGUILayout.IntField("Sorting Order in Layer", tileMap.data.Layers[layer].sortingOrder);
+					if (tk2dGuiUtility.EndChangeCheck()) {
+						Build(true);
+					}
+				}
+#endif
 
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
 				bool using2DPhysics = (tileMap.SpriteCollectionInst != null && tileMap.SpriteCollectionInst.FirstValidDefinition != null && tileMap.SpriteCollectionInst.FirstValidDefinition.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics2D);

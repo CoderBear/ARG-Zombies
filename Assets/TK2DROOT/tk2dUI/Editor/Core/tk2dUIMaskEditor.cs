@@ -9,6 +9,25 @@ public class tk2dUIMaskEditor : Editor {
 		tk2dUIMask mask = (tk2dUIMask)target;
 
 		DrawDefaultInspector();
+
+#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+	Renderer renderer = mask.renderer;
+        GUILayout.Space(8);
+		if (renderer != null) {
+            string sortingLayerName = tk2dEditorUtility.SortingLayerNamePopup("Sorting Layer", renderer.sortingLayerName);
+            if (sortingLayerName != renderer.sortingLayerName) {
+            	tk2dUndo.RecordObject(renderer, "Sorting Layer");
+           		renderer.sortingLayerName = sortingLayerName;
+            }
+
+			int sortingOrder = EditorGUILayout.IntField("Order In Layer", renderer.sortingOrder);
+			if (sortingOrder != renderer.sortingOrder) {
+            	tk2dUndo.RecordObject(renderer, "Order In Layer");
+            	renderer.sortingOrder = sortingOrder;
+			}
+		}
+#endif
+
 		if (GUI.changed) {
 			mask.Build();
 		}

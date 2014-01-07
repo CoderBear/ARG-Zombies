@@ -104,9 +104,9 @@ public class tk2dTileMap : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBuil
 	void Awake()
 	{
 		bool spriteCollectionKeyMatch = true;
-		if ((SpriteCollectionInst && SpriteCollectionInst.buildKey != spriteCollectionKey) ||
-			SpriteCollectionInst.needMaterialInstance
-			) spriteCollectionKeyMatch = false;
+		if (SpriteCollectionInst && (SpriteCollectionInst.buildKey != spriteCollectionKey || SpriteCollectionInst.needMaterialInstance)) {
+			spriteCollectionKeyMatch = false;
+		}
 
 		if (Application.platform == RuntimePlatform.WindowsEditor ||
 			Application.platform == RuntimePlatform.OSXEditor)

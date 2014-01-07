@@ -40,10 +40,18 @@ public class UIDragScrollView : MonoBehaviour
 			scrollView = draggablePanel;
 			draggablePanel = null;
 		}
+		FindScrollView();
+	}
 
+	/// <summary>
+	/// Find the scroll view to work with.
+	/// </summary>
+
+	void FindScrollView ()
+	{
 		// If the scroll view is on a parent, don't try to remember it (as we want it to be dynamic in case of re-parenting)
 		UIScrollView sv = NGUITools.FindInParents<UIScrollView>(mTrans);
-		
+
 		if (scrollView == null)
 		{
 			scrollView = sv;
@@ -53,7 +61,14 @@ public class UIDragScrollView : MonoBehaviour
 		{
 			mAutoFind = true;
 		}
+		mScroll = scrollView;
 	}
+
+	/// <summary>
+	/// Ensure we have a scroll view to work with.
+	/// </summary>
+
+	void Start () { FindScrollView(); }
 
 	/// <summary>
 	/// Create a plane on which we will be performing the dragging.
@@ -61,10 +76,22 @@ public class UIDragScrollView : MonoBehaviour
 
 	void OnPress (bool pressed)
 	{
+		// If the scroll view has been set manually, don't try to find it again
+		if (mAutoFind && mScroll != scrollView)
+		{
+			mScroll = scrollView;
+			mAutoFind = false;
+		}
+
 		if (scrollView && enabled && NGUITools.GetActive(gameObject))
 		{
 			scrollView.Press(pressed);
-			if (!pressed && mAutoFind) scrollView = NGUITools.FindInParents<UIScrollView>(mTrans);
+			
+			if (!pressed && mAutoFind)
+			{
+				scrollView = NGUITools.FindInParents<UIScrollView>(mTrans);
+				mScroll = scrollView;
+			}
 		}
 	}
 
@@ -74,7 +101,7 @@ public class UIDragScrollView : MonoBehaviour
 
 	void OnDrag (Vector2 delta)
 	{
-		if (scrollView && enabled && NGUITools.GetActive(gameObject))
+		if (scrollView && NGUITools.GetActive(this))
 			scrollView.Drag();
 	}
 
@@ -84,7 +111,7 @@ public class UIDragScrollView : MonoBehaviour
 
 	void OnScroll (float delta)
 	{
-		if (scrollView && enabled && NGUITools.GetActive(gameObject))
+		if (scrollView && NGUITools.GetActive(this))
 			scrollView.Scroll(delta);
 	}
 }

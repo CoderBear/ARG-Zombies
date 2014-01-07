@@ -108,7 +108,7 @@ public class tk2dSpriteCollectionDefinition
 	public bool disableTrimming = false;
     public bool additive = false;
     public Vector3 scale = new Vector3(1,1,1);
-    
+
     public Texture2D texture = null;
 	
 	[System.NonSerialized]
@@ -591,6 +591,7 @@ public class tk2dSpriteCollection : MonoBehaviour
 	public float physicsDepth = 0.1f;
 	
 	public bool disableTrimming = false;
+	public bool disableRotation = false;
 	
 	public NormalGenerationMode normalGenerationMode = NormalGenerationMode.None;
 	

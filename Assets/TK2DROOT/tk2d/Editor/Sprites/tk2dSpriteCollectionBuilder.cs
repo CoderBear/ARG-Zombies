@@ -665,6 +665,7 @@ public class tk2dSpriteCollectionBuilder
 			gen.spriteCollection.textures = new Texture2D[0];
 			gen.spriteCollection.pngTextures = new TextAsset[0];
 
+			gen.spriteCollection.loadable = gen.loadable;
 			gen.spriteCollection.hasPlatformData = true;
 			gen.spriteCollection.spriteCollectionPlatforms = platformNames.ToArray();
 			gen.spriteCollection.spriteCollectionPlatformGUIDs = platformGUIDs.ToArray();
@@ -1049,7 +1050,8 @@ public class tk2dSpriteCollectionBuilder
 		int atlasHeight = forceAtlasSize?gen.forcedTextureHeight:gen.maxTextureSize;
 		bool forceSquareAtlas = forceAtlasSize?false:gen.forceSquareAtlas;
 		bool allowFindingOptimalSize = !forceAtlasSize;
-		tk2dEditor.Atlas.Builder atlasBuilder = new tk2dEditor.Atlas.Builder(atlasWidth, atlasHeight, gen.allowMultipleAtlases?64:1, allowFindingOptimalSize, forceSquareAtlas);
+		bool allowRotation = !gen.disableRotation;
+		tk2dEditor.Atlas.Builder atlasBuilder = new tk2dEditor.Atlas.Builder(atlasWidth, atlasHeight, gen.allowMultipleAtlases?64:1, allowFindingOptimalSize, forceSquareAtlas, allowRotation);
 		if (textureList.Length > 0)
 		{
 			foreach (Texture2D currTexture in textureList)
@@ -1221,14 +1223,20 @@ public class tk2dSpriteCollectionBuilder
 		if (!gen.allowMultipleAtlases && gen.altMaterials.Length > 1)
 		{
 			coll.materials = new Material[gen.altMaterials.Length];
-	        for (int i = 0; i < gen.altMaterials.Length; ++i)
+			coll.materialPngTextureId = new int[gen.altMaterials.Length];
+	        for (int i = 0; i < gen.altMaterials.Length; ++i) {
 				coll.materials[i] = gen.altMaterials[i];
+				coll.materialPngTextureId[i] = 0;
+			}
 		}
 		else
 		{
 			coll.materials = new Material[gen.atlasMaterials.Length];
-	        for (int i = 0; i < gen.atlasMaterials.Length; ++i)
+			coll.materialPngTextureId = new int[gen.atlasMaterials.Length];
+	        for (int i = 0; i < gen.atlasMaterials.Length; ++i) {
 				coll.materials[i] = gen.atlasMaterials[i];
+				coll.materialPngTextureId[i] = i;
+			}
 		}
 		
 		// Delete unused atlas textures & materials
@@ -1295,8 +1303,8 @@ public class tk2dSpriteCollectionBuilder
 					fontSpriteLut.Add(v);
 			}
 			
-			fontInfo.scaleW = coll.textures[0].width;
-			fontInfo.scaleH = coll.textures[0].height;
+			fontInfo.scaleW = atlasData[0].width;
+			fontInfo.scaleH = atlasData[0].height;
 			
 			// Set material
 			if (font.useGradient && font.gradientTexture != null && font.gradientCount > 0)
@@ -1375,6 +1383,7 @@ public class tk2dSpriteCollectionBuilder
 
 		var index = tk2dEditorUtility.GetOrCreateIndex();
 		index.AddSpriteCollectionData(gen.spriteCollection);
+
 		EditorUtility.SetDirty(gen.spriteCollection);
 		EditorUtility.SetDirty(gen);
 
@@ -1907,7 +1916,7 @@ public class tk2dSpriteCollectionBuilder
 			else
 			{
 				// make sure its not overrun, can happen when refs are cleared
-				thisTexParam.materialId = Mathf.Min( thisTexParam.materialId, gen.atlasMaterials.Length - 1);
+				thisTexParam.materialId = Mathf.Min( thisTexParam.materialId, gen.altMaterials.Length - 1);
 				coll.spriteDefinitions[i].material = gen.altMaterials[thisTexParam.materialId];
 				coll.spriteDefinitions[i].materialId = thisTexParam.materialId;
 				

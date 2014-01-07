@@ -45,9 +45,10 @@ public class UI2DSprite : UIWidget
 		{
 			if (mSprite != value)
 			{
+				RemoveFromPanel();
 				mSprite = value;
 				nextSprite = null;
-				RemoveFromPanel();
+				MarkAsChanged();
 			}
 		}
 	}
@@ -194,7 +195,7 @@ public class UI2DSprite : UIWidget
 	/// Update the sprite in case it was animated.
 	/// </summary>
 
-	public override void Update()
+	protected override void OnUpdate ()
 	{
 		if (nextSprite != null)
 		{
@@ -202,7 +203,7 @@ public class UI2DSprite : UIWidget
 				sprite2D = nextSprite;
 			nextSprite = null;
 		}
- 		base.Update();
+		base.OnUpdate();
 	}
 
 	/// <summary>
@@ -234,7 +235,7 @@ public class UI2DSprite : UIWidget
 	public override void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
 	{
 		Color colF = color;
-		colF.a *= mPanel.finalAlpha;
+		colF.a = finalAlpha;
 		Color32 col = premultipliedAlpha ? NGUITools.ApplyPMA(colF) : colF;
 		Vector4 v = drawingDimensions;
 		Rect rect = uvRect;

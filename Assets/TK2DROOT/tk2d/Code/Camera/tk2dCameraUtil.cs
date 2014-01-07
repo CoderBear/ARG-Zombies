@@ -90,6 +90,7 @@ public class tk2dCameraResolutionOverride {
 		StretchToFit, // stretch to fit, could be non-uniform and/or very ugly
 		ClosestMultipleOfTwo, // fits to the closest power of two
 		PixelPerfect, // keeps this pixel perfect always
+		Fill, // crop to fit
 	};
 	public AutoScaleMode autoScaleMode = AutoScaleMode.None;
 	

@@ -232,7 +232,8 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 	[System.NonSerialized]
 	public Material[] materialInsts;
 
-	Texture2D[] textureInsts = new Texture2D[0];
+	[System.NonSerialized]
+	public Texture2D[] textureInsts = new Texture2D[0];
 
 
 	/// <summary>
@@ -244,6 +245,7 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 	/// An array of PNG textures used by this sprite collection.
 	/// </summary>
 	public TextAsset[] pngTextures = new TextAsset[0];
+	public int[] materialPngTextureId = new int[0];
 
 	// Used only for PNG textures
 	public FilterMode textureFilterMode = FilterMode.Bilinear;
@@ -536,7 +538,8 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 					materialInsts[i].hideFlags = HideFlags.DontSave;
 	#endif
 					if (assignTextureInst) {
-						materialInsts[i].mainTexture = textureInsts[i];
+						int textureId = (materialPngTextureId.Length == 0) ? 0 : materialPngTextureId[i];
+						materialInsts[i].mainTexture = textureInsts[ textureId ];
 					}
 				}
 			}
@@ -557,6 +560,8 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 				def.materialInst = def.material;
 			}
 		}
+
+		tk2dEditorSpriteDataUnloader.Register(this);
 	}
 
 	/// <summary>
@@ -582,6 +587,8 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 
 	public void ResetPlatformData()
 	{
+		tk2dEditorSpriteDataUnloader.Unregister(this);
+
 		if (platformSpecificData != null) {
 			platformSpecificData.DestroyTextureInsts();
 		}

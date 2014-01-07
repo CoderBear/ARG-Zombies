@@ -108,6 +108,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 			target.forceSquareAtlas = source.forceSquareAtlas;
 			target.atlasWastage = source.atlasWastage;
 			target.allowMultipleAtlases = source.allowMultipleAtlases;
+			target.disableRotation = source.disableRotation;
 			target.removeDuplicates = source.removeDuplicates;
 			
 			target.spriteCollection = source.spriteCollection;
@@ -343,6 +344,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 			target.forceSquareAtlas = source.forceSquareAtlas;
 			target.atlasWastage = source.atlasWastage;
 			target.allowMultipleAtlases = source.allowMultipleAtlases;
+			target.disableRotation = source.disableRotation;
 			target.removeDuplicates = source.removeDuplicates;
 			
 			target.spriteCollection = source.spriteCollection;
@@ -578,6 +580,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 		public bool forceSquareAtlas;
 		public float atlasWastage;
 		public bool allowMultipleAtlases;
+		public bool disableRotation;
 		public bool removeDuplicates;
 		public tk2dSpriteCollectionData spriteCollection;
 	    public bool premultipliedAlpha;

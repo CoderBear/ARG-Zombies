@@ -121,6 +121,7 @@ public class tk2dTextMesh : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBui
 
 	void FormatText(ref string _targetString, string _source)
 	{
+		InitInstance();
 		if (formatting == false || wordWrapWidth == 0 || _fontInst.texelSize == Vector2.zero)
 		{
 			_targetString = _source;
@@ -500,6 +501,7 @@ public class tk2dTextMesh : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBui
 	/// This expects an unformatted string and will wrap the string if required.
 	/// </summary>
 	public Bounds GetEstimatedMeshBoundsForString( string str ) {
+		InitInstance();
 		tk2dTextGeomGen.GeomData geomData = tk2dTextGeomGen.Data( data, _fontInst, _formattedText );
 		Vector2 dims = tk2dTextGeomGen.GetMeshDimensionsForString( FormatText( str ), geomData);
 		float offsetY = tk2dTextGeomGen.GetYAnchorForHeight(dims.y, geomData);

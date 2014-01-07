@@ -29,7 +29,7 @@ class tk2dStaticSpriteBatcherEditor : Editor
 				allTransforms = (from t in allTransforms orderby cam.WorldToScreenPoint((t.renderer != null) ? t.renderer.bounds.center : t.position).z descending select t).ToArray();
 			}
 			else {
-				allTransforms = (from t in allTransforms orderby t.renderer.bounds.center.z descending select t).ToArray();
+				allTransforms = (from t in allTransforms orderby ((t.renderer != null) ? t.renderer.bounds.center : t.position).z descending select t).ToArray();
 			}
 			
 			// and within the z sort by material

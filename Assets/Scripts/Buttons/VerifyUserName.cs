@@ -3,6 +3,7 @@ using System.Collections;
 
 public class VerifyUserName : MonoBehaviour {
 	private string verifyURL = "http://192.185.41.34/~codebear/nameverify.php";
+	private const string verifyDB = "&dbuser=codebear_coder&dbpass=J29kMMX&dbtable=codebear_argz";
 	public UILabel username, verifyStatus, problem, debug;
 	
 	public UIImageButton RegisterButton;
@@ -19,7 +20,8 @@ public class VerifyUserName : MonoBehaviour {
 	IEnumerator handleVerify (string userName)
 	{
 		problem.text = "Checking if username is available";
-		string verify_URL = verifyURL + "?username=" + userName;
+		string verify_URL = verifyURL + "?username=" + userName + verifyDB;
+
 		WWW verifyReader = new WWW (verify_URL);
 		yield return verifyReader;
 		

@@ -401,6 +401,8 @@ namespace tk2dEditor.SpriteCollectionEditor
 
 			SpriteCollection.premultipliedAlpha = EditorGUILayout.Toggle("Premultiplied Alpha", SpriteCollection.premultipliedAlpha);
 			SpriteCollection.disableTrimming = EditorGUILayout.Toggle("Disable Trimming", SpriteCollection.disableTrimming);
+			GUIContent gc = new GUIContent("Disable rotation", "Disable rotation of sprites in atlas. Use this if you need consistent UV direction for shader special effects.");
+			SpriteCollection.disableRotation = EditorGUILayout.Toggle(gc, SpriteCollection.disableRotation);
 			SpriteCollection.normalGenerationMode = (tk2dSpriteCollection.NormalGenerationMode)EditorGUILayout.EnumPopup("Normal Generation", SpriteCollection.normalGenerationMode);
 
 			EndHeader();

@@ -507,6 +507,11 @@ public class tk2dCamera : MonoBehaviour
 			scale.Set(width / settings.nativeResolutionWidth, height / settings.nativeResolutionHeight);
 			break;
 
+		case tk2dCameraResolutionOverride.AutoScaleMode.Fill:
+			s = Mathf.Max(width / settings.nativeResolutionWidth,height / settings.nativeResolutionHeight);
+			scale.Set(s, s);
+			break;
+
 		default:
 		case tk2dCameraResolutionOverride.AutoScaleMode.None: 
 			s = currentOverride.scale;
