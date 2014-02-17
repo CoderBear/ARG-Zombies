@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -334,7 +334,7 @@ public class UICamera : MonoBehaviour
 	static GameObject mHover;
 
 	// Joystick/controller/keyboard event
-	static MouseOrTouch mController = new MouseOrTouch();
+	static public MouseOrTouch controller = new MouseOrTouch();
 
 	// Used to ensure that joystick-based controls don't trigger that often
 	static float mNextEvent = 0f;
@@ -472,7 +472,7 @@ public class UICamera : MonoBehaviour
 				if (mMouse[i].pressed != null)
 					++count;
 
-			if (mController.pressed != null)
+			if (controller.pressed != null)
 				++count;
 
 			return count;
@@ -497,7 +497,7 @@ public class UICamera : MonoBehaviour
 				if (mMouse[i].dragged != null)
 					++count;
 
-			if (mController.dragged != null)
+			if (controller.dragged != null)
 				++count;
 
 			return count;
@@ -603,6 +603,19 @@ public class UICamera : MonoBehaviour
 					for (int b = 0; b < hits.Length; ++b)
 					{
 						GameObject go = hits[b].collider.gameObject;
+						UIWidget w = go.GetComponent<UIWidget>();
+
+						if (w != null)
+						{
+							if (!w.isVisible) continue;
+							if (w.hitCheck != null && !w.hitCheck(hits[b].point)) continue;
+						}
+						else
+						{
+							UIRect rect = NGUITools.FindInParents<UIRect>(go);
+							if (rect != null && rect.finalAlpha < 0.001f) continue;
+						}
+
 						mHit.depth = NGUITools.CalculateRaycastDepth(go);
 
 						if (mHit.depth != int.MaxValue)
@@ -630,11 +643,28 @@ public class UICamera : MonoBehaviour
 					}
 					mHits.Clear();
 				}
-				else if (hits.Length == 1 && IsVisible(ref hits[0]))
+				else if (hits.Length == 1)
 				{
-					hit = hits[0];
-					hoveredObject = hit.collider.gameObject;
-					return true;
+					Collider c = hits[0].collider;
+					UIWidget w = c.GetComponent<UIWidget>();
+
+					if (w != null)
+					{
+						if (!w.isVisible) continue;
+						if (w.hitCheck != null && !w.hitCheck(hits[0].point)) continue;
+					}
+					else
+					{
+						UIRect rect = NGUITools.FindInParents<UIRect>(c.gameObject);
+						if (rect != null && rect.finalAlpha < 0.001f) continue;
+					}
+
+					if (IsVisible(ref hits[0]))
+					{
+						hit = hits[0];
+						hoveredObject = hit.collider.gameObject;
+						return true;
+					}
 				}
 				continue;
 			}
@@ -873,12 +903,14 @@ public class UICamera : MonoBehaviour
 	{
 		cachedCamera.eventMask = 0;
 		cachedCamera.transparencySortMode = TransparencySortMode.Orthographic;
-		if (debug) NGUIDebug.debugRaycast = true;
+		if (handlesEvents) NGUIDebug.debugRaycast = debug;
 	}
+#else
+	void Start () { if (handlesEvents) NGUIDebug.debugRaycast = debug; }
 #endif
 
 #if UNITY_EDITOR
-	void OnValidate () { NGUIDebug.debugRaycast = debug; }
+	void OnValidate () { if (handlesEvents) NGUIDebug.debugRaycast = debug; }
 #endif
 
 	/// <summary>
@@ -1183,7 +1215,7 @@ public class UICamera : MonoBehaviour
 	public void ProcessOthers ()
 	{
 		currentTouchID = -100;
-		currentTouch = mController;
+		currentTouch = controller;
 
 		// If this is an input field, ignore WASD and Space key presses
 		inputHasFocus = (mCurrentSelection != null && mCurrentSelection.GetComponent<UIInput>() != null);
@@ -1333,8 +1365,10 @@ public class UICamera : MonoBehaviour
 				currentTouch.delta = currentTouch.totalDelta;
 
 				// OnDragOver is sent for consistency, so that OnDragOut is always preceded by OnDragOver
+				isDragging = true;
 				Notify(currentTouch.dragged, "OnDragStart", null);
 				Notify(currentTouch.last, "OnDragOver", currentTouch.dragged);
+				isDragging = false;
 			}
 			else if (!currentTouch.dragStarted && drag < mag)
 			{

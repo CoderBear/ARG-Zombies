@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -12,7 +12,11 @@ using System.Collections.Generic;
 /// </summary>
 
 [CanEditMultipleObjects]
+#if UNITY_3_5
 [CustomEditor(typeof(UISprite))]
+#else
+[CustomEditor(typeof(UISprite), true)]
+#endif
 public class UISpriteInspector : UIWidgetInspector
 {
 	/// <summary>

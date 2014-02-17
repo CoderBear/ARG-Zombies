@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -543,7 +543,7 @@ public class UISprite : UIWidget
 			float x1 = x0 + mWidth;
 			float y1 = y0 + mHeight;
 
-			if (mSprite != null)
+			if (GetAtlasSprite() != null)
 			{
 				int padLeft = mSprite.paddingLeft;
 				int padBottom = mSprite.paddingBottom;
@@ -553,7 +553,7 @@ public class UISprite : UIWidget
 				int w = mSprite.width + padLeft + padRight;
 				int h = mSprite.height + padBottom + padTop;
 
-				if (mType == Type.Simple || mType == Type.Filled)
+				if (w > 0 && h > 0 && (mType == Type.Simple || mType == Type.Filled))
 				{
 					if ((w & 1) != 0) ++padRight;
 					if ((h & 1) != 0) ++padTop;

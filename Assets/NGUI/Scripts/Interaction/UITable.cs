@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -65,22 +65,16 @@ public class UITable : UIWidgetContainer
 
 	public OnReposition onReposition;
 
-	UIPanel mPanel;
-	bool mInitDone = false;
-	bool mReposition = false;
-	List<Transform> mChildren = new List<Transform>();
+	protected UIPanel mPanel;
+	protected bool mInitDone = false;
+	protected bool mReposition = false;
+	protected List<Transform> mChildren = new List<Transform>();
 
 	/// <summary>
 	/// Reposition the children on the next Update().
 	/// </summary>
 
 	public bool repositionNow { set { if (value) { mReposition = true; enabled = true; } } }
-
-	/// <summary>
-	/// Function that sorts items by name.
-	/// </summary>
-
-	static public int SortByName (Transform a, Transform b) { return string.Compare(a.name, b.name); }
 
 	/// <summary>
 	/// Returns the list of table's children, sorted alphabetically if necessary.
@@ -101,17 +95,29 @@ public class UITable : UIWidgetContainer
 
 					if (child && child.gameObject && (!hideInactive || NGUITools.GetActive(child.gameObject))) mChildren.Add(child);
 				}
-				if (sorted) mChildren.Sort(SortByName);
+				if (sorted) Sort(mChildren);
 			}
 			return mChildren;
 		}
 	}
 
 	/// <summary>
+	/// Function that sorts items by name.
+	/// </summary>
+
+	static protected int SortByName (Transform a, Transform b) { return string.Compare(a.name, b.name); }
+
+	/// <summary>
+	/// Want your own custom sorting logic? Override this function.
+	/// </summary>
+
+	protected virtual void Sort (List<Transform> list) { list.Sort(SortByName); }
+
+	/// <summary>
 	/// Positions the grid items, taking their own size into consideration.
 	/// </summary>
 
-	void RepositionVariableSize (List<Transform> children)
+	protected void RepositionVariableSize (List<Transform> children)
 	{
 		float xOffset = 0;
 		float yOffset = 0;
@@ -191,7 +197,7 @@ public class UITable : UIWidgetContainer
 	/// </summary>
 
 	[ContextMenu("Execute")]
-	public void Reposition ()
+	public virtual void Reposition ()
 	{
 		if (Application.isPlaying && !mInitDone && NGUITools.GetActive(this))
 		{
@@ -207,9 +213,11 @@ public class UITable : UIWidgetContainer
 		List<Transform> ch = children;
 		if (ch.Count > 0) RepositionVariableSize(ch);
 
-		if (mPanel != null)
+		if (keepWithinPanel && mPanel != null)
 		{
 			mPanel.ConstrainTargetToBounds(myTrans, true);
+			UIScrollView sv = mPanel.GetComponent<UIScrollView>();
+			if (sv != null) sv.UpdateScrollbars(true);
 		}
 
 		if (onReposition != null)
@@ -220,7 +228,7 @@ public class UITable : UIWidgetContainer
 	/// Position the grid's contents when the script starts.
 	/// </summary>
 
-	void Start ()
+	protected virtual void Start ()
 	{
 		Init();
 		Reposition();
@@ -231,18 +239,17 @@ public class UITable : UIWidgetContainer
 	/// Find the necessary components.
 	/// </summary>
 
-	void Init ()
+	protected virtual void Init ()
 	{
 		mInitDone = true;
-		if (keepWithinPanel)
-			mPanel = NGUITools.FindInParents<UIPanel>(gameObject);
+		mPanel = NGUITools.FindInParents<UIPanel>(gameObject);
 	}
 
 	/// <summary>
 	/// Is it time to reposition? Do so now.
 	/// </summary>
 
-	void LateUpdate ()
+	protected virtual void LateUpdate ()
 	{
 		if (mReposition) Reposition();
 		enabled = false;

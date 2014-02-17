@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: d9a637e69b9f0a7449ee6b6e158ddd5b
 ModelImporter:
-  serializedVersion: 15
+  serializedVersion: 16
   fileIDToRecycleName:
     100000: Bip01 Footsteps
     100002: Bip01 Head
@@ -194,4 +194,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 1
+  additionalBone: 0
   userData: 

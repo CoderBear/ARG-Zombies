@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEditor;
@@ -802,10 +802,13 @@ public class NGUIEditorTools
 
 	public static void DrawTexture (Texture2D tex, Rect rect, Rect uv, Color color, Material mat)
 	{
+		int w = Mathf.RoundToInt(tex.width * uv.width);
+		int h = Mathf.RoundToInt(tex.height * uv.height);
+
 		// Create the texture rectangle that is centered inside rect.
 		Rect outerRect = rect;
-		outerRect.width = tex.width;
-		outerRect.height = tex.height;
+		outerRect.width = w;
+		outerRect.height = h;
 
 		if (outerRect.width > 0f)
 		{
@@ -843,6 +846,7 @@ public class NGUIEditorTools
 			// using BeginGroup/EndGroup, and there is no way to specify a UV rect... le'suq.
 			UnityEditor.EditorGUI.DrawPreviewTexture(outerRect, tex, mat);
 		}
+		GUI.color = Color.white;
 
 		// Draw the lines around the sprite
 		Handles.color = Color.black;
@@ -852,7 +856,7 @@ public class NGUIEditorTools
 		Handles.DrawLine(new Vector3(outerRect.xMin, outerRect.yMax), new Vector3(outerRect.xMax, outerRect.yMax));
 
 		// Sprite size label
-		string text = string.Format("Texture Size: {0}x{1}", Mathf.RoundToInt(tex.width), Mathf.RoundToInt(tex.height));
+		string text = string.Format("Texture Size: {0}x{1}", w, h);
 		EditorGUI.DropShadowLabel(GUILayoutUtility.GetRect(Screen.width, 18f), text);
 	}
 
@@ -1236,9 +1240,14 @@ public class NGUIEditorTools
 
 		GUI.changed = false;
 #if UNITY_3_5
+		if (state) text = "\u25B2 " + text;
+		else text = "\u25BC " + text;
 		if (!GUILayout.Toggle(true, text, "dragtab", GUILayout.MinWidth(20f))) state = !state;
 #else
-		if (!GUILayout.Toggle(true, "<b><size=11>" + text + "</size></b>", "dragtab", GUILayout.MinWidth(20f))) state = !state;
+		text = "<b><size=11>" + text + "</size></b>";
+		if (state) text = "\u25B2 " + text;
+		else text = "\u25BC " + text;
+		if (!GUILayout.Toggle(true, text, "dragtab", GUILayout.MinWidth(20f))) state = !state;
 #endif
 		if (GUI.changed) EditorPrefs.SetBool(key, state);
 

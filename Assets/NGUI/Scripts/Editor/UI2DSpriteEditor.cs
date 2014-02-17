@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 #if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
@@ -14,7 +14,11 @@ using System.Collections.Generic;
 /// </summary>
 
 [CanEditMultipleObjects]
+#if UNITY_3_5
 [CustomEditor(typeof(UI2DSprite))]
+#else
+[CustomEditor(typeof(UI2DSprite), true)]
+#endif
 public class UI2DSpriteEditor : UIWidgetInspector
 {
 	UI2DSprite mSprite;

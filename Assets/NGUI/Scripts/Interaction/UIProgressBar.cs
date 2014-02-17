@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -250,13 +250,25 @@ public class UIProgressBar : UIWidgetContainer
 
 	protected void OnValidate ()
 	{
-		Upgrade();
-		mIsDirty = true;
-		float val = Mathf.Clamp01(mValue);
-		if (mValue != val) mValue = val;
-		if (numberOfSteps < 0) numberOfSteps = 0;
-		else if (numberOfSteps > 20) numberOfSteps = 20;
-		ForceUpdate();
+		// For some bizarre reason Unity calls this function on prefabs, even if prefabs
+		// are not actually used in the scene, nor selected in inspector. Dafuq?
+		if (NGUITools.GetActive(this))
+		{
+			Upgrade();
+			mIsDirty = true;
+			float val = Mathf.Clamp01(mValue);
+			if (mValue != val) mValue = val;
+			if (numberOfSteps < 0) numberOfSteps = 0;
+			else if (numberOfSteps > 20) numberOfSteps = 20;
+			ForceUpdate();
+		}
+		else
+		{
+			float val = Mathf.Clamp01(mValue);
+			if (mValue != val) mValue = val;
+			if (numberOfSteps < 0) numberOfSteps = 0;
+			else if (numberOfSteps > 20) numberOfSteps = 20;
+		}
 	}
 
 	/// <summary>
@@ -292,12 +304,12 @@ public class UIProgressBar : UIWidgetContainer
 			if (isHorizontal)
 			{
 				float diff = (localPos.x - corners[0].x) / size.x;
-				return Mathf.Clamp01(isInverted ? 1f - diff : diff);
+				return isInverted ? 1f - diff : diff;
 			}
 			else
 			{
 				float diff = (localPos.y - corners[0].y) / size.y;
-				return Mathf.Clamp01(isInverted ? 1f - diff : diff);
+				return isInverted ? 1f - diff : diff;
 			}
 		}
 		return value;

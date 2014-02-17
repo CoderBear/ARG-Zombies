@@ -1,12 +1,16 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_3_5
 [CustomEditor(typeof(UIButtonColor))]
+#else
+[CustomEditor(typeof(UIButtonColor), true)]
+#endif
 public class UIButtonColorEditor : UIWidgetContainerEditor
 {
 	public override void OnInspectorGUI ()

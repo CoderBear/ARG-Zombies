@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 // Dynamic font support contributed by the NGUI community members:
@@ -19,7 +19,7 @@ using System.Text;
 /// </summary>
 
 [ExecuteInEditMode]
-[AddComponentMenu("NGUI/UI/Font")]
+[AddComponentMenu("NGUI/UI/NGUI Font")]
 public class UIFont : MonoBehaviour
 {
 	[HideInInspector][SerializeField] Material mMat;
@@ -227,7 +227,7 @@ public class UIFont : MonoBehaviour
 		{
 			if (mReplacement != null) return mReplacement.uvRect;
 
-			if (mAtlas != null && (mSprite == null && sprite != null))
+			if (mAtlas != null && (!mSpriteSet && sprite != null))
 			{
 				Texture tex = mAtlas.texture;
 

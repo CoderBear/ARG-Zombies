@@ -4,7 +4,7 @@ using System.Collections;
 public class Login : MonoBehaviour {
 	private string loginURL = "http://192.185.41.34/~codebear/login.php";
 	private const string verifyDB = "&dbuser=codebear_coder&dbpass=J29kMMX&dbtable=codebear_argz";
-	
+
 	public UILabel username, problem;
 	public UIInput password;
 	private string userName = "", passWord ="";

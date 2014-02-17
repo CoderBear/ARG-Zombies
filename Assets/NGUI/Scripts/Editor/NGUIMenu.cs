@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -200,6 +200,7 @@ static public class NGUIMenu
 		if (panel == null) panel = NGUIEditorTools.SelectedRoot(true).GetComponent<UIPanel>();
 		panel.clipping = UIDrawCall.Clipping.SoftClip;
 		panel.name = "Scroll View";
+		panel.gameObject.AddComponent<UIScrollView>();
 		Selection.activeGameObject = panel.gameObject;
 	}
 
@@ -222,7 +223,7 @@ static public class NGUIMenu
 
 	[MenuItem("NGUI/Create/2D UI", true)]
 	[MenuItem("Assets/NGUI/Create 2D UI", true, 1)]
-	static bool Create2Da () { return UIRoot.list.Count == 0; }
+	static bool Create2Da () { return UIRoot.list.Count == 0 || UICamera.list.size == 0 || !UICamera.list[0].camera.isOrthoGraphic; }
 
 	[MenuItem("NGUI/Create/3D UI", false, 6)]
 	[MenuItem("Assets/NGUI/Create 3D UI", false, 1)]
@@ -230,7 +231,7 @@ static public class NGUIMenu
 
 	[MenuItem("NGUI/Create/3D UI", true)]
 	[MenuItem("Assets/NGUI/Create 3D UI", true, 1)]
-	static bool Create3Da () { return UIRoot.list.Count == 0; }
+	static bool Create3Da () { return UIRoot.list.Count == 0 || UICamera.list.size == 0 || UICamera.list[0].camera.isOrthoGraphic; }
 
 #endregion
 #region Attach

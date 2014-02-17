@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -40,7 +40,8 @@ public class UIDragScrollView : MonoBehaviour
 			scrollView = draggablePanel;
 			draggablePanel = null;
 		}
-		FindScrollView();
+
+		if (mAutoFind || mScroll == null) FindScrollView();
 	}
 
 	/// <summary>

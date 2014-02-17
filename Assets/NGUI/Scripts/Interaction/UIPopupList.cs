@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -480,6 +480,7 @@ public class UIPopupList : UIWidgetContainer
 		if (enabled && NGUITools.GetActive(gameObject) && handleEvents)
 		{
 			int index = mLabelList.IndexOf(mHighlightedLabel);
+			if (index == -1) index = 0;
 
 			if (key == KeyCode.UpArrow)
 			{
@@ -689,7 +690,8 @@ public class UIPopupList : UIWidgetContainer
 				listener.parameter = s;
 
 				// Move the selection here if this is the right label
-				if (mSelectedItem == s) Highlight(lbl, true);
+				if (mSelectedItem == s || (i == 0 && string.IsNullOrEmpty(mSelectedItem)))
+					Highlight(lbl, true);
 
 				// Add this label to the list
 				mLabelList.Add(lbl);

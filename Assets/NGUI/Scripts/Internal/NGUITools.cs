@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -189,18 +189,23 @@ static public class NGUITools
 	{
 		int layerMask = 1 << layer;
 
+		Camera cam;
+
 		for (int i = 0; i < UICamera.list.size; ++i)
 		{
-			Camera uc = UICamera.list.buffer[i].cachedCamera;
-			if ((uc != null) && (uc.cullingMask & layerMask) != 0)
-				return uc;
+			cam = UICamera.list.buffer[i].cachedCamera;
+			if ((cam != null) && (cam.cullingMask & layerMask) != 0)
+				return cam;
 		}
+
+		cam = Camera.main;
+		if (cam != null && (cam.cullingMask & layerMask) != 0) return cam;
 
 		Camera[] cameras = NGUITools.FindActive<Camera>();
 
 		for (int i = 0, imax = cameras.Length; i < imax; ++i)
 		{
-			Camera cam = cameras[i];
+			cam = cameras[i];
 			if ((cam.cullingMask & layerMask) != 0)
 				return cam;
 		}
@@ -704,11 +709,22 @@ static public class NGUITools
 
 		if (trans != null)
 		{
+			// Find the root object
 			while (trans.parent != null) trans = trans.parent;
-			trans.parent = panel.transform;
-			trans.localScale = Vector3.one;
-			trans.localPosition = Vector3.zero;
-			SetChildLayer(panel.cachedTransform, panel.cachedGameObject.layer);
+
+			if (NGUITools.IsChild(trans, panel.transform))
+			{
+				// Odd hierarchy -- can't reparent
+				panel = trans.gameObject.AddComponent<UIPanel>();
+			}
+			else
+			{
+				// Reparent this root object to be a child of the panel
+				trans.parent = panel.transform;
+				trans.localScale = Vector3.one;
+				trans.localPosition = Vector3.zero;
+				SetChildLayer(panel.cachedTransform, panel.cachedGameObject.layer);
+			}
 		}
 		return panel;
 	}
@@ -805,8 +821,11 @@ static public class NGUITools
 	static public T FindInParents<T> (GameObject go) where T : Component
 	{
 		if (go == null) return null;
+#if UNITY_FLASH
 		object comp = go.GetComponent<T>();
-
+#else
+		T comp = go.GetComponent<T>();
+#endif
 		if (comp == null)
 		{
 			Transform t = go.transform.parent;
@@ -817,7 +836,11 @@ static public class NGUITools
 				t = t.parent;
 			}
 		}
+#if UNITY_FLASH
 		return (T)comp;
+#else
+		return comp;
+#endif
 	}
 
 	/// <summary>
@@ -827,8 +850,11 @@ static public class NGUITools
 	static public T FindInParents<T> (Transform trans) where T : Component
 	{
 		if (trans == null) return null;
+#if UNITY_FLASH
 		object comp = trans.GetComponent<T>();
-
+#else
+		T comp = trans.GetComponent<T>();
+#endif
 		if (comp == null)
 		{
 			Transform t = trans.transform.parent;
@@ -839,7 +865,11 @@ static public class NGUITools
 				t = t.parent;
 			}
 		}
+#if UNITY_FLASH
 		return (T)comp;
+#else
+		return comp;
+#endif
 	}
 
 	/// <summary>

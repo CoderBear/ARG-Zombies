@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 #if UNITY_EDITOR || (!UNITY_FLASH && !NETFX_CORE)
@@ -115,7 +115,8 @@ public class EventDelegate
 			Callback callback = obj as Callback;
 #if REFLECTION_SUPPORT
 			if (callback.Equals(mCachedCallback)) return true;
-			return (mTarget == (MonoBehaviour)callback.Target && string.Equals(mMethodName, GetMethodName(callback)));
+			MonoBehaviour mb = callback.Target as MonoBehaviour;
+			return (mTarget == mb && string.Equals(mMethodName, GetMethodName(callback)));
 #elif UNITY_FLASH
 			return (callback == mCachedCallback);
 #else
@@ -146,7 +147,7 @@ public class EventDelegate
 	Callback Get ()
 	{
 #if REFLECTION_SUPPORT
-		if (!mRawDelegate && (mCachedCallback == null || (MonoBehaviour)mCachedCallback.Target != mTarget || GetMethodName(mCachedCallback) != mMethodName))
+		if (!mRawDelegate && (mCachedCallback == null || (mCachedCallback.Target as MonoBehaviour) != mTarget || GetMethodName(mCachedCallback) != mMethodName))
 		{
 			if (mTarget != null && !string.IsNullOrEmpty(mMethodName))
 			{
@@ -290,6 +291,9 @@ public class EventDelegate
 				if (del != null)
 				{
 					del.Execute();
+
+					if (i >= list.Count) break;
+					if (list[i] != del) continue;
 
 					if (del.oneShot)
 					{
