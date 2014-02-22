@@ -1,0 +1,100 @@
+{"frames": {
+
+"ACCEPT.png":
+{
+	"frame": {"x":1855,"y":305,"w":123,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
+	"sourceSize": {"w":123,"h":55}
+},
+"ALERT!.png":
+{
+	"frame": {"x":1349,"y":2,"w":504,"h":357},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":1,"w":504,"h":357},
+	"sourceSize": {"w":516,"h":369}
+},
+"ALERT.png":
+{
+	"frame": {"x":684,"y":2,"w":663,"h":363},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":663,"h":363},
+	"sourceSize": {"w":663,"h":363}
+},
+"BACK.png":
+{
+	"frame": {"x":1855,"y":248,"w":123,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
+	"sourceSize": {"w":123,"h":55}
+},
+"BLANK.png":
+{
+	"frame": {"x":1855,"y":191,"w":123,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
+	"sourceSize": {"w":123,"h":55}
+},
+"EXPLORE.png":
+{
+	"frame": {"x":1855,"y":134,"w":123,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
+	"sourceSize": {"w":123,"h":55}
+},
+"FIGHT.png":
+{
+	"frame": {"x":1855,"y":2,"w":138,"h":73},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":138,"h":73},
+	"sourceSize": {"w":138,"h":73}
+},
+"RUNAWAY.png":
+{
+	"frame": {"x":1855,"y":77,"w":123,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
+	"sourceSize": {"w":123,"h":55}
+},
+"alertdown.png":
+{
+	"frame": {"x":684,"y":367,"w":490,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":127,"w":490,"h":187},
+	"sourceSize": {"w":500,"h":387}
+},
+"alertup.png":
+{
+	"frame": {"x":1349,"y":361,"w":494,"h":187},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":127,"w":494,"h":187},
+	"sourceSize": {"w":500,"h":387}
+},
+"survival.png":
+{
+	"frame": {"x":2,"y":2,"w":680,"h":547},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":680,"h":547},
+	"sourceSize": {"w":680,"h":547}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "gameCombatUI.png",
+	"format": "RGBA8888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e2023081aea2d4b28c193895444feb3f:dcc09811752ff9086d7a4bce4ab21adb:3993d18daac801890551d6944bd56fc2$"
+}
+}
