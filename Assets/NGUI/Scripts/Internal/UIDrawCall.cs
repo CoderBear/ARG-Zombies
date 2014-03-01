@@ -149,7 +149,7 @@ public class UIDrawCall : MonoBehaviour
 				if (mRenderer != null)
 				{
 					mRenderer.enabled = value;
-					UnityEditor.EditorUtility.SetDirty(gameObject);
+					NGUITools.SetDirty(gameObject);
 				}
 			}
 		}
@@ -404,6 +404,9 @@ public class UIDrawCall : MonoBehaviour
 				if (!trim && panel.renderQueue != UIPanel.RenderQueue.Automatic)
 					trim = (mMesh == null || mMesh.vertexCount != verts.buffer.Length);
 
+				// If the number of vertices in the buffer is less than half of the full buffer, trim it
+				if (!trim && (verts.size << 1) < verts.buffer.Length) trim = true;
+
 				mTriangles = (verts.size >> 1);
 
 				if (trim || verts.buffer.Length > 65000)
@@ -640,16 +643,17 @@ public class UIDrawCall : MonoBehaviour
 		// If we're in the editor, create the game object with hide flags set right away
 		GameObject go = UnityEditor.EditorUtility.CreateGameObjectWithHideFlags(name,
  #if SHOW_HIDDEN_OBJECTS
-			HideFlags.DontSave | HideFlags.NotEditable);
+			HideFlags.DontSave | HideFlags.NotEditable, typeof(UIDrawCall));
  #else
-			HideFlags.HideAndDontSave);
+			HideFlags.HideAndDontSave, typeof(UIDrawCall));
  #endif
+		UIDrawCall newDC = go.GetComponent<UIDrawCall>();
 #else
 		GameObject go = new GameObject(name);
 		DontDestroyOnLoad(go);
+		UIDrawCall newDC = go.AddComponent<UIDrawCall>();
 #endif
 		// Create the draw call
-		UIDrawCall newDC = go.AddComponent<UIDrawCall>();
 		mActiveList.Add(newDC);
 		return newDC;
 	}

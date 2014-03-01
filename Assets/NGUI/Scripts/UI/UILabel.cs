@@ -10,6 +10,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Alignment = NGUIText.Alignment;
 
 [ExecuteInEditMode]
 [AddComponentMenu("NGUI/UI/NGUI Label")]
@@ -52,6 +53,7 @@ public class UILabel : UIWidget
 	[HideInInspector][SerializeField] string mText = "";
 	[HideInInspector][SerializeField] int mFontSize = 16;
 	[HideInInspector][SerializeField] FontStyle mFontStyle = FontStyle.Normal;
+	[HideInInspector][SerializeField] Alignment mAlignment = Alignment.Automatic;
 	[HideInInspector][SerializeField] bool mEncoding = true;
 	[HideInInspector][SerializeField] int mMaxLineCount = 0; // 0 denotes unlimited
 	[HideInInspector][SerializeField] Effect mEffectStyle = Effect.None;
@@ -241,6 +243,8 @@ public class UILabel : UIWidget
 		}
 		set
 		{
+			if (mText == value) return;
+
 			if (string.IsNullOrEmpty(value))
 			{
 				if (!string.IsNullOrEmpty(mText))
@@ -256,6 +260,8 @@ public class UILabel : UIWidget
 				shouldBeProcessed = true;
 				ProcessAndRequest();
 			}
+
+			if (autoResizeBoxCollider) ResizeCollider();
 		}
 	}
 
@@ -303,6 +309,27 @@ public class UILabel : UIWidget
 			if (mFontStyle != value)
 			{
 				mFontStyle = value;
+				shouldBeProcessed = true;
+				ProcessAndRequest();
+			}
+		}
+	}
+
+	/// <summary>
+	/// Text alignment option.
+	/// </summary>
+
+	public Alignment alignment
+	{
+		get
+		{
+			return mAlignment;
+		}
+		set
+		{
+			if (mAlignment != value)
+			{
+				mAlignment = value;
 				shouldBeProcessed = true;
 				ProcessAndRequest();
 			}
@@ -738,6 +765,9 @@ public class UILabel : UIWidget
 	float pixelSize { get { return (mFont != null) ? mFont.pixelSize : 1f; } }
 
 #if DYNAMIC_FONT
+	static BetterList<UILabel> mList = new BetterList<UILabel>();
+	static Dictionary<Font, int> mFontUsage = new Dictionary<Font, int>();
+
 	/// <summary>
 	/// Register the font texture change listener.
 	/// </summary>
@@ -745,6 +775,7 @@ public class UILabel : UIWidget
 	protected override void OnInit ()
 	{
 		base.OnInit();
+		mList.Add(this);
 		SetActiveFont(trueTypeFont);
 	}
 
@@ -755,6 +786,7 @@ public class UILabel : UIWidget
 	protected override void OnDisable ()
 	{
 		SetActiveFont(null);
+		mList.Remove(this);
 		base.OnDisable();
 	}
 
@@ -767,12 +799,35 @@ public class UILabel : UIWidget
 		if (mActiveTTF != fnt)
 		{
 			if (mActiveTTF != null)
-				mActiveTTF.textureRebuildCallback -= FontTextureChanged;
+			{
+				int usage;
+
+				if (mFontUsage.TryGetValue(mActiveTTF, out usage))
+				{
+					usage = Mathf.Max(0, --usage);
+
+					if (usage == 0)
+					{
+						mActiveTTF.textureRebuildCallback = null;
+						mFontUsage.Remove(mActiveTTF);
+					}
+					else mFontUsage[mActiveTTF] = usage;
+				}
+				else mActiveTTF.textureRebuildCallback = null;
+			}
 
 			mActiveTTF = fnt;
 
 			if (mActiveTTF != null)
-				mActiveTTF.textureRebuildCallback += FontTextureChanged;
+			{
+				int usage = 0;
+
+				// Font hasn't been used yet? Register a change delegate callback
+				if (!mFontUsage.TryGetValue(mActiveTTF, out usage))
+					mActiveTTF.textureRebuildCallback = OnFontTextureChanged;
+
+				mFontUsage[mActiveTTF] = ++usage;
+			}
 		}
 	}
 
@@ -780,16 +835,27 @@ public class UILabel : UIWidget
 	/// Notification called when the Unity's font's texture gets rebuilt.
 	/// Unity's font has a nice tendency to simply discard other characters when the texture's dimensions change.
 	/// By requesting them inside the notification callback, we immediately force them back in.
+	/// Originally I was subscribing each label to the font individually, but as it turned out
+	/// mono's delegate system causes an insane amount of memory allocations when += or -= to a delegate.
+	/// So... queue yet another work-around.
 	/// </summary>
 
-	void FontTextureChanged ()
+	static void OnFontTextureChanged ()
 	{
-		Font fnt = trueTypeFont;
-
-		if (fnt != null)
+		for (int i = 0; i < mList.size; ++i)
 		{
-			fnt.RequestCharactersInTexture(mText, mPrintedSize, mFontStyle);
-			MarkAsChanged();
+			UILabel lbl = mList[i];
+
+			if (lbl != null)
+			{
+				Font fnt = lbl.trueTypeFont;
+
+				if (fnt != null)
+				{
+					fnt.RequestCharactersInTexture(lbl.mText, lbl.mPrintedSize, lbl.mFontStyle);
+					lbl.MarkAsChanged();
+				}
+			}
 		}
 	}
 #endif
@@ -1238,7 +1304,7 @@ public class UILabel : UIWidget
 	{
 		if (characterIndex != -1 && characterIndex < mText.Length)
 		{
-			int linkStart = mText.LastIndexOf("[url=", characterIndex, characterIndex);
+			int linkStart = mText.LastIndexOf("[url=", characterIndex);
 
 			if (linkStart != -1)
 			{
@@ -1490,9 +1556,7 @@ public class UILabel : UIWidget
 	public void SetCurrentProgress ()
 	{
 		if (UIProgressBar.current != null)
-		{
 			text = UIProgressBar.current.value.ToString("F");
-		}
 	}
 
 	/// <summary>
@@ -1503,9 +1567,7 @@ public class UILabel : UIWidget
 	public void SetCurrentPercent ()
 	{
 		if (UIProgressBar.current != null)
-		{
 			text = Mathf.RoundToInt(UIProgressBar.current.value * 100f) + "%";
-		}
 	}
 
 	/// <summary>
@@ -1518,7 +1580,7 @@ public class UILabel : UIWidget
 		if (UIPopupList.current != null)
 		{
 			text = UIPopupList.current.isLocalized ?
-				Localization.Localize(UIPopupList.current.value) :
+				Localization.Get(UIPopupList.current.value) :
 				UIPopupList.current.value;
 		}
 	}
@@ -1603,17 +1665,21 @@ public class UILabel : UIWidget
 		}
 #endif
 
-		Pivot p = pivot;
+		if (alignment == Alignment.Automatic)
+		{
+			Pivot p = pivot;
 
-		if (p == Pivot.Left || p == Pivot.TopLeft || p == Pivot.BottomLeft)
-		{
-			NGUIText.alignment = TextAlignment.Left;
+			if (p == Pivot.Left || p == Pivot.TopLeft || p == Pivot.BottomLeft)
+			{
+				NGUIText.alignment = Alignment.Left;
+			}
+			else if (p == Pivot.Right || p == Pivot.TopRight || p == Pivot.BottomRight)
+			{
+				NGUIText.alignment = Alignment.Right;
+			}
+			else NGUIText.alignment = Alignment.Center;
 		}
-		else if (p == Pivot.Right || p == Pivot.TopRight || p == Pivot.BottomRight)
-		{
-			NGUIText.alignment = TextAlignment.Right;
-		}
-		else NGUIText.alignment = TextAlignment.Center;
+		else NGUIText.alignment = alignment;
 
 		NGUIText.Update();
 	}

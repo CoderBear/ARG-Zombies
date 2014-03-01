@@ -141,11 +141,12 @@ public class UIPanel : UIRect
 	static BetterList<Color32> mCols = new BetterList<Color32>();
 
 	Camera mCam;
-	Vector2 mClipOffset = Vector2.zero;
+	[SerializeField] Vector2 mClipOffset = Vector2.zero;
 
 	float mCullTime = 0f;
 	float mUpdateTime = 0f;
 	int mMatrixFrame = -1;
+	int mAlphaFrameID = 0;
 	int mLayer = -1;
 
 	// Values used for visibility checks
@@ -192,6 +193,7 @@ public class UIPanel : UIRect
 
 			if (mAlpha != val)
 			{
+				mAlphaFrameID = -1;
 				mResized = true;
 				mAlpha = val;
 				SetDirty();
@@ -215,7 +217,7 @@ public class UIPanel : UIRect
 			{
 				mDepth = value;
 #if UNITY_EDITOR
-				UnityEditor.EditorUtility.SetDirty(this);
+				NGUITools.SetDirty(this);
 #endif
 				list.Sort(CompareFunc);
 			}
@@ -368,15 +370,18 @@ public class UIPanel : UIRect
 		}
 		set
 		{
-			if (Mathf.Abs(mClipRange.x - value.x) > 0.001f ||
-				Mathf.Abs(mClipRange.y - value.y) > 0.001f ||
-				Mathf.Abs(mClipRange.z - value.z) > 0.001f ||
-				Mathf.Abs(mClipRange.w - value.w) > 0.001f)
+			if (Mathf.Abs(mClipRange.x - value.x) > 0.49f ||
+				Mathf.Abs(mClipRange.y - value.y) > 0.49f ||
+				Mathf.Abs(mClipRange.z - value.z) > 0.49f ||
+				Mathf.Abs(mClipRange.w - value.w) > 0.49f)
 			{
 				mResized = true;
 				mCullTime = (mCullTime == 0f) ? 0.001f : RealTime.time + 0.15f;
 				mClipRange = value;
 				mMatrixFrame = -1;
+
+				UIScrollView sv = GetComponent<UIScrollView>();
+				if (sv != null) sv.UpdatePosition();
 #if UNITY_EDITOR
 				if (!Application.isPlaying) UpdateDrawCalls();
 #endif
@@ -385,7 +390,7 @@ public class UIPanel : UIRect
 	}
 
 	/// <summary>
-	/// Final clipping region after the offset has been taken into consideration.
+	/// Final clipping region after the offset has been taken into consideration. XY = center, ZW = size.
 	/// </summary>
 
 	public Vector4 finalClipRegion
@@ -563,7 +568,15 @@ public class UIPanel : UIRect
 		return base.GetSides(relativeTo);
 	}
 
-	int mAlphaFrameID = 0;
+	/// <summary>
+	/// Invalidating the panel should reset its alpha.
+	/// </summary>
+
+	public override void Invalidate (bool includeChildren)
+	{
+		mAlphaFrameID = -1;
+		base.Invalidate(includeChildren);
+	}
 
 	/// <summary>
 	/// Widget's final alpha, after taking the panel's alpha into account.
@@ -715,6 +728,9 @@ public class UIPanel : UIRect
 		}
 
 		mRebuild = true;
+		mAlphaFrameID = -1;
+		mMatrixFrame = -1;
+
 		list.Add(this);
 		list.Sort(CompareFunc);
 	}
@@ -730,8 +746,12 @@ public class UIPanel : UIRect
 			UIDrawCall dc = drawCalls.buffer[i];
 			if (dc != null) UIDrawCall.Destroy(dc);
 		}
+		
 		drawCalls.Clear();
 		list.Remove(this);
+
+		mAlphaFrameID = -1;
+		mMatrixFrame = -1;
 		
 		if (list.size == 0)
 		{

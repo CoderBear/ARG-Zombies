@@ -97,6 +97,7 @@
      <Compile Include="Assets\NGUI\Scripts\Editor\UIImageButtonInspector.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIInputEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UILabelInspector.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Editor\UILocalizeEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIPanelInspector.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIPanelTool.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIPlayAnimationEditor.cs" />
@@ -233,6 +234,8 @@
      <Compile Include="Assets\TK2DROOT\tk2dUI\Editor\Core\tk2dUIMaskEditor.cs" />
      <Compile Include="Assets\TK2DROOT\tk2dUI\Editor\Core\tk2dUIMethodBindingHelper.cs" />
      <Compile Include="Assets\TK2DROOT\tk2dUI\Editor\Core\tk2dUISpriteAnimatorEditor.cs" />
+     <Compile Include="Assets\UnityRandom\Editor\UnityRandomEditorDraw.cs" />
+     <Compile Include="Assets\UnityRandom\Editor\UnityRandomEditorWindow.cs" />
      <Compile Include="Assets\iTween\PlayMaker\Editor\iTweenMoveToActionEditor.cs" />
      <Compile Include="Assets\sqlitekit\Editor\SQLiteKitEditor.cs" />
      <Compile Include="Assets\sqlitekit\Editor\SQLiteKitEditorSettings.cs" />
@@ -293,8 +296,10 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
+     <None Include="Assets\UnityRandom\Samples\sampling.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\PlayMaker\Versions\readme.txt" />
+     <None Include="Assets\NGUI\Resources\Localization.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\NGUI Atlases\Resources\gameCombatUI.txt" />
  <Reference Include="PlayMaker">

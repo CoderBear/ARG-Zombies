@@ -16,6 +16,15 @@ using System.Text;
 
 static public class NGUIText
 {
+	public enum Alignment
+	{
+		Automatic,
+		Left,
+		Center,
+		Right,
+		Justified,
+	}
+
 	public enum SymbolStyle
 	{
 		None,
@@ -49,7 +58,7 @@ static public class NGUIText
 	static public float fontScale = 1f;
 	static public float pixelDensity = 1f;
 	static public FontStyle fontStyle = FontStyle.Normal;
-	static public TextAlignment alignment = TextAlignment.Left;
+	static public Alignment alignment = Alignment.Left;
 	static public Color tint = Color.white;
 
 	static public int rectWidth = 1000000;
@@ -401,7 +410,7 @@ static public class NGUIText
 
 		if (text[index + 1] == 'u' && text[index + 2] == 'r' && text[index + 3] == 'l' && text[index + 4] == '=')
 		{
-			int closingBracket = text.IndexOf(']');
+			int closingBracket = text.IndexOf(']', index + 4);
 			
 			if (closingBracket != -1)
 			{
@@ -470,41 +479,92 @@ static public class NGUIText
 	/// Align the vertices to be right or center-aligned given the line width specified by NGUIText.lineWidth.
 	/// </summary>
 
-	static public void Align (BetterList<Vector3> verts, int indexOffset, float offset)
+	static public void Align (BetterList<Vector3> verts, int indexOffset, float printedWidth)
 	{
-		if (alignment != TextAlignment.Left)
+		switch (alignment)
 		{
-			float padding = 0f;
-
-			if (alignment == TextAlignment.Right)
+			case Alignment.Right:
 			{
-				padding = rectWidth - offset;
-				if (padding < 0f) padding = 0f;
+				float padding = rectWidth - printedWidth;
+				if (padding < 0f) return;
+#if UNITY_FLASH
+				for (int i = indexOffset; i < verts.size; ++i)
+					verts.buffer[i] = verts.buffer[i] + new Vector3(padding, 0f);
+#else
+				for (int i = indexOffset; i < verts.size; ++i)
+					verts.buffer[i].x += padding;
+#endif
+				break;
 			}
-			else
+
+			case Alignment.Center:
 			{
-				// Centered alignment
-				padding = (rectWidth - offset) * 0.5f;
-				if (padding < 0f) padding = 0f;
+				float padding = (rectWidth - printedWidth) * 0.5f;
+				if (padding < 0f) return;
 
 				// Keep it pixel-perfect
-				int diff = Mathf.RoundToInt(rectWidth - offset);
+				int diff = Mathf.RoundToInt(rectWidth - printedWidth);
 				int intWidth = Mathf.RoundToInt(rectWidth);
 
 				bool oddDiff = (diff & 1) == 1;
 				bool oddWidth = (intWidth & 1) == 1;
 				if ((oddDiff && !oddWidth) || (!oddDiff && oddWidth))
-					padding += 0.5f / fontScale;
+					padding += 0.5f * fontScale;
+#if UNITY_FLASH
+				for (int i = indexOffset; i < verts.size; ++i)
+					verts.buffer[i] = verts.buffer[i] + new Vector3(padding, 0f);
+#else
+				for (int i = indexOffset; i < verts.size; ++i)
+					verts.buffer[i].x += padding;
+#endif
+				break;
 			}
 
-			for (int i = indexOffset; i < verts.size; ++i)
+			case Alignment.Justified:
 			{
+				// Printed text needs to reach at least 65% of the width in order to be justified
+				if (printedWidth < rectWidth * 0.65f) return;
+
+				// There must be some padding involved
+				float padding = (rectWidth - printedWidth) * 0.5f;
+				if (padding < 1f) return;
+
+				// There must be at least two characters
+				int chars = (verts.size - indexOffset) / 4;
+				if (chars < 1) return;
+
+				float progressPerChar = 1f / (chars - 1);
+				float scale = rectWidth / printedWidth;
+
+				for (int i = indexOffset + 4, charIndex = 1; i < verts.size; ++charIndex)
+				{
+					float x0 = verts.buffer[i].x;
+					float x1 = verts.buffer[i+2].x;
+					float w = x1 - x0;
+					float x0a = x0 * scale;
+					float x1a = x0a + w;
+					float x1b = x1 * scale;
+					float x0b = x1b - w;
+					float progress = charIndex * progressPerChar;
+
+					x0 = Mathf.Lerp(x0a, x0b, progress);
+					x1 = Mathf.Lerp(x1a, x1b, progress);
+					x0 = Mathf.Round(x0);
+					x1 = Mathf.Round(x1);
 #if UNITY_FLASH
-				verts.buffer[i] = verts.buffer[i] + new Vector3(padding, 0f);
+					verts.buffer[i] = verts.buffer[i] + new Vector3(x0, 0f);
+					verts.buffer[i+1] = verts.buffer[i+1] + new Vector3(x0, 0f);
+					verts.buffer[i+2] = verts.buffer[i+2] + new Vector3(x1, 0f);
+					verts.buffer[i+3] = verts.buffer[i+3] + new Vector3(x1, 0f);
+					i += 4;
 #else
-				verts.buffer[i] = verts.buffer[i];
-				verts.buffer[i].x += padding;
+					verts.buffer[i++].x = x0;
+					verts.buffer[i++].x = x0;
+					verts.buffer[i++].x = x1;
+					verts.buffer[i++].x = x1;
 #endif
+				}
+				break;
 			}
 		}
 	}
@@ -679,7 +739,7 @@ static public class NGUIText
 			}
 		}
 
-		float remainingWidth = NGUIText.rectWidth;
+		float remainingWidth = rectWidth;
 		int currentCharacterIndex = mSizes.size;
 
 		while (currentCharacterIndex > 0 && remainingWidth > 0)
@@ -764,15 +824,6 @@ static public class NGUIText
 				continue;
 			}
 
-			// If this marks the end of a word, add it to the final string.
-			if (ch == ' ' && prev != ' ' && start < offset)
-			{
-				sb.Append(text.Substring(start, offset - start + 1));
-				lineIsEmpty = false;
-				start = offset + 1;
-				prev = ch;
-			}
-
 			// When encoded symbols such as [RrGgBb] or [-] are encountered, skip past them
 			if (encoding && ParseSymbol(text, ref offset)) { --offset; continue; }
 
@@ -793,6 +844,20 @@ static public class NGUIText
 
 			// Reduce the width
 			remainingWidth -= glyphWidth;
+
+			// If this marks the end of a word, add it to the final string.
+			if (ch == ' ' && prev != ' ' && start < offset)
+			{
+				int end = offset - start + 1;
+
+				// Last word on the last line should not include an invisible character
+				if (lineCount == maxLineCount && remainingWidth <= 0f && offset < textLength && text[offset] <= ' ') --end;
+
+				sb.Append(text.Substring(start, end));
+				lineIsEmpty = false;
+				start = offset + 1;
+				prev = ch;
+			}
 
 			// Doesn't fit?
 			if (remainingWidth < 0f)
@@ -921,7 +986,7 @@ static public class NGUIText
 			{
 				if (x > maxX) maxX = x;
 
-				if (alignment != TextAlignment.Left)
+				if (alignment != Alignment.Left)
 				{
 					Align(verts, indexOffset, x - finalSpacingX);
 					indexOffset = verts.size;
@@ -970,7 +1035,7 @@ static public class NGUIText
 				{
 					if (x == 0f) return;
 
-					if (alignment != TextAlignment.Left && indexOffset < verts.size)
+					if (alignment != Alignment.Left && indexOffset < verts.size)
 					{
 						Align(verts, indexOffset, x - finalSpacingX);
 						indexOffset = verts.size;
@@ -1065,7 +1130,7 @@ static public class NGUIText
 				{
 					if (x == 0f) return;
 
-					if (alignment != TextAlignment.Left && indexOffset < verts.size)
+					if (alignment != Alignment.Left && indexOffset < verts.size)
 					{
 						Align(verts, indexOffset, x - finalSpacingX);
 						indexOffset = verts.size;
@@ -1200,10 +1265,11 @@ static public class NGUIText
 					}
 					else // Italic
 					{
-						verts.Add(new Vector3(v0x, v0y));
-						verts.Add(new Vector3(v0x + fontSize * 0.2f, v1y));
-						verts.Add(new Vector3(v1x + fontSize * 0.2f, v1y));
-						verts.Add(new Vector3(v1x, v0y));
+						float slant = fontSize * 0.1f * ((v1y - v0y) / fontSize);
+						verts.Add(new Vector3(v0x - slant, v0y));
+						verts.Add(new Vector3(v0x + slant, v1y));
+						verts.Add(new Vector3(v1x + slant, v1y));
+						verts.Add(new Vector3(v1x - slant, v0y));
 					}
 				}
 				else // Bold
@@ -1213,10 +1279,11 @@ static public class NGUIText
 						float a = mBoldOffset[j * 2];
 						float b = mBoldOffset[j * 2 + 1];
 
-						verts.Add(new Vector3(v0x + a, v0y + b));
-						verts.Add(new Vector3(v0x + (italic ? fontSize * 0.2f : 0) + a, v1y + b));
-						verts.Add(new Vector3(v1x + (italic ? fontSize * 0.2f : 0) + a, v1y + b));
-						verts.Add(new Vector3(v1x + a, v0y + b));
+						float slant = a + (italic ? fontSize * 0.1f * ((v1y - v0y) / fontSize) : 0f);
+						verts.Add(new Vector3(v0x - slant, v0y + b));
+						verts.Add(new Vector3(v0x + slant, v1y + b));
+						verts.Add(new Vector3(v1x + slant, v1y + b));
+						verts.Add(new Vector3(v1x - slant, v0y + b));
 					}
 				}
 
@@ -1280,7 +1347,7 @@ static public class NGUIText
 			}
 		}
 
-		if (alignment != TextAlignment.Left && indexOffset < verts.size)
+		if (alignment != Alignment.Left && indexOffset < verts.size)
 		{
 			Align(verts, indexOffset, x - finalSpacingX);
 			indexOffset = verts.size;
@@ -1318,7 +1385,7 @@ static public class NGUIText
 			{
 				if (x > maxX) maxX = x;
 
-				if (alignment != TextAlignment.Left)
+				if (alignment != Alignment.Left)
 				{
 					Align(verts, indexOffset, x - finalSpacingX);
 					indexOffset = verts.size;
@@ -1356,7 +1423,7 @@ static public class NGUIText
 					{
 						if (x == 0f) return;
 
-						if (alignment != TextAlignment.Left && indexOffset < verts.size)
+						if (alignment != Alignment.Left && indexOffset < verts.size)
 						{
 							Align(verts, indexOffset, x - finalSpacingX);
 							indexOffset = verts.size;
@@ -1380,7 +1447,7 @@ static public class NGUIText
 				{
 					if (x == 0f) return;
 
-					if (alignment != TextAlignment.Left && indexOffset < verts.size)
+					if (alignment != Alignment.Left && indexOffset < verts.size)
 					{
 						Align(verts, indexOffset, x - finalSpacingX);
 						indexOffset = verts.size;
@@ -1398,7 +1465,7 @@ static public class NGUIText
 			}
 		}
 
-		if (alignment != TextAlignment.Left && indexOffset < verts.size)
+		if (alignment != Alignment.Left && indexOffset < verts.size)
 			Align(verts, indexOffset, x - finalSpacingX);
 	}
 
@@ -1451,8 +1518,7 @@ static public class NGUIText
 				// Align the caret
 				if (caret != null && caretSet)
 				{
-					if (NGUIText.alignment != TextAlignment.Left)
-						NGUIText.Align(caret, caretOffset, x - finalSpacingX);
+					if (alignment != Alignment.Left) Align(caret, caretOffset, x - finalSpacingX);
 					caret = null;
 				}
 
@@ -1475,9 +1541,9 @@ static public class NGUIText
 					}
 
 					// Align the highlight
-					if (NGUIText.alignment != TextAlignment.Left && highlightOffset < highlight.size)
+					if (alignment != Alignment.Left && highlightOffset < highlight.size)
 					{
-						NGUIText.Align(highlight, highlightOffset, x - finalSpacingX);
+						Align(highlight, highlightOffset, x - finalSpacingX);
 						highlightOffset = highlight.size;
 					}
 				}
@@ -1520,8 +1586,7 @@ static public class NGUIText
 					// Align the caret
 					if (caret != null && caretSet)
 					{
-						if (NGUIText.alignment != TextAlignment.Left)
-							NGUIText.Align(caret, caretOffset, x - finalSpacingX);
+						if (alignment != Alignment.Left) Align(caret, caretOffset, x - finalSpacingX);
 						caret = null;
 					}
 
@@ -1544,9 +1609,10 @@ static public class NGUIText
 						}
 
 						// Align the highlight
-						if (NGUIText.alignment != TextAlignment.Left && highlightOffset < highlight.size)
+						if (alignment != Alignment.Left && highlightOffset < highlight.size)
 						{
-							NGUIText.Align(highlight, highlightOffset, x - finalSpacingX);
+							Debug.Log("Aligning");
+							Align(highlight, highlightOffset, x - finalSpacingX);
 							highlightOffset = highlight.size;
 						}
 					}
@@ -1602,8 +1668,8 @@ static public class NGUIText
 				caret.Add(new Vector3(x + 1f, -y - fs));
 			}
 
-			if (NGUIText.alignment != TextAlignment.Left)
-				NGUIText.Align(caret, caretOffset, x - finalSpacingX);
+			if (alignment != Alignment.Left)
+				Align(caret, caretOffset, x - finalSpacingX);
 		}
 
 		// Close the selection
@@ -1625,8 +1691,8 @@ static public class NGUIText
 			}
 
 			// Align the highlight
-			if (NGUIText.alignment != TextAlignment.Left && highlightOffset < highlight.size)
-				NGUIText.Align(highlight, highlightOffset, x - finalSpacingX);
+			if (alignment != Alignment.Left && highlightOffset < highlight.size)
+				Align(highlight, highlightOffset, x - finalSpacingX);
 		}
 	}
 }

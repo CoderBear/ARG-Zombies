@@ -167,29 +167,32 @@ public class UIPanelInspector : UIRectEditor
 
 			case EventType.MouseDown:
 			{
-				mStartMouse = e.mousePosition;
-				mAllowSelection = true;
-
-				if (e.button == 1)
+				if (actionUnderMouse != UIWidgetInspector.Action.None)
 				{
-					if (e.modifiers == 0)
+					mStartMouse = e.mousePosition;
+					mAllowSelection = true;
+
+					if (e.button == 1)
 					{
+						if (e.modifiers == 0)
+						{
+							GUIUtility.hotControl = GUIUtility.keyboardControl = id;
+							e.Use();
+						}
+					}
+					else if (e.button == 0 && actionUnderMouse != UIWidgetInspector.Action.None &&
+						UIWidgetInspector.Raycast(handles, out mStartDrag))
+					{
+						mWorldPos = t.position;
+						mLocalPos = t.localPosition;
+						mStartRot = t.localRotation.eulerAngles;
+						mStartDir = mStartDrag - t.position;
+						mStartCR = mPanel.baseClipRegion;
+						mDragPivot = pivotUnderMouse;
+						mActionUnderMouse = actionUnderMouse;
 						GUIUtility.hotControl = GUIUtility.keyboardControl = id;
 						e.Use();
 					}
-				}
-				else if (e.button == 0 && actionUnderMouse != UIWidgetInspector.Action.None &&
-					UIWidgetInspector.Raycast(handles, out mStartDrag))
-				{
-					mWorldPos = t.position;
-					mLocalPos = t.localPosition;
-					mStartRot = t.localRotation.eulerAngles;
-					mStartDir = mStartDrag - t.position;
-					mStartCR = mPanel.baseClipRegion;
-					mDragPivot = pivotUnderMouse;
-					mActionUnderMouse = actionUnderMouse;
-					GUIUtility.hotControl = GUIUtility.keyboardControl = id;
-					e.Use();
 				}
 			}
 			break;
@@ -445,6 +448,22 @@ public class UIPanelInspector : UIRectEditor
 		if (mPanel.clipping != UIDrawCall.Clipping.None)
 		{
 			Vector4 range = mPanel.baseClipRegion;
+
+			// Scroll view is anchored, meaning it adjusts the offset itself, so we don't want it to be modifiable
+			EditorGUI.BeginDisabledGroup(mPanel.GetComponent<UIScrollView>() != null);
+			GUI.changed = false;
+			GUILayout.BeginHorizontal();
+			GUILayout.Space(80f);
+			Vector3 off = EditorGUILayout.Vector2Field("Offset", mPanel.clipOffset);
+			GUILayout.EndHorizontal();
+
+			if (GUI.changed)
+			{
+				NGUIEditorTools.RegisterUndo("Clipping Change", mPanel);
+				mPanel.clipOffset = off;
+				EditorUtility.SetDirty(mPanel);
+			}
+			EditorGUI.EndDisabledGroup();
 
 			GUILayout.BeginHorizontal();
 			GUILayout.Space(80f);

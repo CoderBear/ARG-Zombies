@@ -64,12 +64,6 @@ public class UIToggle : UIWidgetContainer
 	public bool optionCanBeNone = false;
 
 	/// <summary>
-	/// Whether the toggle starts active or not.
-	/// </summary>
-
-	public bool startsChecked = false;
-
-	/// <summary>
 	/// Callbacks triggered when the toggle's state changes.
 	/// </summary>
 
@@ -84,6 +78,7 @@ public class UIToggle : UIWidgetContainer
 	[HideInInspector][SerializeField] Animation checkAnimation;
 	[HideInInspector][SerializeField] GameObject eventReceiver;
 	[HideInInspector][SerializeField] string functionName = "OnActivate";
+	[HideInInspector][SerializeField] bool startsChecked = false; // Use 'startsActive' instead
 
 	bool mIsActive = true;
 	bool mStarted = false;
@@ -125,16 +120,19 @@ public class UIToggle : UIWidgetContainer
 
 	void Start ()
 	{
+		if (startsChecked)
+		{
+			startsChecked = false;
+			startsActive = true;
+#if UNITY_EDITOR
+			NGUITools.SetDirty(this);
+#endif
+		}
+
 #if UNITY_EDITOR
 		// Auto-upgrade
 		if (!Application.isPlaying)
 		{
-			if (startsChecked)
-			{
-				startsChecked = false;
-				startsActive = true;
-			}
-
 			if (checkSprite != null && activeSprite == null)
 			{
 				activeSprite = checkSprite;
