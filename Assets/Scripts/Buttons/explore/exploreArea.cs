@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+<<<<<<< HEAD
 using NPack;
 
 public class exploreArea : MonoBehaviour {
@@ -15,10 +16,19 @@ public class exploreArea : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rand = new MersenneTwister ();
+=======
+
+public class exploreArea : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+	
+>>>>>>> origin/master
 	}
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 	}
 
 	void OnClick() {
@@ -33,3 +43,8 @@ public class exploreArea : MonoBehaviour {
 		}
 	}
 }
+=======
+	
+	}
+}
+>>>>>>> origin/master

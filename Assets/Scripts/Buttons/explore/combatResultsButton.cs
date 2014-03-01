@@ -3,6 +3,7 @@ using System.Collections;
 
 public class combatResultsButton : MonoBehaviour {
 
+<<<<<<< HEAD
 	public GameObject goExplore, goResults;
 	public UILabel labelXP, labelMoney;
 
@@ -10,10 +11,16 @@ public class combatResultsButton : MonoBehaviour {
 	void Start () {
 		labelXP.text = "0";
 		labelMoney.text = "0";
+=======
+	// Use this for initialization
+	void Start () {
+	
+>>>>>>> origin/master
 	}
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 	}
 
 	void OnClick() {
@@ -21,3 +28,8 @@ public class combatResultsButton : MonoBehaviour {
 		goResults.SetActive (false);
 	}
 }
+=======
+	
+	}
+}
+>>>>>>> origin/master

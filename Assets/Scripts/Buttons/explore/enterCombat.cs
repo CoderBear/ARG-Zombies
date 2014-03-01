@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+<<<<<<< HEAD
 using NPack;
 
 public class enterCombat : MonoBehaviour {
@@ -12,10 +13,19 @@ public class enterCombat : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rand = new MersenneTwister ();
+=======
+
+public class enterCombat : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+	
+>>>>>>> origin/master
 	}
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 	}
 
 	void OnClick() {
@@ -29,3 +39,8 @@ public class enterCombat : MonoBehaviour {
 		}
 	}
 }
+=======
+	
+	}
+}
+>>>>>>> origin/master
