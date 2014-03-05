@@ -502,6 +502,7 @@
      <Compile Include="Assets\PlayMaker\Actions\Network\StartServer.cs" />
      <Compile Include="Assets\PlayMaker\Actions\NextFrameEvent.cs" />
      <Compile Include="Assets\PlayMaker\Actions\ObjectCompare.cs" />
+     <Compile Include="Assets\PlayMaker\Actions\PRNG\RollD20.cs" />
      <Compile Include="Assets\PlayMaker\Actions\PauseMovieTexture.cs" />
      <Compile Include="Assets\PlayMaker\Actions\PerSecond.cs" />
      <Compile Include="Assets\PlayMaker\Actions\PlayAnimation.cs" />
@@ -738,6 +739,7 @@
      <Compile Include="Assets\Scripts\GlobalConstants.cs" />
      <Compile Include="Assets\Scripts\Gui.cs" />
      <Compile Include="Assets\Scripts\LocationManager.cs" />
+     <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCamera.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCameraAnchor.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCameraUtil.cs" />

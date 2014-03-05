@@ -1,46 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
-<<<<<<< HEAD
 using NPack;
 
 public class enterCombat : MonoBehaviour {
 
 	private MersenneTwister rand;
-	private const int COMBAT_VALUE = 75; // how often an encounter can occur (MAX=100)% of the time.
+	private const int COMBAT_VALUE = 75; // how often an encounter can occur (MAX=100)% of the time
+	private const int DICE_VALUE_MIN = 1;  //The lowest value that can be rolled
+	private const int D20_VALUE_MAX = 20; // the highest roll on a d20
+	private const int D4_VALUE_MAX = 4; // the highest roll on a d4
 
 	public GameObject goCombat, goResult;
 
 	// Use this for initialization
 	void Start () {
 		rand = new MersenneTwister ();
-=======
-
-public class enterCombat : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
->>>>>>> origin/master
 	}
 	
 	// Update is called once per frame
 	void Update () {
-<<<<<<< HEAD
 	}
 
 	void OnClick() {
-		int fofValue = rand.Next (COMBAT_VALUE);
+		goCombat.SetActive(false);
+		goResult.SetActive(true);
 
-		if(fofValue > COMBAT_VALUE ){ // An enounter occurs
-			goCombat.SetActive(false);
-			goResult.SetActive(true);
-		} else { // the room is clear and player continues
-			Application.LoadLevel ("gameMap");
-		}
+//		DoAutoCombat ();
+	}
+
+	private void DoAutoCombat() {
+
 	}
 }
-=======
-	
-	}
-}
->>>>>>> origin/master

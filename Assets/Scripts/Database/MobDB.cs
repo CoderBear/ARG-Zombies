@@ -2,15 +2,7 @@
 using System.Collections;
 
 public class MobDB : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	}
 	
-	// Update is called once per frame
-	void Update () {
-	}
-
 	public int getHP(int id) {
 		int num = 0;
 		string dbFile = Application.persistentDataPath + "/mobDB.db";
