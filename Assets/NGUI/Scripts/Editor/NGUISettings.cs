@@ -282,6 +282,12 @@ public class NGUISettings
 		set { SetEnum("NGUI Font Style", value); }
 	}
 
+	static public Font dynamicFont
+	{
+		get { return Get<Font>("NGUI Dynamic Font", null); }
+		set { Set("NGUI Dynamic Font", value); }
+	}
+
 	static public UILabel.Overflow overflowStyle
 	{
 		get { return GetEnum("NGUI Overflow", UILabel.Overflow.ShrinkContent); }
@@ -340,6 +346,18 @@ public class NGUISettings
 	{
 		get { return GetBool("NGUI Guides", false); }
 		set { SetBool("NGUI Guides", value); }
+	}
+
+	static public string charsToInclude
+	{
+		get { return GetString("NGUI Chars", ""); }
+		set { SetString("NGUI Chars", value); }
+	}
+
+	static public string pathToFreeType
+	{
+		get { return GetString("NGUI FreeType", Application.dataPath + "/NGUI/Editor/FreeType.dll"); }
+		set { SetString("NGUI FreeType", value); }
 	}
 #endregion
 

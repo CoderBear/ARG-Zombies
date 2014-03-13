@@ -26,7 +26,6 @@ using System.Collections.Generic;
 /// * OnDragOut (draggedObject) is sent to a game object when another object is dragged out of its area.
 /// * OnDragEnd () is sent to a dragged object when the drag event finishes.
 /// 
-/// * OnInput (text) is sent when typing (after selecting a collider by clicking on it).
 /// * OnTooltip (show) is sent when the mouse hovers over a collider for some time without moving.
 /// * OnScroll (float delta) is sent out when the mouse scroll wheel is moved.
 /// * OnKey (KeyCode key) is sent when keyboard or controller input is used.
@@ -674,14 +673,17 @@ public class UICamera : MonoBehaviour
 #if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
 			else if (cam.eventType == EventType.Unity2D)
 			{
-				Collider2D c2d = Physics2D.OverlapPoint(pos, mask);
-
-				if (c2d)
+				if (m2DPlane.Raycast(ray, out dist))
 				{
-					hit = lastHit;
-					hit.point = pos;
-					hoveredObject = c2d.gameObject;
-					return true;
+					Collider2D c2d = Physics2D.OverlapPoint(ray.GetPoint(dist), mask);
+
+					if (c2d)
+					{
+						hit = lastHit;
+						hit.point = pos;
+						hoveredObject = c2d.gameObject;
+						return true;
+					}
 				}
 				continue;
 			}
@@ -690,6 +692,10 @@ public class UICamera : MonoBehaviour
 		hit = mEmpty;
 		return false;
 	}
+
+#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
+	static Plane m2DPlane = new Plane(Vector3.back, 0f);
+#endif
 
 	/// <summary>
 	/// Helper function to check if the specified hit is visible by the panel.
@@ -919,8 +925,10 @@ public class UICamera : MonoBehaviour
 	
 	void Start ()
 	{
-		cachedCamera.eventMask = 0;
-		cachedCamera.transparencySortMode = TransparencySortMode.Orthographic;
+		if (eventType != EventType.World && cachedCamera.transparencySortMode != TransparencySortMode.Orthographic)
+			cachedCamera.transparencySortMode = TransparencySortMode.Orthographic;
+
+		if (Application.isPlaying) cachedCamera.eventMask = 0;
 		if (handlesEvents) NGUIDebug.debugRaycast = debug;
 	}
 #else
@@ -928,7 +936,7 @@ public class UICamera : MonoBehaviour
 #endif
 
 #if UNITY_EDITOR
-	void OnValidate () { if (handlesEvents) NGUIDebug.debugRaycast = debug; }
+	void OnValidate () { Start(); }
 #endif
 
 	/// <summary>
@@ -977,21 +985,8 @@ public class UICamera : MonoBehaviour
 			}
 		}
 
-		// Forward the input to the selected object
-		if (mCurrentSelection != null)
-		{
-			string input = Input.inputString;
-
-			// Adding support for some macs only having the "Delete" key instead of "Backspace"
-			if (useKeyboard && Input.GetKeyDown(KeyCode.Delete)) input += "\b";
-
-			if (input.Length > 0)
-			{
-				if (!stickyTooltip && mTooltip != null) ShowTooltip(false);
-				Notify(mCurrentSelection, "OnInput", input);
-			}
-		}
-		else inputHasFocus = false;
+		// If nothing is selected, input focus is lost
+		if (mCurrentSelection == null) inputHasFocus = false;
 
 		// Update the keyboard and joystick events
 		if (mCurrentSelection != null) ProcessOthers();
@@ -1510,6 +1505,7 @@ public class UICamera : MonoBehaviour
 		if (!val) mTooltip = null;
 	}
 
+#if !UNITY_EDITOR
 	/// <summary>
 	/// Clear all active press states when the application gets paused.
 	/// </summary>
@@ -1527,6 +1523,7 @@ public class UICamera : MonoBehaviour
 					currentTouch = pair.Value;
 					currentTouchID = pair.Key;
 					currentScheme = ControlScheme.Touch;
+					currentTouch.clickNotification = ClickNotification.None;
 					ProcessTouch(false, true);
 					ids.Add(currentTouchID);
 					currentTouch = null;
@@ -1547,6 +1544,7 @@ public class UICamera : MonoBehaviour
 					currentTouchID = -1 - i;
 					currentKey = KeyCode.Mouse0 + i;
 					currentScheme = ControlScheme.Mouse;
+					currentTouch.clickNotification = ClickNotification.None;
 					ProcessTouch(false, true);
 					currentTouch = null;
 				}
@@ -1562,10 +1560,12 @@ public class UICamera : MonoBehaviour
 				currentScheme = ControlScheme.Controller;
 				currentTouch.last = currentTouch.current;
 				currentTouch.current = mCurrentSelection;
+				currentTouch.clickNotification = ClickNotification.None;
 				ProcessTouch(false, true);
 				currentTouch.last = null;
 				currentTouch = null;
 			}
 		}
 	}
+#endif
 }

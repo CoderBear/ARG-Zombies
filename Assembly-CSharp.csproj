@@ -731,6 +731,7 @@
      <Compile Include="Assets\Scripts\Buttons\explore\fleeCombat.cs" />
      <Compile Include="Assets\Scripts\Buttons\explore\gotoMap.cs" />
      <Compile Include="Assets\Scripts\Buttons\game map\gotoMainMenu.cs" />
+     <Compile Include="Assets\Scripts\Buttons\gotoExplore.cs" />
      <Compile Include="Assets\Scripts\Buttons\main menu\OptionsButton.cs" />
      <Compile Include="Assets\Scripts\Buttons\main menu\PlayGame.cs" />
      <Compile Include="Assets\Scripts\Buttons\main menu\Signout.cs" />
@@ -739,6 +740,7 @@
      <Compile Include="Assets\Scripts\GlobalConstants.cs" />
      <Compile Include="Assets\Scripts\Gui.cs" />
      <Compile Include="Assets\Scripts\LocationManager.cs" />
+     <Compile Include="Assets\Scripts\Mob.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCamera.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCameraAnchor.cs" />

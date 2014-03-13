@@ -3,10 +3,12 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	public PlayerDB db;
+	public PlayerDB db = null;
 
-	private int maxHP, maxMP;
-	private int hp, mp, r_atk, m_atk, def, xp, money;
+	private int maxHP = 0, maxMP = 0;
+	private int initMod = 0, initiative = 0;
+	private int hp = 0, mp = 0, r_atk = 0, m_atk = 0, def = 0, xp = 0, money = 0;
+	private int lastXP = 0, lastMoney = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +21,7 @@ public class Player : MonoBehaviour {
 
 		r_atk = db.getRangeAttack ();
 		m_atk = db.getMeleeAttack ();
+
 		def = db.getDefense ();
 		money = db.getMoney ();
 	}
@@ -51,17 +54,31 @@ public class Player : MonoBehaviour {
 
 #region Player Update Methods
 	public void UpdateXP (int xp)
-	{ 
-			db.setXP (xp);
+	{
+		lastXP = xp;
+		db.setXP (xp);
 	}
 
 	public void UpdateMoney (int money)
 	{
-			db.setMoney (money);
+		lastMoney = money;
+		db.setMoney (money);
+	}
+
+	// update database with new values of XP, Money, health
+	public void UpdateDB() {
 	}
 #endregion
 
 #region Get Methods
+	public bool isDead ()
+	{
+		if (hp <= 0)
+			return true;
+		else
+			return false;
+	}
+	
 	public int getHP() { return hp; }
 	public int getMP() { return mp; }
 

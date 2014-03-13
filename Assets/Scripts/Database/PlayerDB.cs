@@ -138,6 +138,22 @@ public class PlayerDB : MonoBehaviour {
 		
 		return num;
 	}
+
+	public int getInit(int id) {
+		int num = 0;
+		string dbFile = Application.persistentDataPath + "/playerDB.db";
+		SQLiteDB db = new SQLiteDB ();
+		
+		db.Open (dbFile);
+		SQLiteQuery qr = new SQLiteQuery (db, "SELECT init FROM player_info WHERE id=?");
+		qr.Bind (id);
+		qr.Step ();
+		num = qr.GetInteger ("init");
+		qr.Release ();
+		db.Close (); 
+		
+		return num;
+	}
 #endregion
 
 #region SQL Lite Storage Functions
@@ -158,6 +174,12 @@ public class PlayerDB : MonoBehaviour {
 		SQLiteDB db = new SQLiteDB ();
 
 		string query = "UPDATE player_info SET money = " + money.ToString () + " WHERE id = 1";
+		db.Open (dbFile);
+		
+		SQLiteQuery qr = new SQLiteQuery (db, query);
+		qr.Step ();
+		qr.Release ();
+		db.Close ();
 	}
 
 	// Updates variable player stats

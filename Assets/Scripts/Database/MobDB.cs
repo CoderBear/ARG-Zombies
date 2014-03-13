@@ -98,4 +98,20 @@ public class MobDB : MonoBehaviour {
 		
 		return num;
 	}
+
+	public int getInit(int id) {
+		int num = 0;
+		string dbFile = Application.persistentDataPath + "/mobDB.db";
+		SQLiteDB db = new SQLiteDB ();
+		
+		db.Open (dbFile);
+		SQLiteQuery qr = new SQLiteQuery (db, "SELECT init FROM mob_info WHERE id=?");
+		qr.Bind (id);
+		qr.Step ();
+		num = qr.GetInteger ("init");
+		qr.Release ();
+		db.Close (); 
+
+		return num;
+	}
 }

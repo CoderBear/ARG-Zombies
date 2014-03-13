@@ -173,10 +173,10 @@ public class UILabelInspector : UIWidgetInspector
 #endif
 			GUI.skin.textField.wordWrap = ww;
 
-			NGUIEditorTools.DrawPaddedProperty("Alignment", serializedObject, "mAlignment");
-
 			SerializedProperty ov = NGUIEditorTools.DrawPaddedProperty("Overflow", serializedObject, "mOverflow");
 			NGUISettings.overflowStyle = (UILabel.Overflow)ov.intValue;
+
+			NGUIEditorTools.DrawPaddedProperty("Alignment", serializedObject, "mAlignment");
 
 			if (dynFont != null)
 				NGUIEditorTools.DrawPaddedProperty("Keep crisp", serializedObject, "keepCrispWhenShrunk");
@@ -197,6 +197,7 @@ public class UILabelInspector : UIWidgetInspector
 			GUILayout.Label("use emoticons and colors");
 			GUILayout.EndHorizontal();
 
+			EditorGUI.BeginDisabledGroup(mLabel.bitmapFont != null && mLabel.bitmapFont.packedFontShader);
 			GUILayout.BeginHorizontal();
 			SerializedProperty gr = NGUIEditorTools.DrawProperty("Gradient", serializedObject, "mApplyGradient", GUILayout.Width(100f));
 			if (gr.hasMultipleDifferentValues || gr.boolValue)
@@ -230,6 +231,7 @@ public class UILabelInspector : UIWidgetInspector
 				NGUIEditorTools.SetLabelWidth(80f);
 				GUILayout.EndHorizontal();
 			}
+			EditorGUI.EndDisabledGroup();
 		}
 		EditorGUI.EndDisabledGroup();
 		return isValid;
