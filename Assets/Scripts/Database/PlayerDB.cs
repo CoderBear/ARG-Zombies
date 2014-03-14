@@ -183,8 +183,31 @@ public class PlayerDB : MonoBehaviour {
 	}
 
 	// Updates variable player stats
-	public void setCurrentHP_MP(int hp, int mp) {}
-	public void setMaxHP_MP(int maxHP, int maxMP) {}
+	public void setCurrentHP_MP(int hp, int mp) {
+		string dbFile = Application.persistentDataPath + "/playerDB.db";
+		SQLiteDB db = new SQLiteDB ();
+		
+		string query = "UPDATE player_info SET hp = " + hp.ToString () + ", mp = " + mp.ToString () + " WHERE id = 1";
+		db.Open (dbFile);
+		
+		SQLiteQuery qr = new SQLiteQuery (db, query);
+		qr.Step ();
+		qr.Release ();
+		db.Close ();
+	}
+
+	public void setMaxHP_MP(int maxHP, int maxMP) {
+		string dbFile = Application.persistentDataPath + "/playerDB.db";
+		SQLiteDB db = new SQLiteDB ();
+		
+		string query = "UPDATE player_info SET maxhp = " + maxHP.ToString () + ", maxmp = " + maxMP.ToString () + " WHERE id = 1";
+		db.Open (dbFile);
+		
+		SQLiteQuery qr = new SQLiteQuery (db, query);
+		qr.Step ();
+		qr.Release ();
+		db.Close ();
+	}
 	public void setAttackDefense(int r_atk, int m_atk, int def) {}
 #endregion
 }

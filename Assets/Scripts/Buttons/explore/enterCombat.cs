@@ -21,7 +21,7 @@ public class enterCombat : MonoBehaviour {
 		rand = new MersenneTwister ();
 
 		// set local private player object to the singleton player.
-		goPlayer = this.gameObject.AddComponent ();
+		goPlayer = gameObject.AddComponent<Player> ();
 
 		// creat the ememies that the player will combat against
 		goMOB1 = new Mob ();
@@ -33,9 +33,6 @@ public class enterCombat : MonoBehaviour {
 	}
 
 	void OnClick() {
-		goCombat.SetActive(false);
-		goResult.SetActive(true);
-
 		DoAutoCombat ();
 	}
 
@@ -106,9 +103,14 @@ public class enterCombat : MonoBehaviour {
 		// if player dies return to map screen
 		switch(victor) {
 		case 1: // player won
-			goPlayer.UpdateXP(goMOB1.getXP (), goMOB2.getXP ());
-			goPlayer.UpdateMoney (goMOB1.getMoney (), goMOB2.getMoney ());
+			goPlayer.UpdateXP(goMOB1.getXP () + goMOB2.getXP ());
+			goPlayer.UpdateMoney (goMOB1.getMoney () + goMOB2.getMoney ());
 			goPlayer.UpdateDB();
+
+			doCleanup ();
+
+			goCombat.SetActive(false);
+			goResult.SetActive(true);
 			break;
 		case 2: // player defeated
 			Application.LoadLevel("gameMap");
@@ -117,6 +119,15 @@ public class enterCombat : MonoBehaviour {
 			break;
 		}
 	}
+
+#region Cleanup Methods
+	private void doCleanup() {
+		Destroy (goMOB1);
+		Destroy (goMOB2);
+		goMOB1 = null;
+		goMOB2 = null;
+	}
+#endregion
 
 #region Combat Check/Damage Methods
 	// check if a hit lands on the defender

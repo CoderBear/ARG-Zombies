@@ -53,20 +53,25 @@ public class Player : MonoBehaviour {
 #endregion
 
 #region Player Update Methods
-	public void UpdateXP (int xp)
+	// save the XP gained from recent battle
+	public void UpdateXP (int xp_recent)
 	{
-		lastXP = xp;
-		db.setXP (xp);
+		lastXP = xp_recent;
+		xp += xp_recent;
 	}
 
-	public void UpdateMoney (int money)
+	// save the Money earned from recent battle
+	public void UpdateMoney (int money_recent)
 	{
-		lastMoney = money;
-		db.setMoney (money);
+		lastMoney = money_recent;
+		money += money_recent;
 	}
 
 	// update database with new values of XP, Money, health
 	public void UpdateDB() {
+		db.setCurrentHP_MP (hp, mp);
+		db.setXP (xp);
+		db.setMoney (money);
 	}
 #endregion
 
@@ -85,5 +90,8 @@ public class Player : MonoBehaviour {
 	public int getRangeAttack() { return r_atk; }
 	public int getMeleeAttack() { return m_atk; }
 	public int getDefense() { return def; }
+
+	public int getLastXP() { return lastXP; }
+	public int getLastMoney() { return lastMoney; }
 #endregion
 }
