@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class combatResultsButton : MonoBehaviour {
-	public GameObject goExplore, goResults;
+	public ExploreCombatUI uiObject;
 	public UILabel labelXP, labelMoney;
 
 	public Player player;
@@ -17,7 +17,6 @@ public class combatResultsButton : MonoBehaviour {
 	}
 
 	void OnClick() {
-		goExplore.SetActive (true);
-		goResults.SetActive (false);
+		uiObject.SwitchScreenUI (0);
 	}
 }

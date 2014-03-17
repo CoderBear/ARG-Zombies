@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using NPack;
 
 public class enterCombat : MonoBehaviour {
@@ -12,20 +13,32 @@ public class enterCombat : MonoBehaviour {
 	private const int COMBATANTS_MAX = 3; // Maximum number of Combatants
 	
 	private Player goPlayer;
-	private Mob goMOB1, goMOB2;
-	
-	public GameObject goCombat, goResult;
+	public Mob goMOB1, goMOB2;
+
+	private List<GameObject> spawnedMobs;
+
+	public ExploreCombatUI uiObject;
 
 	// Use this for initialization
 	void Start () {
 		rand = new MersenneTwister ();
+		spawnedMobs = new List<GameObject> ();
 
 		// set local private player object to the singleton player.
-		goPlayer = gameObject.AddComponent<Player> ();
+		goPlayer = GameObject.FindWithTag ("Player").GetComponent<Player>();
 
-		// creat the ememies that the player will combat against
-		goMOB1 = new Mob ();
-		goMOB2 = new Mob ();
+		Debug.Log ("Player HP is " + goPlayer.getHP ());
+
+		Debug.Log ("Spawning MOBs");
+
+		// create the ememies that the player will combat against
+		spawnFollowers ();
+		spawnFollowers ();
+		
+		Debug.Log ("Initializing MOBs");
+		InitializeMOB ();
+		
+		Debug.Log ("goMob1 currentHealth is " + spawnedMobs[0].GetComponent<Mob>().getHP ());
 	}
 	
 	// Update is called once per frame
@@ -33,6 +46,8 @@ public class enterCombat : MonoBehaviour {
 	}
 
 	void OnClick() {
+		Debug.Log ("Starting Auto-Combat");
+//		Application.LoadLevel("gameMap");
 		DoAutoCombat ();
 	}
 
@@ -48,69 +63,71 @@ public class enterCombat : MonoBehaviour {
 		int cIndex = 1; // The current combatant 1-3
 		int victor = 0; // The winner, 0 = initial value | 1 = player | 2 = enemy
 
+		Debug.Log ("Starting Combat");
 		/* Battle Sequence (Demo: Initiative not calculated)
 		 * 1st - Player | 2nd - MOB 1 | 3rd - MOB 2
 		 */
-		while(!done) {
+		do {
 			switch (cIndex) {
 			case 1: // Player
-				if(!goMOB1.isDead()) {
-					if(isHit (goPlayer.getMeleeAttack(), goMOB1.getDefense ()))
-						dealDamage(2,goPlayer.getMeleeAttack());
+				Debug.Log ("goMOB1 !isDead: " + !spawnedMobs [0].GetComponent<Mob> ().isDead ());
+				if (!spawnedMobs [0].GetComponent<Mob> ().isDead ()) {
+					if (isHit (goPlayer.getMeleeAttack (), spawnedMobs [0].GetComponent<Mob> ().getDefense ()))
+						dealDamage (2, goPlayer.getMeleeAttack ());
 				} else {
-					if(isHit (goPlayer.getMeleeAttack(), goMOB2.getDefense ()))
-						dealDamage(3,goPlayer.getMeleeAttack());
+					if (isHit (goPlayer.getMeleeAttack (), spawnedMobs [1].GetComponent<Mob> ().getDefense ()))
+						dealDamage (3, goPlayer.getMeleeAttack ());
 				}
 				break;
 			case 2: // Mob 1
-				if(isHit(goMOB1.getAttack(),goPlayer.getDefense()))
-					dealDamage(1, goMOB1.getAttack ());
+				if (isHit (spawnedMobs [0].GetComponent<Mob> ().getAttack (), goPlayer.getDefense ()))
+					dealDamage (1, spawnedMobs [0].GetComponent<Mob> ().getAttack ());
+				Debug.Log("Player Health is " + goPlayer.getHP() + "/13" );
 				break;
 			case 3: // Mob 2
-				if(isHit(goMOB2.getAttack(),goPlayer.getDefense()))
-					dealDamage(1, goMOB2.getAttack ());
+				if (isHit (spawnedMobs [1].GetComponent<Mob> ().getAttack (), goPlayer.getDefense ()))
+					dealDamage (1, spawnedMobs [1].GetComponent<Mob> ().getAttack ());
+				Debug.Log("Player Health is " + goPlayer.getHP() + "/13" );
 				break;
 			default:
-			break;
+				break;
 			}
 
 			// check the health of the player and the mobs
-			if(goMOB1.isDead ()){
+			if (spawnedMobs [0].GetComponent<Mob> ().isDead ()) {
 				cIndex += 2;
-			} else if(goMOB2.isDead()) {
+			} else if (spawnedMobs [1].GetComponent<Mob> ().isDead ()) {
 				cIndex += 2;
 			} else {
 				cIndex++;
 
 				// if we have gane through all the turns this round,
 				// we reset the index.
-				if(cIndex < 3)
+				if (cIndex > 3)
 					cIndex = 1;
 			}
 
 			// check if either player is dead or both enemies are
 			// dead and declare a winner.
-
-			if (goPlayer.isDead()) {
+			if (goPlayer.isDead ()) {
 				victor = 2;
 				done = true;
-			} else if( goMOB1.isDead () && goMOB2.isDead ()) {
+			} else if (spawnedMobs [0].GetComponent<Mob> ().isDead () && spawnedMobs [1].GetComponent<Mob> ().isDead ()) {
 				victor = 1;
 				done = true;
 			}
-		}
+		} while(!done);
+		Debug.Log ("Ending Combat");
 
 		// if player dies return to map screen
 		switch(victor) {
 		case 1: // player won
-			goPlayer.UpdateXP(goMOB1.getXP () + goMOB2.getXP ());
-			goPlayer.UpdateMoney (goMOB1.getMoney () + goMOB2.getMoney ());
+			goPlayer.UpdateXP(spawnedMobs[0].GetComponent<Mob>().getXP () + spawnedMobs[1].GetComponent<Mob>().getXP ());
+			goPlayer.UpdateMoney (spawnedMobs[0].GetComponent<Mob>().getMoney () + spawnedMobs[1].GetComponent<Mob>().getMoney ());
 			goPlayer.UpdateDB();
 
 			doCleanup ();
-
-			goCombat.SetActive(false);
-			goResult.SetActive(true);
+			uiObject.SwitchScreenUI (2);
 			break;
 		case 2: // player defeated
 			Application.LoadLevel("gameMap");
@@ -120,12 +137,35 @@ public class enterCombat : MonoBehaviour {
 		}
 	}
 
+#region Monster Generation Methods
+	private void spawnCultists() {
+		Instantiate (goMOB1);
+		spawnedMobs.Add (GameObject.FindGameObjectWithTag ("cultist"));
+	}
+
+	private void spawnFollowers () {
+		Instantiate (goMOB2);
+		spawnedMobs.Add (GameObject.FindWithTag ("follower"));
+	}
+
+	// Initialize the gameobjext according to its tag
+	private void InitializeMOB() {
+		foreach (var mob in spawnedMobs) {
+			if(mob.tag == "cultist")
+				mob.GetComponent<Mob>().Initialize (1);
+			if(mob.tag == "follower")
+				mob.GetComponent<Mob>().Initialize (2);
+		}
+	}
+#endregion
+
 #region Cleanup Methods
 	private void doCleanup() {
-		Destroy (goMOB1);
-		Destroy (goMOB2);
-		goMOB1 = null;
-		goMOB2 = null;
+
+		for (int i = 0; i < spawnedMobs.Count; i++) {
+			Destroy(spawnedMobs[i]);
+		}
+		spawnedMobs.Clear ();
 	}
 #endregion
 

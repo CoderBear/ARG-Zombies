@@ -10,7 +10,7 @@ public class exploreArea : MonoBehaviour {
 	private const int NUM_ROOMS_MIN = 3; // how few rooms an area has
 	private const int NUM_ROOMS_MAX = 5; // max number of rooms an area has,
 
-	public GameObject goExplore, goCombat;
+	public ExploreCombatUI uiObject;
 
 	public UILabel labelRoomClear;
 	public UISprite spriteAlert;
@@ -32,11 +32,11 @@ public class exploreArea : MonoBehaviour {
 	void OnClick() {
 		if (roomsCleared < roomsTotal) {
 			int fofValue = rand.Next (ENCOUNTER_VALUE_MAX);
+			Debug.Log ("Encounter(" + roomsCleared.ToString() + ") Value: " + fofValue.ToString ());
 
-			if (fofValue > ENCOUNTER_VALUE) { // An enounter occurs
+			if (fofValue <= ENCOUNTER_VALUE) { // An enounter occurs
 				spriteAlert.gameObject.SetActive (true);
-				goExplore.SetActive (false);
-				goCombat.SetActive (true);
+				uiObject.SwitchScreenUI (1);
 			} else { // the room is clear and player continues
 				labelRoomClear.gameObject.SetActive (true);
 			}

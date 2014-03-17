@@ -12,6 +12,7 @@ public class Mob : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
+			db = gameObject.AddComponent<MobDB> ();
 		}
 
 		public void Initialize (int id)

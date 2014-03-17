@@ -2,6 +2,10 @@
 using System.Collections;
 
 public class PlayerDB : MonoBehaviour {
+
+	void Awake() {
+		DontDestroyOnLoad (this.gameObject);
+	}
 	
 #region SQL Lite Query Functions
 	public int getHP() {
