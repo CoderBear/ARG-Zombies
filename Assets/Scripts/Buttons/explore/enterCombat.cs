@@ -28,9 +28,16 @@ public class enterCombat : MonoBehaviour {
 		goPlayer = GameObject.FindWithTag ("Player").GetComponent<Player>();
 
 		Debug.Log ("Player HP is " + goPlayer.getHP ());
+		Debug.Log ("Player M_ATK is " + goPlayer.getMeleeAttack ());
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	}
 
+	void OnClick() {
 		Debug.Log ("Spawning MOBs");
-
+		
 		// create the ememies that the player will combat against
 		spawnFollowers ();
 		spawnFollowers ();
@@ -39,15 +46,8 @@ public class enterCombat : MonoBehaviour {
 		InitializeMOB ();
 		
 		Debug.Log ("goMob1 currentHealth is " + spawnedMobs[0].GetComponent<Mob>().getHP ());
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	}
 
-	void OnClick() {
 		Debug.Log ("Starting Auto-Combat");
-//		Application.LoadLevel("gameMap");
 		DoAutoCombat ();
 	}
 
@@ -74,9 +74,11 @@ public class enterCombat : MonoBehaviour {
 				if (!spawnedMobs [0].GetComponent<Mob> ().isDead ()) {
 					if (isHit (goPlayer.getMeleeAttack (), spawnedMobs [0].GetComponent<Mob> ().getDefense ()))
 						dealDamage (2, goPlayer.getMeleeAttack ());
+					Debug.Log("MOB1 Health is " + spawnedMobs [0].GetComponent<Mob> ().getHP() + "/8" );
 				} else {
 					if (isHit (goPlayer.getMeleeAttack (), spawnedMobs [1].GetComponent<Mob> ().getDefense ()))
 						dealDamage (3, goPlayer.getMeleeAttack ());
+					Debug.Log("MOB2 Health is " + spawnedMobs [1].GetComponent<Mob> ().getHP() + "/8" );
 				}
 				break;
 			case 2: // Mob 1
@@ -201,10 +203,10 @@ public class enterCombat : MonoBehaviour {
 			goPlayer.UpdateCurrentHP(-dmg);
 			break;
 		case 2: // Mob 1
-			goMOB1.UpdateCurrentHP(-dmg);
+			spawnedMobs [0].GetComponent<Mob> ().UpdateCurrentHP(-dmg);
 			break;
 		case 3: // Mob 2
-			goMOB2.UpdateCurrentHP(-dmg);
+			spawnedMobs [1].GetComponent<Mob> ().UpdateCurrentHP(-dmg);
 			break;
 		default:
 			break;

@@ -5,10 +5,12 @@ public class combatResultsButton : MonoBehaviour {
 	public ExploreCombatUI uiObject;
 	public UILabel labelXP, labelMoney;
 
-	public Player player;
+	private Player player;
 
 	// Use this for initialization
 	void Start () {
+		player = GameObject.FindWithTag ("Player").GetComponent<Player>();
+
 		labelXP.text = player.getLastXP().ToString ();
 		labelMoney.text = player.getLastMoney().ToString();
 	}	
