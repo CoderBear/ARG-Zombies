@@ -39,11 +39,12 @@ public class enterCombat : MonoBehaviour {
 		Debug.Log ("Spawning MOBs");
 		
 		// create the ememies that the player will combat against
-		spawnFollowers ();
-		spawnFollowers ();
-		
-		Debug.Log ("Initializing MOBs");
-		InitializeMOB ();
+		RandomEnemySpawn ();
+//		spawnFollowers ();
+//		spawnFollowers ();
+//		
+//		Debug.Log ("Initializing MOBs");
+//		InitializeMOB ();
 		
 		Debug.Log ("goMob1 currentHealth is " + spawnedMobs[0].GetComponent<Mob>().getHP ());
 
@@ -140,6 +141,32 @@ public class enterCombat : MonoBehaviour {
 	}
 
 #region Monster Generation Methods
+
+	private void RandomEnemySpawn() {
+		int n1 = 0, n2 = 0;
+
+		// generate a number between 1 & 2)
+		n1 = rand.Next(DICE_VALUE_MIN);
+		chooseSpawn(n1);
+		n2 = rand.Next(DICE_VALUE_MIN);
+		chooseSpawn(n2);
+
+		InitializeMOB();
+	}
+
+	private void chooseSpawn(int index) {
+		switch(index) {
+		case 0: //spawn follower
+			spawnFollowers ();
+			break;
+		case 1: //spawn cultist
+			spawnCultists();
+			break;
+		default:
+			break;
+		}
+	}
+
 	private void spawnCultists() {
 		Instantiate (goMOB1);
 		spawnedMobs.Add (GameObject.FindGameObjectWithTag ("cultist"));
