@@ -53,7 +53,7 @@ class tk2dTextMeshEditor : Editor
 	// Draws the word wrap GUI
 	void DrawWordWrapSceneGUI(tk2dTextMesh textMesh)
 	{
-		tk2dFontData font = textMesh.font;
+		tk2dFontData font = textMesh.font.inst;
 		Transform transform = textMesh.transform;
 
 		int px = textMesh.wordWrapWidth;
@@ -117,6 +117,10 @@ class tk2dTextMeshEditor : Editor
 
 	public void OnSceneGUI()
 	{
+		if (!tk2dEditorUtility.IsEditable(target)) {
+			return;
+		}
+
 		tk2dTextMesh textMesh = (tk2dTextMesh)target;
 		if (textMesh.formatting && textMesh.wordWrapWidth > 0)
 		{
@@ -311,7 +315,7 @@ class tk2dTextMeshEditor : Editor
 				                 "^CRRGGBBAA - set color\n" +
 				                 "^GRRGGBBAARRGGBBAA - set top and bottom colors\n" +
 				                 "      RRGGBBAA = 2 digit hex values (00 - ff)\n\n" +
-				                 ((textMesh.font.textureGradients && textMesh.font.gradientCount > 0) ?
+				                 ((textMesh.font.inst.textureGradients && textMesh.font.inst.gradientCount > 0) ?
 				 				 "^0-9 - select gradient\n" : "") +
 				                 "^^ - print ^";
 				tk2dGuiUtility.InfoBox( message, tk2dGuiUtility.WarningLevel.Info );
@@ -377,7 +381,7 @@ class tk2dTextMeshEditor : Editor
 			Vector3 newScale = EditorGUILayout.Vector3Field("Scale", textMesh.scale);
 			if (newScale != textMesh.scale) UndoableAction( tm => tm.scale = newScale );
 			
-			if (textMesh.font.textureGradients && textMesh.font.gradientCount > 0)
+			if (textMesh.font.textureGradients && textMesh.font.inst.gradientCount > 0)
 			{
 				GUILayout.BeginHorizontal();
 				EditorGUILayout.PrefixLabel("TextureGradient");
@@ -386,14 +390,14 @@ class tk2dTextMeshEditor : Editor
 				bool drawGradientScroller = true;
 				if (drawGradientScroller)
 				{
-					textMesh.textureGradient = textMesh.textureGradient % textMesh.font.gradientCount;
+					textMesh.textureGradient = textMesh.textureGradient % textMesh.font.inst.gradientCount;
 					
 					gradientScroll = EditorGUILayout.BeginScrollView(gradientScroll, GUILayout.ExpandHeight(false));
-					Rect r = GUILayoutUtility.GetRect(textMesh.font.gradientTexture.width, textMesh.font.gradientTexture.height, GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false));
-					GUI.DrawTexture(r, textMesh.font.gradientTexture);
+					Rect r = GUILayoutUtility.GetRect(textMesh.font.inst.gradientTexture.width, textMesh.font.inst.gradientTexture.height, GUILayout.ExpandWidth(false), GUILayout.ExpandHeight(false));
+					GUI.DrawTexture(r, textMesh.font.inst.gradientTexture);
 					
 					Rect hr = r;
-					hr.width /= textMesh.font.gradientCount;
+					hr.width /= textMesh.font.inst.gradientCount;
 					hr.x += hr.width * textMesh.textureGradient;
 					float ox = hr.width / 8;
 					float oy = hr.height / 8;
@@ -402,10 +406,10 @@ class tk2dTextMeshEditor : Editor
 					
 					if (GUIUtility.hotControl == 0 && Event.current.type == EventType.MouseDown && r.Contains(Event.current.mousePosition))
 					{
-						int newTextureGradient = (int)(Event.current.mousePosition.x / (textMesh.font.gradientTexture.width / textMesh.font.gradientCount));
+						int newTextureGradient = (int)(Event.current.mousePosition.x / (textMesh.font.inst.gradientTexture.width / textMesh.font.inst.gradientCount));
 						if (newTextureGradient != textMesh.textureGradient) {
 							UndoableAction( delegate(tk2dTextMesh tm) {
-									if (tm.useGUILayout && tm.font != null && newTextureGradient < tm.font.gradientCount) {
+									if (tm.useGUILayout && tm.font != null && newTextureGradient < tm.font.inst.gradientCount) {
 										tm.textureGradient = newTextureGradient;
 									}
 								} );

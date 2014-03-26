@@ -222,12 +222,12 @@ public class UIPopupList : UIWidgetContainer
 	{
 		get
 		{
-			UIButtonKeys keys = GetComponent<UIButtonKeys>();
+			UIKeyNavigation keys = GetComponent<UIKeyNavigation>();
 			return (keys == null || !keys.enabled);
 		}
 		set
 		{
-			UIButtonKeys keys = GetComponent<UIButtonKeys>();
+			UIKeyNavigation keys = GetComponent<UIKeyNavigation>();
 			if (keys != null) keys.enabled = !value;
 		}
 	}
@@ -507,9 +507,15 @@ public class UIPopupList : UIWidgetContainer
 	/// Get rid of the popup dialog when the selection gets lost.
 	/// </summary>
 
-	void OnSelect (bool isSelected)
+	void OnSelect (bool isSelected) { if (!isSelected) Close(); }
+
+	/// <summary>
+	/// Manually close the popup list.
+	/// </summary>
+
+	public void Close ()
 	{
-		if (!isSelected && mChild != null)
+		if (mChild != null)
 		{
 			mLabelList.Clear();
 			handleEvents = false;
@@ -530,10 +536,7 @@ public class UIPopupList : UIWidgetContainer
 				for (int i = 0, imax = cols.Length; i < imax; ++i) cols[i].enabled = false;
 				Destroy(mChild, animSpeed);
 			}
-			else
-			{
-				Destroy(mChild);
-			}
+			else Destroy(mChild);
 
 			mBackground = null;
 			mHighlight = null;

@@ -62,6 +62,8 @@ public class tk2dSpriteCollectionDefinition
 		BlackZeroAlpha,
 		Extend,
 		TileXY,
+		TileX,
+		TileY,
 	}
 	
 	public enum ColliderType
@@ -71,6 +73,7 @@ public class tk2dSpriteCollectionDefinition
 		BoxTrimmed, 		// box, trimmed to cover visible region
 		BoxCustom, 			// box, with custom values provided by user
 		Polygon, 			// polygon, can be concave
+		Advanced,			// advanced colliders - set up multiple oriented boxes
 	}
 	
 	public enum PolygonColliderCap
@@ -101,6 +104,36 @@ public class tk2dSpriteCollectionDefinition
 		Complete,
 		SolidOnly,
 		TransparentOnly,
+	}
+
+	[System.Serializable]
+	public class ColliderData {
+		public enum Type {
+			Box,
+			Circle,
+		}
+
+		public string name = "";
+		public Type type = Type.Box;
+		public Vector2 origin = Vector3.zero;
+		public Vector2 size = Vector3.zero;
+		public float angle = 0;
+
+		public void CopyFrom(ColliderData src) {
+			name = src.name;
+			type = src.type;
+			origin = src.origin;
+			size = src.size;
+			angle = src.angle;
+		}
+
+		public bool CompareTo(ColliderData src) {
+			return (name == src.name && 
+				type == src.type &&
+				origin == src.origin &&
+				size == src.size &&
+				angle == src.angle);
+		}
 	}
 
 	public string name = "";
@@ -142,6 +175,7 @@ public class tk2dSpriteCollectionDefinition
 	public int regionId;
 	
 	public ColliderType colliderType = ColliderType.UserDefined;
+	public List<ColliderData> colliderData = new List<ColliderData>();
 	public Vector2 boxColliderMin, boxColliderMax;
 	public tk2dSpriteColliderIsland[] polyColliderIslands;
 	public PolygonColliderCap polyColliderCap = PolygonColliderCap.FrontAndBack;
@@ -198,7 +232,14 @@ public class tk2dSpriteCollectionDefinition
 		colliderSmoothSphereCollisions = src.colliderSmoothSphereCollisions;
 		
 		extraPadding = src.extraPadding;
-		
+
+		colliderData = new List<ColliderData>( src.colliderData.Count );
+		foreach ( ColliderData srcCollider in src.colliderData ) {
+			ColliderData data = new ColliderData();
+			data.CopyFrom(srcCollider);
+			colliderData.Add(data);
+		}
+
 		if (src.polyColliderIslands != null)
 		{
 			polyColliderIslands = new tk2dSpriteColliderIsland[src.polyColliderIslands.Length];
@@ -295,6 +336,11 @@ public class tk2dSpriteCollectionDefinition
 			if (polyColliderIslands.Length != src.polyColliderIslands.Length) return false;
 			for (int i = 0; i < polyColliderIslands.Length; ++i)
 				if (!polyColliderIslands[i].CompareTo(src.polyColliderIslands[i])) return false;
+		}
+		
+		if (colliderData.Count != src.colliderData.Count) return false;
+		for (int i = 0; i < colliderData.Count; ++i) {
+			if (!colliderData[i].CompareTo( src.colliderData[i] )) return false;
 		}
 		
 		if (polyColliderCap != src.polyColliderCap) return false;

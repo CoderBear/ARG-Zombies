@@ -19,7 +19,9 @@ class tk2dSpriteEditor : Editor
 
     public void OnSceneGUI()
     {
-		if (tk2dPreferences.inst.enableSpriteHandles == false) return;
+		if (tk2dPreferences.inst.enableSpriteHandles == false || !tk2dEditorUtility.IsEditable(target)) {
+			return;
+		}
 
     	tk2dSprite spr = (tk2dSprite)target;
 		var sprite = spr.CurrentSprite;

@@ -15,6 +15,7 @@ public class enterCombat : MonoBehaviour {
 	private Player goPlayer;
 	public Mob goMOB1, goMOB2;
 
+	[SerializeField]
 	private List<GameObject> spawnedMobs;
 
 	public ExploreCombatUI uiObject;
@@ -22,13 +23,10 @@ public class enterCombat : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rand = new MersenneTwister ();
-		spawnedMobs = new List<GameObject> ();
+		spawnedMobs = new List<GameObject> (2);
 
 		// set local private player object to the singleton player.
 		goPlayer = GameObject.FindWithTag ("Player").GetComponent<Player>();
-
-		Debug.Log ("Player HP is " + goPlayer.getHP ());
-		Debug.Log ("Player M_ATK is " + goPlayer.getMeleeAttack ());
 	}
 	
 	// Update is called once per frame
@@ -39,14 +37,17 @@ public class enterCombat : MonoBehaviour {
 		Debug.Log ("Spawning MOBs");
 		
 		// create the ememies that the player will combat against
-		RandomEnemySpawn ();
-//		spawnFollowers ();
-//		spawnFollowers ();
-//		
-//		Debug.Log ("Initializing MOBs");
-//		InitializeMOB ();
+//		RandomEnemySpawn ();
+		spawnFollowers ();
+		spawnFollowers ();
+		
+		Debug.Log ("Initializing MOBs");
+		InitializeMOB ();
 		
 		Debug.Log ("goMob1 currentHealth is " + spawnedMobs[0].GetComponent<Mob>().getHP ());
+		Debug.Log ("goMOB1 Death is " + spawnedMobs [0].GetComponent<Mob> ().isDead());
+		Debug.Log ("goMob2 currentHealth is " + spawnedMobs[1].GetComponent<Mob>().getHP ());
+		Debug.Log ("goMOB2 Death is " + spawnedMobs [1].GetComponent<Mob> ().isDead());
 
 		Debug.Log ("Starting Auto-Combat");
 		DoAutoCombat ();
@@ -68,29 +69,36 @@ public class enterCombat : MonoBehaviour {
 		/* Battle Sequence (Demo: Initiative not calculated)
 		 * 1st - Player | 2nd - MOB 1 | 3rd - MOB 2
 		 */
-		do {
+		while(!done) {
+			Debug.Log("current cIndex is " + cIndex);
 			switch (cIndex) {
 			case 1: // Player
 				Debug.Log ("goMOB1 !isDead: " + !spawnedMobs [0].GetComponent<Mob> ().isDead ());
 				if (!spawnedMobs [0].GetComponent<Mob> ().isDead ()) {
-					if (isHit (goPlayer.getMeleeAttack (), spawnedMobs [0].GetComponent<Mob> ().getDefense ()))
+					if (isHit (goPlayer.getMeleeAttack (), spawnedMobs [0].GetComponent<Mob> ().getDefense ())) {
 						dealDamage (2, goPlayer.getMeleeAttack ());
-					Debug.Log("MOB1 Health is " + spawnedMobs [0].GetComponent<Mob> ().getHP() + "/8" );
-				} else {
-					if (isHit (goPlayer.getMeleeAttack (), spawnedMobs [1].GetComponent<Mob> ().getDefense ()))
+						Debug.Log("goMOB1 Health is " + spawnedMobs [0].GetComponent<Mob> ().getCurrentHP() + "/8" );
+					}
+				} else if(spawnedMobs [0].GetComponent<Mob> ().isDead ()) {
+					if (isHit (goPlayer.getMeleeAttack (), spawnedMobs [1].GetComponent<Mob> ().getDefense ())) {
 						dealDamage (3, goPlayer.getMeleeAttack ());
-					Debug.Log("MOB2 Health is " + spawnedMobs [1].GetComponent<Mob> ().getHP() + "/8" );
+						Debug.Log("goMOB2 Health is " + spawnedMobs [1].GetComponent<Mob> ().getCurrentHP() + "/8" );
+					}
 				}
 				break;
 			case 2: // Mob 1
-				if (isHit (spawnedMobs [0].GetComponent<Mob> ().getAttack (), goPlayer.getDefense ()))
+				Debug.Log("goMOB1 is attacking");
+				if (isHit (spawnedMobs [0].GetComponent<Mob> ().getAttack (), goPlayer.getDefense ())) {
 					dealDamage (1, spawnedMobs [0].GetComponent<Mob> ().getAttack ());
-				Debug.Log("Player Health is " + goPlayer.getHP() + "/13" );
+					Debug.Log("Player Health is " + goPlayer.getHP() + "/13" );
+				}
 				break;
 			case 3: // Mob 2
-				if (isHit (spawnedMobs [1].GetComponent<Mob> ().getAttack (), goPlayer.getDefense ()))
+				Debug.Log("goMOB2 is attacking");
+				if (isHit (spawnedMobs [1].GetComponent<Mob> ().getAttack (), goPlayer.getDefense ())) {
 					dealDamage (1, spawnedMobs [1].GetComponent<Mob> ().getAttack ());
-				Debug.Log("Player Health is " + goPlayer.getHP() + "/13" );
+					Debug.Log("Player Health is " + goPlayer.getHP() + "/13" );
+				}
 				break;
 			default:
 				break;
@@ -112,6 +120,10 @@ public class enterCombat : MonoBehaviour {
 
 			// check if either player is dead or both enemies are
 			// dead and declare a winner.
+			Debug.Log ("Player Death is " + goPlayer.isDead());
+			Debug.Log ("goMOB1 Death is " + spawnedMobs [0].GetComponent<Mob> ().isDead());
+			Debug.Log("goMOB2 Health is " + spawnedMobs [1].GetComponent<Mob> ().getCurrentHP() + "/8" );
+			Debug.Log ("goMOB2 Death is " + spawnedMobs [1].GetComponent<Mob> ().isDead());
 			if (goPlayer.isDead ()) {
 				victor = 2;
 				done = true;
@@ -119,18 +131,20 @@ public class enterCombat : MonoBehaviour {
 				victor = 1;
 				done = true;
 			}
-		} while(!done);
+		}
 		Debug.Log ("Ending Combat");
 
 		// if player dies return to map screen
 		switch(victor) {
 		case 1: // player won
+			cIndex = 1;
+			done = false;
 			goPlayer.UpdateXP(spawnedMobs[0].GetComponent<Mob>().getXP () + spawnedMobs[1].GetComponent<Mob>().getXP ());
 			goPlayer.UpdateMoney (spawnedMobs[0].GetComponent<Mob>().getMoney () + spawnedMobs[1].GetComponent<Mob>().getMoney ());
 			goPlayer.UpdateDB();
 
 			doCleanup ();
-			uiObject.SwitchScreenUI (2);
+			uiObject.SwitchScreenUI (3);
 			break;
 		case 2: // player defeated
 			Application.LoadLevel("gameMap");
@@ -227,12 +241,15 @@ public class enterCombat : MonoBehaviour {
 
 		switch (index) {
 		case 1: //Player
+			Debug.Log ("Player was dealt " + dmg + " damage");
 			goPlayer.UpdateCurrentHP(-dmg);
 			break;
 		case 2: // Mob 1
+			Debug.Log ("goMOB1 was dealt " + dmg + " damage");
 			spawnedMobs [0].GetComponent<Mob> ().UpdateCurrentHP(-dmg);
 			break;
 		case 3: // Mob 2
+			Debug.Log ("goMOB2 was dealt " + dmg + " damage");
 			spawnedMobs [1].GetComponent<Mob> ().UpdateCurrentHP(-dmg);
 			break;
 		default:

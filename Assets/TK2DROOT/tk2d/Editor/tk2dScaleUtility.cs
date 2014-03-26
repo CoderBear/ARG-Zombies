@@ -7,6 +7,7 @@ public static class tk2dScaleUtility
 {
 	static void BakeRecursive(Transform node, Vector3 accumulatedScale)
 	{
+		node.localPosition = Vector3.Scale( accumulatedScale, node.localPosition );
 		accumulatedScale = new Vector3(accumulatedScale.x * node.localScale.x,
 									   accumulatedScale.y * node.localScale.y,
 									   accumulatedScale.z * node.localScale.z);

@@ -364,6 +364,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 			else if (SpriteCollection.atlasFormat == tk2dSpriteCollection.AtlasFormat.Png) {
 				tk2dGuiUtility.InfoBox("Png atlases will decrease on disk game asset sizes, at the expense of increased load times.",
 					tk2dGuiUtility.WarningLevel.Warning);
+				SpriteCollection.textureCompression = (tk2dSpriteCollection.TextureCompression)EditorGUILayout.EnumPopup("Compression", SpriteCollection.textureCompression);
 				SpriteCollection.filterMode = (FilterMode)EditorGUILayout.EnumPopup("Filter Mode", SpriteCollection.filterMode);
 				SpriteCollection.mipmapEnabled = EditorGUILayout.Toggle("Mip Maps", SpriteCollection.mipmapEnabled);
 			}

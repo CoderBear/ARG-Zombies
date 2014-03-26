@@ -2,7 +2,7 @@
 
 "ACCEPT.png":
 {
-	"frame": {"x":1855,"y":305,"w":123,"h":55},
+	"frame": {"x":392,"y":1928,"w":123,"h":55},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
@@ -10,7 +10,7 @@
 },
 "ALERT!.png":
 {
-	"frame": {"x":1349,"y":2,"w":504,"h":357},
+	"frame": {"x":964,"y":1558,"w":504,"h":357},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":9,"y":1,"w":504,"h":357},
@@ -18,7 +18,7 @@
 },
 "ALERT.png":
 {
-	"frame": {"x":684,"y":2,"w":663,"h":363},
+	"frame": {"x":964,"y":1193,"w":663,"h":363},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":663,"h":363},
@@ -26,7 +26,7 @@
 },
 "BACK.png":
 {
-	"frame": {"x":1855,"y":248,"w":123,"h":55},
+	"frame": {"x":267,"y":1985,"w":123,"h":55},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
@@ -34,7 +34,7 @@
 },
 "BLANK.png":
 {
-	"frame": {"x":1855,"y":191,"w":123,"h":55},
+	"frame": {"x":267,"y":1928,"w":123,"h":55},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
@@ -42,7 +42,7 @@
 },
 "EXPLORE.png":
 {
-	"frame": {"x":1855,"y":134,"w":123,"h":55},
+	"frame": {"x":142,"y":1985,"w":123,"h":55},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
@@ -50,7 +50,7 @@
 },
 "FIGHT.png":
 {
-	"frame": {"x":1855,"y":2,"w":138,"h":73},
+	"frame": {"x":2,"y":1928,"w":138,"h":73},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":138,"h":73},
@@ -58,7 +58,7 @@
 },
 "RUNAWAY.png":
 {
-	"frame": {"x":1855,"y":77,"w":123,"h":55},
+	"frame": {"x":142,"y":1928,"w":123,"h":55},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":123,"h":55},
@@ -66,7 +66,7 @@
 },
 "alertdown.png":
 {
-	"frame": {"x":684,"y":367,"w":490,"h":187},
+	"frame": {"x":1470,"y":1747,"w":490,"h":187},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":127,"w":490,"h":187},
@@ -74,19 +74,75 @@
 },
 "alertup.png":
 {
-	"frame": {"x":1349,"y":361,"w":494,"h":187},
+	"frame": {"x":1470,"y":1558,"w":494,"h":187},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":127,"w":494,"h":187},
 	"sourceSize": {"w":500,"h":387}
 },
+"combatBG001.png":
+{
+	"frame": {"x":2,"y":1286,"w":960,"h":640},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":960,"h":640},
+	"sourceSize": {"w":960,"h":640}
+},
+"combatBG002.png":
+{
+	"frame": {"x":2,"y":644,"w":960,"h":640},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":960,"h":640},
+	"sourceSize": {"w":960,"h":640}
+},
+"combatBG003.png":
+{
+	"frame": {"x":964,"y":2,"w":960,"h":640},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":960,"h":640},
+	"sourceSize": {"w":960,"h":640}
+},
+"combatBG004.png":
+{
+	"frame": {"x":2,"y":2,"w":960,"h":640},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":960,"h":640},
+	"sourceSize": {"w":960,"h":640}
+},
+"cultist.png":
+{
+	"frame": {"x":1646,"y":644,"w":123,"h":250},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":9,"w":123,"h":250},
+	"sourceSize": {"w":167,"h":300}
+},
+"follower.png":
+{
+	"frame": {"x":1771,"y":644,"w":123,"h":248},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":11,"w":123,"h":248},
+	"sourceSize": {"w":167,"h":300}
+},
 "survival.png":
 {
-	"frame": {"x":2,"y":2,"w":680,"h":547},
+	"frame": {"x":964,"y":644,"w":680,"h":547},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":680,"h":547},
 	"sourceSize": {"w":680,"h":547}
+},
+"testPlayer.png":
+{
+	"frame": {"x":1926,"y":2,"w":64,"h":150},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":28,"w":64,"h":150},
+	"sourceSize": {"w":102,"h":198}
 }},
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker ",
@@ -95,6 +151,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2048,"h":2048},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:e2023081aea2d4b28c193895444feb3f:dcc09811752ff9086d7a4bce4ab21adb:3993d18daac801890551d6944bd56fc2$"
+	"smartupdate": "$TexturePacker:SmartUpdate:de809ad2876a5503f50fb275cc60e7ee:b98e57b196443a6906cf70779890aa4d:3993d18daac801890551d6944bd56fc2$"
 }
 }

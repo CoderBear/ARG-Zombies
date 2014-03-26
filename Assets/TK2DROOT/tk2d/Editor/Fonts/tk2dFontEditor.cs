@@ -6,9 +6,10 @@ using System.Collections.Generic;
 [CustomEditor(typeof(tk2dFont))]
 public class tk2dFontEditor : Editor 
 {
-	public Shader GetShader(bool gradient)
+	public Shader GetShader(bool gradient, bool packed)
 	{
-		if (gradient) return Shader.Find("tk2d/Blend2TexVertexColor");
+		if (packed) return Shader.Find("tk2d/Goodies/PackedTextMesh");
+		else if (gradient) return Shader.Find("tk2d/Blend2TexVertexColor");
 		else return Shader.Find("tk2d/BlendVertexColor");
 	}
 	
@@ -79,7 +80,7 @@ public class tk2dFontEditor : Editor
 			
 			if (gen.material == null)
 			{
-				gen.material = new Material(GetShader(gen.gradientTexture != null));
+				gen.material = new Material(GetShader(gen.gradientTexture != null, gen.data != null && gen.data.isPacked));
 				string materialPath = AssetDatabase.GetAssetPath(gen).Replace(".prefab", "material.mat");
 				AssetDatabase.CreateAsset(gen.material, materialPath);
 			}
@@ -105,7 +106,7 @@ public class tk2dFontEditor : Editor
 
 			if (gen.manageMaterial)
 			{
-				Shader s = GetShader(gen.gradientTexture != null);
+				Shader s = GetShader(gen.gradientTexture != null, gen.data != null && gen.data.isPacked);
 				if (gen.material.shader != s)
 				{
 					gen.material.shader = s;

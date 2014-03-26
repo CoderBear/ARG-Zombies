@@ -1228,7 +1228,7 @@ public class tk2dTileMapEditor : Editor, ITileMapEditorHost
 			return;
 		}
 
-		if (sceneGUI != null)
+		if (sceneGUI != null && tk2dEditorUtility.IsEditable(target))
 		{
 			sceneGUI.OnSceneGUI();
 		}

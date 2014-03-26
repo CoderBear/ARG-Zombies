@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ExploreCombatUI : MonoBehaviour {
 
-	public GameObject goExplore, goCombat, goResults;
+	public GameObject goExplore, goCombat, goResults, goBattle;
 
 	// make sure the right screen is shown for the active
 	// action being taken
@@ -17,7 +17,11 @@ public class ExploreCombatUI : MonoBehaviour {
 			goExplore.SetActive(false);
 			goCombat.SetActive(true);
 			break;
-		case 2: // Results UI
+		case 2: // Battle UI
+			goCombat.SetActive(false);
+			goBattle.SetActive(true);
+			break;
+		case 3: // Results UI
 			goResults.SetActive(true);
 			goCombat.SetActive (false);
 			break;

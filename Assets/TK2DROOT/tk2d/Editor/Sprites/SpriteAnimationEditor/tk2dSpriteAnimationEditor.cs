@@ -24,6 +24,7 @@ class tk2dSpriteAnimationEditor : Editor
             {
                 tk2dSpriteAnimationEditorPopup v = EditorWindow.GetWindow( typeof(tk2dSpriteAnimationEditorPopup), false, "SpriteAnimation" ) as tk2dSpriteAnimationEditorPopup;
                 v.SetSpriteAnimation(anim);
+                v.Show();
             }
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();

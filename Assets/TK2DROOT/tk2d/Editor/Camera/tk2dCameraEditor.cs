@@ -122,6 +122,8 @@ public class tk2dCameraEditor : Editor
 
 			bool isPerspective = _target.SettingsRoot.CameraSettings.projection == tk2dCameraSettings.ProjectionType.Perspective;
 
+			tk2dGuiUtility.InfoBox("Anchored viewport clipping is a legacy feature which will be removed in a future version of 2D Toolkit.\n", tk2dGuiUtility.WarningLevel.Warning);
+
 			EditorGUILayout.LabelField("Anchored Viewport Clipping", EditorStyles.boldLabel);
 			EditorGUI.indentLevel++;
 			if (_target.InheritConfig == null || isPerspective) {

@@ -551,6 +551,10 @@ public class tk2dSpriteAnimator : MonoBehaviour
 					return currFrame;
 				}
 
+				case tk2dSpriteAnimationClip.WrapMode.Single: {
+					return 0;
+				}
+
 				default: {
 					Debug.LogError("Unhandled clip wrap mode");
 					goto case tk2dSpriteAnimationClip.WrapMode.Loop;
@@ -630,7 +634,7 @@ public class tk2dSpriteAnimator : MonoBehaviour
 
 			case tk2dSpriteAnimationClip.WrapMode.PingPong:
 			{
-				int currFrame = (currentClip.frames.Length > 1) ? (currentClip.frames.Length + currentClip.frames.Length - 2) : 0;
+				int currFrame = (currentClip.frames.Length > 1) ? ((int)clipTime % (currentClip.frames.Length + currentClip.frames.Length - 2)) : 0;
 				int dir = 1;
 				if (currFrame >= currentClip.frames.Length)
 				{

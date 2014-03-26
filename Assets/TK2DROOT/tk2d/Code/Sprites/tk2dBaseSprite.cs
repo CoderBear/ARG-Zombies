@@ -906,6 +906,14 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 #endif		
 	}
 
+#if UNITY_EDITOR
+	private void OnEnable() {
+		if (renderer != null && Collection != null && renderer.sharedMaterial == null && Collection.inst.needMaterialInstance) {
+			ForceBuild();
+		}
+	}
+#endif
+	
 	// Used by derived classes only
 	public void CreateSimpleBoxCollider() {
 		if (CurrentSprite == null) {

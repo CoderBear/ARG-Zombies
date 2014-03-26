@@ -51,11 +51,6 @@ public class UIFontMaker : EditorWindow
 		set { NGUISettings.SetInt("NGUI Character Map", (int)value); }
 	}
 
-	void Awake ()
-	{
-		mType = (Application.platform == RuntimePlatform.WindowsEditor) ? FontType.GeneratedBitmap : FontType.ImportedBitmap;
-	}
-
 	/// <summary>
 	/// Update all labels associated with this font.
 	/// </summary>
@@ -183,33 +178,29 @@ public class UIFontMaker : EditorWindow
 			{
 				if (!FreeType.isPresent)
 				{
-					if (Application.platform != RuntimePlatform.WindowsEditor)
-					{
-						EditorGUILayout.HelpBox("Built-in bitmap font generation is only available on Windows platforms.", MessageType.Error);
-					}
-					else
-					{
-						EditorGUILayout.HelpBox("Assets/Editor/FreeType.dll is missing", MessageType.Error);
+					string filename = (Application.platform == RuntimePlatform.WindowsEditor) ? "FreeType.dll" : "FreeType.dylib";
+					
+					EditorGUILayout.HelpBox("Assets/NGUI/Editor/" + filename + " is missing", MessageType.Error);
 
-						GUILayout.BeginHorizontal();
-						GUILayout.Space(20f);
+					GUILayout.BeginHorizontal();
+					GUILayout.Space(20f);
 
-						if (GUILayout.Button("Find FreeType.dll"))
+					if (GUILayout.Button("Find " + filename))
+					{
+						string path = EditorUtility.OpenFilePanel("Find " + filename, "Assets",
+							(Application.platform == RuntimePlatform.WindowsEditor) ? "dll" : "dylib");
+
+						if (!string.IsNullOrEmpty(path))
 						{
-							string path = EditorUtility.OpenFilePanel("Find FreeType.dll", "Assets", "dll");
-
-							if (!string.IsNullOrEmpty(path))
+							if (System.IO.Path.GetFileName(path) == filename)
 							{
-								if (Path.GetFileName(path) == "FreeType.dll")
-								{
-									NGUISettings.pathToFreeType = path;
-								}
-								else Debug.LogError("The library must be named 'FreeType'");
+								NGUISettings.pathToFreeType = path;
 							}
+							else Debug.LogError("The library must be named '" + filename + "'");
 						}
-						GUILayout.Space(20f);
-						GUILayout.EndHorizontal();
 					}
+					GUILayout.Space(20f);
+					GUILayout.EndHorizontal();
 				}
 				else if (ttf != null)
 				{
@@ -434,7 +425,7 @@ public class UIFontMaker : EditorWindow
 
 					// Save the material
 					AssetDatabase.CreateAsset(mat, matPath);
-					AssetDatabase.Refresh();
+					AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
 					// Load the material so it's usable
 					mat = AssetDatabase.LoadAssetAtPath(matPath, typeof(Material)) as Material;
@@ -504,12 +495,12 @@ public class UIFontMaker : EditorWindow
 
 						// Save the material
 						AssetDatabase.CreateAsset(mat, matPath);
-						AssetDatabase.Refresh();
+						AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
 						// Load the material so it's usable
 						mat = AssetDatabase.LoadAssetAtPath(matPath, typeof(Material)) as Material;
 					}
-					else AssetDatabase.Refresh();
+					else AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
 					// Re-load the texture
 					tex = AssetDatabase.LoadAssetAtPath(texPath, typeof(Texture2D)) as Texture2D;
@@ -530,7 +521,7 @@ public class UIFontMaker : EditorWindow
 			// Update the prefab
 			PrefabUtility.ReplacePrefab(go, prefab);
 			DestroyImmediate(go);
-			AssetDatabase.Refresh();
+			AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
 			// Select the atlas
 			go = AssetDatabase.LoadAssetAtPath(prefabPath, typeof(GameObject)) as GameObject;

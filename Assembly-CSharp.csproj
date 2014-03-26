@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_4;UNITY_4_3;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_4;UNITY_4_3;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +65,7 @@
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\DragDropItem.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\DragDropRoot.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\DragDropSurface.cs" />
+     <Compile Include="Assets\NGUI\Examples\Scripts\Other\EnvelopContent.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\LagPosition.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\LagRotation.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\LoadLevelOnClick.cs" />
@@ -76,6 +77,7 @@
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\ShaderQuality.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\Spin.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\SpinWithMouse.cs" />
+     <Compile Include="Assets\NGUI\Examples\Scripts\Other\Tutorial5.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\TypewriterEffect.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\UISliderColors.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\Other\UpdateManager.cs" />
@@ -104,6 +106,7 @@
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIForwardEvents.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIGrid.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIImageButton.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Interaction\UIKeyNavigation.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIPlayAnimation.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIPlaySound.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIPlayTween.cs" />
@@ -118,6 +121,7 @@
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIToggledComponents.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIToggledObjects.cs" />
      <Compile Include="Assets\NGUI\Scripts\Interaction\UIWidgetContainer.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Interaction\UIWrapContent.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\ActiveAnimation.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\AnimationOrTween.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\BMFont.cs" />
@@ -810,6 +814,7 @@
      <Compile Include="Assets\TK2DROOT\tk2dUI\Code\Core\tk2dUISpriteAnimator.cs" />
      <Compile Include="Assets\TK2DROOT\tk2dUI\Code\Core\tk2dUITime.cs" />
      <Compile Include="Assets\TK2DROOT\tk2dUI\Code\Core\tk2dUITouch.cs" />
+     <Compile Include="Assets\UnityRandom\lib\DiceRoll.cs" />
      <Compile Include="Assets\UnityRandom\lib\MersenneTwister.cs" />
      <Compile Include="Assets\iTween\iTween.cs" />
      <Compile Include="Assets\sqlitekit\DemoObject.cs" />
@@ -920,8 +925,11 @@
      <Compile Include="Assets\sqlitekit\src\walker_c.cs" />
      <Compile Include="Assets\sqlitekit\src\where_c.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
+     <None Include="Assets\NGUI\ReadMe - 3.0.8 f3.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitSolidVertexColor.shader" />
+     <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />
+     <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />
      <None Include="Assets\PlayMaker\Readme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (SoftClip).shader" />
      <None Include="Assets\TK2DROOT\tk2d\Goodies\TexturePacker\Exporter\2dtoolkit\exporter.xml" />
@@ -930,10 +938,12 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
      <None Include="Assets\TK2DROOT\tk2dUI\Shaders\DepthMask.shader" />
+     <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
      <None Include="Assets\NGUI Atlases\Resources\gameMapUI.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitPremulVertexColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\PremulVertexColor.shader" />
+     <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\goodies\PackedTextMesh.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\Blend2TexVertexColor.shader" />
@@ -941,6 +951,8 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
      <None Include="Assets\TK2DROOT\tk2dUI\Shaders\DepthMaskSolid.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (AlphaClip).shader" />
+     <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
+     <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (SoftClip).shader" />
      <None Include="Assets\NGUI Atlases\Resources\charSelectBody.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\resources\BlendVertexColor.shader" />
@@ -951,23 +963,30 @@
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitCutoutVertexColor.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font.shader" />
+     <None Include="Assets\NGUI\ReadMe - 3.0.5.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Editor\EditorUtility.shader" />
      <None Include="Assets\iTween\ReadMe!\ReadMe!.txt" />
+     <None Include="Assets\NGUI\Examples\Other\English.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
+     <None Include="Assets\NGUI\Examples\Other\French.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\CutoutVertexColor.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
      <None Include="Assets\PlayMaker\Resources\PlayMakerAssemblies.txt" />
+     <None Include="Assets\NGUI\1. Which Version To Import.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitBlendVertexColor.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
+     <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth.shader" />
+     <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\PlayMaker\Versions\readme.txt" />
+     <None Include="Assets\NGUI\Resources\Localization.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\NGUI Atlases\Resources\gameCombatUI.txt" />
- <Reference Include="Assets\PlayMaker\PlayMaker">
+ <Reference Include="PlayMaker">
  <HintPath>Assets\PlayMaker\PlayMaker.dll</HintPath>
  </Reference>
   </ItemGroup>

@@ -372,8 +372,10 @@ public class tk2dTextMesh : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBui
 
 	void InitInstance()
 	{
-		if (_fontInst == null && data.font != null)
+		if (data != null && data.font != null) {
 			_fontInst = data.font.inst;
+			_fontInst.InitDictionary();
+		}
 	}
 
 	Renderer _cachedRenderer = null;
@@ -406,6 +408,14 @@ public class tk2dTextMesh : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBui
 		// Sensibly reset, so tk2dUpdateManager can deal with this properly
 		updateFlags = UpdateFlags.UpdateNone;
 	}
+
+#if UNITY_EDITOR
+	private void OnEnable() {
+		if (renderer != null && data != null && data.font != null && data.font.inst != null && renderer.sharedMaterial == null && data.font.inst.needMaterialInstance) {
+			ForceBuild();
+		}
+	}
+#endif
 
 	protected void OnDestroy()
 	{
@@ -460,6 +470,7 @@ public class tk2dTextMesh : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBui
 			if (_fontInst.useDictionary)
 			{
 				if (!_fontInst.charDict.ContainsKey(idx)) idx = 0;
+
 			}
 			else
 			{

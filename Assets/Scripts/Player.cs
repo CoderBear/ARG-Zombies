@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
 	public PlayerDB db;
 
 	private int maxHP = 0, maxMP = 0;
-	private int initMod = 0, initiative = 0;
+//	private int initMod = 0, initiative = 0;
 	private int hp = 0, mp = 0, r_atk = 0, m_atk = 0, def = 0, xp = 0, money = 0;
 	private int lastXP = 0, lastMoney = 0;
 

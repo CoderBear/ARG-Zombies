@@ -187,10 +187,27 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		Build();
 	}
 	
+#if UNITY_EDITOR
+	private void OnEnable() {
+		if (renderer != null && batchedSprites != null) {
+			bool needBuild = false;
+			foreach (Material m in renderer.sharedMaterials) {
+				if (m == null) {
+					needBuild = true;
+					break;
+				}
+			}
+			if (needBuild) {
+				ForceBuild();
+			}
+		}
+	}
+#endif
+
 	// Sanitize data, returns true if needs rebuild
 	bool UpgradeData()
 	{
-		if (version == CURRENT_VERSION) {
+		if (version == CURRENT_VERSION ) {
 			return false;
 		}
 		

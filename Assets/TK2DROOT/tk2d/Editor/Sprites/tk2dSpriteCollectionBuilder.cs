@@ -174,6 +174,11 @@ public class tk2dSpriteCollectionBuilder
 
 	static void PadTexture(Texture2D tex, int pad, tk2dSpriteCollectionDefinition.Pad padMode)
 	{
+		// Default is now extend
+		if (padMode == tk2dSpriteCollectionDefinition.Pad.Default) {
+			padMode = tk2dSpriteCollectionDefinition.Pad.Extend;
+		}
+
 		Color bgColor = new Color(0,0,0,0);
 		Color c0 = bgColor, c1 = bgColor;
 		for (int y = 0; y < pad; ++y)
@@ -182,6 +187,7 @@ public class tk2dSpriteCollectionBuilder
 			{
 				switch (padMode) {
 					case tk2dSpriteCollectionDefinition.Pad.Extend: c0 = tex.GetPixel(x, pad); c1 = tex.GetPixel(x, tex.height - 1 - pad); break;
+					case tk2dSpriteCollectionDefinition.Pad.TileX:
 					case tk2dSpriteCollectionDefinition.Pad.TileXY: c1 = tex.GetPixel(x, pad); c0 = tex.GetPixel(x, tex.height - 1 - pad); break;
 				}
 				tex.SetPixel(x, y, c0);
@@ -194,6 +200,7 @@ public class tk2dSpriteCollectionBuilder
 			{
 				switch (padMode) {
 					case tk2dSpriteCollectionDefinition.Pad.Extend: c0 = tex.GetPixel(pad, y); c1 = tex.GetPixel(tex.width - 1 - pad, y); break;
+					case tk2dSpriteCollectionDefinition.Pad.TileY:
 					case tk2dSpriteCollectionDefinition.Pad.TileXY: c1 = tex.GetPixel(pad, y); c0 = tex.GetPixel(tex.width - 1 - pad, y); break;
 				}
 				tex.SetPixel(x, y, c0);
@@ -945,7 +952,7 @@ public class tk2dSpriteCollectionBuilder
 					SpriteLut lut = new SpriteLut();
 
 					int cy = (int)( (font.flipTextureY ? c.y : (fontInfo.scaleH - c.y - c.height)) * texScale );
-					Texture2D dest = ProcessTexture(gen, false, tk2dSpriteCollectionDefinition.Pad.Default, false, true, false,
+					Texture2D dest = ProcessTexture(gen, false, tk2dSpriteCollectionDefinition.Pad.BlackZeroAlpha, false, true, false,
 						(rescaledTexture != null) ? rescaledTexture : font.texture, 
 						(int)(c.x * texScale), cy, 
 						(int)(c.width * texScale), (int)(c.height * texScale), 
@@ -1466,7 +1473,8 @@ public class tk2dSpriteCollectionBuilder
 
 		if (importer.filterMode != gen.filterMode) 
 		{ 
-			importer.filterMode = gen.filterMode; textureDirty = true; 
+			importer.filterMode = gen.filterMode; 
+			textureDirty = true; 
 		}
 
 		if (!gen.userDefinedTextureSettings)
@@ -1475,6 +1483,13 @@ public class tk2dSpriteCollectionBuilder
 			if (importer.mipmapEnabled != gen.mipmapEnabled) { importer.mipmapEnabled = gen.mipmapEnabled; textureDirty = true; }
 			if (importer.anisoLevel != gen.anisoLevel) { importer.anisoLevel = gen.anisoLevel; textureDirty = true; }
 		}
+
+#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1)
+        if (importer.alphaIsTransparency) {
+        	importer.alphaIsTransparency = false;
+        	textureDirty = true;
+        }
+#endif
 
 		if (textureDirty)
 		{
@@ -2149,6 +2164,37 @@ public class tk2dSpriteCollectionBuilder
 			def.colliderSmoothSphereCollisions = src.colliderSmoothSphereCollisions;
 			def.edgeCollider2D = edgeCollider2D.ToArray();
 			def.polygonCollider2D = polygonCollider2D.ToArray();
+		}
+		else if (colliderType == tk2dSpriteCollectionDefinition.ColliderType.Advanced) {
+			List<tk2dSpriteColliderDefinition> colliders = new List<tk2dSpriteColliderDefinition>();
+			foreach (tk2dSpriteCollectionDefinition.ColliderData rawCollider in src.colliderData) {
+				Vector3 colliderOrigin = new Vector3(rawCollider.origin.x * src.scale.x, (texHeight - rawCollider.origin.y) * src.scale.y, 0) * scale + origin;
+				tk2dSpriteColliderDefinition gameColliderDef = null;
+
+				switch (rawCollider.type) {
+					case tk2dSpriteCollectionDefinition.ColliderData.Type.Box: {
+						gameColliderDef = new tk2dSpriteColliderDefinition( tk2dSpriteColliderDefinition.Type.Box, colliderOrigin, rawCollider.angle );
+						Vector3 size = Vector3.Scale( rawCollider.size, src.scale ) * scale;
+						size.z = gen.physicsDepth;
+						gameColliderDef.vectors = new Vector3[] { size };
+						break;
+					}
+					case tk2dSpriteCollectionDefinition.ColliderData.Type.Circle: {
+						float radius = rawCollider.size.x * Mathf.Max( Mathf.Abs(src.scale.x * scale), Mathf.Abs(src.scale.y * scale) );
+						gameColliderDef = new tk2dSpriteColliderDefinition( tk2dSpriteColliderDefinition.Type.Circle, colliderOrigin, rawCollider.angle );
+						gameColliderDef.floats = new float[] { radius };
+						gameColliderDef.origin = colliderOrigin;
+						gameColliderDef.angle = 0;
+						break;
+					}
+				}
+
+				if (gameColliderDef != null) {
+					gameColliderDef.name = rawCollider.name;
+					colliders.Add(gameColliderDef);
+				}
+			}
+			def.customColliders = colliders.ToArray();
 		}
 		else if (colliderType == tk2dSpriteCollectionDefinition.ColliderType.ForceNone)
 		{

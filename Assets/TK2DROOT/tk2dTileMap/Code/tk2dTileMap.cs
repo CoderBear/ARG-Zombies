@@ -140,6 +140,34 @@ public class tk2dTileMap : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBuil
 		}
 	}
 
+#if UNITY_EDITOR
+	void OnEnable() {
+		if (spriteCollection != null && data != null && renderData != null 
+			&& SpriteCollectionInst != null && SpriteCollectionInst.needMaterialInstance) {
+
+			bool needBuild = false;
+			if (layers != null) {
+				foreach (tk2dRuntime.TileMap.Layer layer in layers) {
+					if (layer.spriteChannel != null && layer.spriteChannel.chunks != null) {
+						foreach (tk2dRuntime.TileMap.SpriteChunk chunk in layer.spriteChannel.chunks) {
+							if (chunk.gameObject != null && chunk.gameObject.renderer != null) {
+								if (chunk.gameObject.renderer.sharedMaterial == null) {
+									needBuild = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (needBuild) {
+				Build(BuildFlags.ForceBuild);
+			}
+		}
+	}
+#endif
+
 	void OnDestroy() {
 		if (layers != null) {
 			foreach (tk2dRuntime.TileMap.Layer layer in layers) {
@@ -334,7 +362,7 @@ public class tk2dTileMap : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBuil
 			Vector3 localPosition = transform.worldToLocalMatrix.MultiplyPoint(position);
 			x = (localPosition.x - data.tileOrigin.x) / data.tileSize.x;
 			y = (localPosition.y - data.tileOrigin.y) / data.tileSize.y;
-			return (x >= 0 && x <= width && y >= 0 && y <= height);
+			return (x >= 0 && x < width && y >= 0 && y < height);
 		}
 		case tk2dTileMapData.TileType.Isometric:
 		{
@@ -378,7 +406,7 @@ public class tk2dTileMap : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBuil
 				}
 			}
 			
-			return (x >= 0 && x <= width && y >= 0 && y <= height);
+			return (x >= 0 && x < width && y >= 0 && y < height);
 		}
 		}
 		

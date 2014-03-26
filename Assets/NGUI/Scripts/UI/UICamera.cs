@@ -397,6 +397,18 @@ public class UICamera : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Returns 'true' if any of the active touch, mouse or controller is currently holding the specified object.
+	/// </summary>
+
+	static public bool IsPressed (GameObject go)
+	{
+		for (int i = 0; i < 3; ++i) if (mMouse[i].pressed == go) return true;
+		foreach (KeyValuePair<int, MouseOrTouch> touch in mTouches) if (touch.Value.pressed == go) return true;
+		if (controller.pressed == go) return true;
+		return false;
+	}
+
+	/// <summary>
 	/// Change the selection.
 	/// </summary>
 
@@ -408,21 +420,6 @@ public class UICamera : MonoBehaviour
 		}
 		else if (mCurrentSelection != go)
 		{
-			if (mCurrentSelection != null)
-			{
-				UICamera uicam = FindCameraForLayer(mCurrentSelection.layer);
-
-				if (uicam != null)
-				{
-					current = uicam;
-					currentCamera = uicam.mCam;
-					UICamera.currentScheme = scheme;
-					Notify(mCurrentSelection, "OnSelect", false);
-					current = null;
-				}
-			}
-
-			mCurrentSelection = null;
 			mNextSelection = go;
 			mNextScheme = scheme;
 
@@ -443,6 +440,7 @@ public class UICamera : MonoBehaviour
 	System.Collections.IEnumerator ChangeSelection ()
 	{
 		yield return new WaitForEndOfFrame();
+		Notify(mCurrentSelection, "OnSelect", false);
 		mCurrentSelection = mNextSelection;
 		mNextSelection = null;
 
@@ -807,13 +805,18 @@ public class UICamera : MonoBehaviour
 		return 0;
 	}
 
+	static bool mNotifying = false;
+
 	/// <summary>
 	/// Generic notification function. Used in place of SendMessage to shorten the code and allow for more than one receiver.
 	/// </summary>
 
 	static public void Notify (GameObject go, string funcName, object obj)
 	{
-		if (go != null)
+		if (mNotifying) return;
+		mNotifying = true;
+
+		if (NGUITools.GetActive(go))
 		{
 			go.SendMessage(funcName, obj, SendMessageOptions.DontRequireReceiver);
 
@@ -822,6 +825,7 @@ public class UICamera : MonoBehaviour
 				genericEventHandler.SendMessage(funcName, obj, SendMessageOptions.DontRequireReceiver);
 			}
 		}
+		mNotifying = false;
 	}
 
 	/// <summary>
@@ -1342,6 +1346,10 @@ public class UICamera : MonoBehaviour
 		float drag   = isMouse ? mouseDragThreshold : touchDragThreshold;
 		float click  = isMouse ? mouseClickThreshold : touchClickThreshold;
 
+		// So we can use sqrMagnitude below
+		drag *= drag;
+		click *= click;
+
 		// Send out the press message
 		if (pressed)
 		{
@@ -1364,11 +1372,11 @@ public class UICamera : MonoBehaviour
 				selectedObject = null;
 			}
 		}
-		else if (currentTouch.pressed != null && (currentTouch.delta.magnitude != 0f || currentTouch.current != currentTouch.last))
+		else if (currentTouch.pressed != null && (currentTouch.delta.sqrMagnitude != 0f || currentTouch.current != currentTouch.last))
 		{
 			// Keep track of the total movement
 			currentTouch.totalDelta += currentTouch.delta;
-			float mag = currentTouch.totalDelta.magnitude;
+			float mag = currentTouch.totalDelta.sqrMagnitude;
 			bool justStarted = false;
 
 			// If the drag process hasn't started yet but we've already moved off the object, start it immediately
@@ -1454,7 +1462,7 @@ public class UICamera : MonoBehaviour
 				if (currentTouch.dragged == currentTouch.current ||
 					(currentScheme != ControlScheme.Controller &&
 					currentTouch.clickNotification != ClickNotification.None &&
-					currentTouch.totalDelta.magnitude < drag))
+					currentTouch.totalDelta.sqrMagnitude < drag))
 				{
 					if (currentTouch.pressed != mCurrentSelection)
 					{
@@ -1469,7 +1477,7 @@ public class UICamera : MonoBehaviour
 					}
 
 					// If the touch should consider clicks, send out an OnClick notification
-					if (currentTouch.clickNotification != ClickNotification.None)
+					if (currentTouch.clickNotification != ClickNotification.None && currentTouch.pressed == currentTouch.current)
 					{
 						float time = RealTime.time;
 
@@ -1512,6 +1520,8 @@ public class UICamera : MonoBehaviour
 
 	void OnApplicationPause ()
 	{
+		MouseOrTouch prev = currentTouch;
+
 		if (useTouch)
 		{
 			BetterList<int> ids = new BetterList<int>();
@@ -1526,7 +1536,6 @@ public class UICamera : MonoBehaviour
 					currentTouch.clickNotification = ClickNotification.None;
 					ProcessTouch(false, true);
 					ids.Add(currentTouchID);
-					currentTouch = null;
 				}
 			}
 
@@ -1546,7 +1555,6 @@ public class UICamera : MonoBehaviour
 					currentScheme = ControlScheme.Mouse;
 					currentTouch.clickNotification = ClickNotification.None;
 					ProcessTouch(false, true);
-					currentTouch = null;
 				}
 			}
 		}
@@ -1563,9 +1571,9 @@ public class UICamera : MonoBehaviour
 				currentTouch.clickNotification = ClickNotification.None;
 				ProcessTouch(false, true);
 				currentTouch.last = null;
-				currentTouch = null;
 			}
 		}
+		currentTouch = prev;
 	}
 #endif
 }

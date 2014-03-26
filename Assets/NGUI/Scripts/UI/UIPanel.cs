@@ -120,6 +120,14 @@ public class UIPanel : UIRect
 	[System.NonSerialized]
 	public Matrix4x4 worldToLocal = Matrix4x4.identity;
 
+	public delegate void OnClippingMoved (UIPanel panel);
+
+	/// <summary>
+	/// Event callback that's triggered when the panel's clip region gets moved.
+	/// </summary>
+
+	public OnClippingMoved onClipMove;
+
 	// Panel's alpha (affects the alpha of all widgets)
 	[HideInInspector][SerializeField] float mAlpha = 1f;
 
@@ -128,17 +136,12 @@ public class UIPanel : UIRect
 	[HideInInspector][SerializeField] Vector4 mClipRange = new Vector4(0f, 0f, 300f, 200f);
 	[HideInInspector][SerializeField] Vector2 mClipSoftness = new Vector2(4f, 4f);
 	[HideInInspector][SerializeField] int mDepth = 0;
-
+#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
+	[HideInInspector][SerializeField] int mSortingOrder = 0;
+#endif
 	// Whether a full rebuild of geometry buffers is required
 	bool mRebuild = false;
 	bool mResized = false;
-
-	// Cached in order to reduce memory allocations
-	static BetterList<Vector3> mVerts = new BetterList<Vector3>();
-	static BetterList<Vector3> mNorms = new BetterList<Vector3>();
-	static BetterList<Vector4> mTans = new BetterList<Vector4>();
-	static BetterList<Vector2> mUvs = new BetterList<Vector2>();
-	static BetterList<Color32> mCols = new BetterList<Color32>();
 
 	Camera mCam;
 	[SerializeField] Vector2 mClipOffset = Vector2.zero;
@@ -223,6 +226,31 @@ public class UIPanel : UIRect
 			}
 		}
 	}
+
+#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
+	/// <summary>
+	/// Sorting order value for the panel's draw calls, to be used with Unity's 2D system.
+	/// </summary>
+
+	public int sortingOrder
+	{
+		get
+		{
+			return mSortingOrder;
+		}
+		set
+		{
+			if (mSortingOrder != value)
+			{
+				mSortingOrder = value;
+#if UNITY_EDITOR
+				NGUITools.SetDirty(this);
+#endif
+				UpdateDrawCalls();
+			}
+		}
+	}
+#endif
 
 	/// <summary>
 	/// Function that can be used to depth-sort panels.
@@ -332,6 +360,9 @@ public class UIPanel : UIRect
 				mCullTime = (mCullTime == 0f) ? 0.001f : RealTime.time + 0.15f;
 				mClipOffset = value;
 				mMatrixFrame = -1;
+
+				// Call the event delegate
+				if (onClipMove != null) onClipMove(this);
 #if UNITY_EDITOR
 				if (!Application.isPlaying) UpdateDrawCalls();
 #endif
@@ -370,10 +401,10 @@ public class UIPanel : UIRect
 		}
 		set
 		{
-			if (Mathf.Abs(mClipRange.x - value.x) > 0.49f ||
-				Mathf.Abs(mClipRange.y - value.y) > 0.49f ||
-				Mathf.Abs(mClipRange.z - value.z) > 0.49f ||
-				Mathf.Abs(mClipRange.w - value.w) > 0.49f)
+			if (Mathf.Abs(mClipRange.x - value.x) > 0.001f ||
+				Mathf.Abs(mClipRange.y - value.y) > 0.001f ||
+				Mathf.Abs(mClipRange.z - value.z) > 0.001f ||
+				Mathf.Abs(mClipRange.w - value.w) > 0.001f)
 			{
 				mResized = true;
 				mCullTime = (mCullTime == 0f) ? 0.001f : RealTime.time + 0.15f;
@@ -382,6 +413,7 @@ public class UIPanel : UIRect
 
 				UIScrollView sv = GetComponent<UIScrollView>();
 				if (sv != null) sv.UpdatePosition();
+				if (onClipMove != null) onClipMove(this);
 #if UNITY_EDITOR
 				if (!Application.isPlaying) UpdateDrawCalls();
 #endif
@@ -1034,9 +1066,10 @@ public class UIPanel : UIRect
 
 				if (mat != mt || tex != tx || sdr != sd)
 				{
-					if (mVerts.size != 0)
+					if (dc != null && dc.verts.size != 0)
 					{
-						SubmitDrawCall(dc);
+						drawCalls.Add(dc);
+						dc.UpdateGeometry();
 						dc = null;
 					}
 
@@ -1063,28 +1096,18 @@ public class UIPanel : UIRect
 
 					w.drawCall = dc;
 
-					if (generateNormals) w.WriteToBuffers(mVerts, mUvs, mCols, mNorms, mTans);
-					else w.WriteToBuffers(mVerts, mUvs, mCols, null, null);
+					if (generateNormals) w.WriteToBuffers(dc.verts, dc.uvs, dc.cols, dc.norms, dc.tans);
+					else w.WriteToBuffers(dc.verts, dc.uvs, dc.cols, null, null);
 				}
 			}
 			else w.drawCall = null;
 		}
-		if (mVerts.size != 0) SubmitDrawCall(dc);
-	}
 
-	/// <summary>
-	/// Submit the draw call using the current geometry.
-	/// </summary>
-
-	void SubmitDrawCall (UIDrawCall dc)
-	{
-		drawCalls.Add(dc);
-		dc.Set(mVerts, generateNormals ? mNorms : null, generateNormals ? mTans : null, mUvs, mCols);
-		mVerts.Clear();
-		mNorms.Clear();
-		mTans.Clear();
-		mUvs.Clear();
-		mCols.Clear();
+		if (dc != null && dc.verts.size != 0)
+		{
+			drawCalls.Add(dc);
+			dc.UpdateGeometry();
+		}
 	}
 
 	/// <summary>
@@ -1114,22 +1137,17 @@ public class UIPanel : UIRect
 				{
 					if (w.isVisible && w.hasVertices)
 					{
-						if (generateNormals) w.WriteToBuffers(mVerts, mUvs, mCols, mNorms, mTans);
-						else w.WriteToBuffers(mVerts, mUvs, mCols, null, null);
+						if (generateNormals) w.WriteToBuffers(dc.verts, dc.uvs, dc.cols, dc.norms, dc.tans);
+						else w.WriteToBuffers(dc.verts, dc.uvs, dc.cols, null, null);
 					}
 					else w.drawCall = null;
 				}
 				++i;
 			}
 
-			if (mVerts.size != 0)
+			if (dc.verts.size != 0)
 			{
-				dc.Set(mVerts, generateNormals ? mNorms : null, generateNormals ? mTans : null, mUvs, mCols);
-				mVerts.Clear();
-				mNorms.Clear();
-				mTans.Clear();
-				mUvs.Clear();
-				mCols.Clear();
+				dc.UpdateGeometry();
 				return true;
 			}
 		}
@@ -1202,6 +1220,9 @@ public class UIPanel : UIRect
 			dc.clipSoftness = mClipSoftness;
 			dc.alwaysOnScreen = alwaysOnScreen &&
 				(mClipping == UIDrawCall.Clipping.None || mClipping == UIDrawCall.Clipping.ConstrainButDontClip);
+#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
+			dc.sortingOrder = mSortingOrder;
+#endif
 		}
 	}
 
@@ -1455,7 +1476,7 @@ public class UIPanel : UIRect
 	{
 		Vector3 offset = CalculateConstrainOffset(targetBounds.min, targetBounds.max);
 
-		if (offset.magnitude > 0f)
+		if (offset.sqrMagnitude > 0f)
 		{
 			if (immediate)
 			{

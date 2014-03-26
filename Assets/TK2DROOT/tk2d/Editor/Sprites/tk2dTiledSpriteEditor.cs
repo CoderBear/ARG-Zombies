@@ -18,9 +18,9 @@ class tk2dTiledSpriteEditor : tk2dSpriteEditor
         tk2dTiledSprite sprite = (tk2dTiledSprite)target;
 		base.OnInspectorGUI();
 		
-		if (sprite.Collection == null)
+		if (sprite.Collection == null) {
 			return;
-
+		}
 		
 		EditorGUILayout.BeginVertical();
 		
@@ -86,7 +86,9 @@ class tk2dTiledSpriteEditor : tk2dSpriteEditor
     }
 
 	public new void OnSceneGUI() {
-		if (tk2dPreferences.inst.enableSpriteHandles == false) return;
+		if (tk2dPreferences.inst.enableSpriteHandles == false || !tk2dEditorUtility.IsEditable(target)) {
+			return;
+		}
 
 		tk2dTiledSprite spr = (tk2dTiledSprite)target;
 

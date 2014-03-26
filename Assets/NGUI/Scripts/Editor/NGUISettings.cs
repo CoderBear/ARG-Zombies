@@ -177,6 +177,18 @@ public class NGUISettings
 		set { SetColor("NGUI Color", value); }
 	}
 
+	static public Color foregroundColor
+	{
+		get { return GetColor("NGUI FG Color", Color.white); }
+		set { SetColor("NGUI FG Color", value); }
+	}
+
+	static public Color backgroundColor
+	{
+		get { return GetColor("NGUI BG Color", Color.black); }
+		set { SetColor("NGUI BG Color", value); }
+	}
+
 	static public ColorMode colorMode
 	{
 		get { return GetEnum("NGUI Color Mode", ColorMode.Blue); }
@@ -356,7 +368,13 @@ public class NGUISettings
 
 	static public string pathToFreeType
 	{
-		get { return GetString("NGUI FreeType", Application.dataPath + "/NGUI/Editor/FreeType.dll"); }
+		get
+		{
+			string path = Application.dataPath;
+			if (Application.platform == RuntimePlatform.WindowsEditor) path += "/NGUI/Editor/FreeType.dll";
+			else path += "/NGUI/Editor/FreeType.dylib";
+			return GetString("NGUI FreeType", path);
+		}
 		set { SetString("NGUI FreeType", value); }
 	}
 #endregion

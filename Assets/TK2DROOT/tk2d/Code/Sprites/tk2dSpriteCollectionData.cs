@@ -8,6 +8,63 @@ public class tk2dCollider2DData {
 
 [System.Serializable]
 /// <summary>
+/// Advanced collider definitions
+/// </summary>
+public class tk2dSpriteColliderDefinition {
+	// This is used to quickly get a collider of this "type" from the physics manager
+	public enum Type {
+		Box,
+		Circle,
+	}
+
+	/// <summary>
+	/// Type of collider
+	/// </summary>
+	public Type type = Type.Box;
+
+	/// <summary>
+	/// Origin of the collider relative to the sprite
+	/// </summary>
+	public Vector3 origin;
+
+	/// <summary>
+	/// Rotation angle of the collider. Meaningless on Circle shapes.
+	/// </summary>
+	public float angle;
+
+	public string name = "";
+
+	public Vector3[] vectors = new Vector3[0];
+	public float[] floats = new float[0];
+
+	public tk2dSpriteColliderDefinition( Type type, Vector3 origin, float angle ) {
+		this.type = type;
+		this.origin = origin;
+		this.angle = angle;
+	}
+
+	/// <summary>
+	/// The radius of a Circle collider
+	/// </summary>
+	public float Radius {
+		get {
+			return type == Type.Circle ? floats[0] : 0;
+		}
+	}
+
+	/// <summary>
+	/// The size of the box collider
+	/// </summary>
+	public Vector3 Size {
+		get {
+			return type == Type.Box ? vectors[0] : Vector3.zero;
+		}
+	}
+}
+
+
+[System.Serializable]
+/// <summary>
 /// Sprite Definition.
 /// </summary>
 public class tk2dSpriteDefinition
@@ -36,6 +93,11 @@ public class tk2dSpriteDefinition
 		/// Create a mesh collider.
 		/// </summary>
 		Mesh,
+
+		/// <summary>
+		/// Will use a custom physics engine. User is responsible in managing colliders.
+		/// </summary>
+		Custom,
 	}
 
 	/// <summary>
@@ -131,6 +193,11 @@ public class tk2dSpriteDefinition
 	/// Collider type
 	/// </summary>
 	public ColliderType colliderType = ColliderType.Unset;
+
+	/// <summary>
+	/// Advanced custom colliders, set when colliderType == Advanced
+	/// </summary>
+	public tk2dSpriteColliderDefinition[] customColliders = new tk2dSpriteColliderDefinition[0];
 	
 	/// <summary>
 	/// v0 and v1 are center and size respectively for box colliders when colliderType is Box.
@@ -489,6 +556,8 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 			return platformSpecificData;
 		}
 	}
+
+	public static readonly string internalResourcePrefix = "tk2dInternal$.";
 	
 	void Init()
 	{
@@ -522,20 +591,23 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 					textureInsts = new Texture2D[pngTextures.Length];
 					for (int i = 0; i < pngTextures.Length; ++i) {
 						Texture2D tex = new Texture2D(4, 4, TextureFormat.ARGB32, textureMipMaps);
+	#if UNITY_EDITOR
+						tex.name = string.Format("{0}PNG_{1}_{2}", internalResourcePrefix, name, i);
+						tex.hideFlags = HideFlags.DontSave;
+	#endif
 						tex.LoadImage(pngTextures[i].bytes);
 						textureInsts[i] = tex;
 						tex.filterMode = textureFilterMode;
-	#if UNITY_EDITOR
-						tex.hideFlags = HideFlags.DontSave;
-	#endif
+						tex.Apply(textureMipMaps, true);	
 					}
 				}
-
-				for (int i = 0; i < materials.Length; ++i)
+ 
+				for (int i = 0; i < materials.Length; ++i) 
 				{
 					materialInsts[i] = Instantiate(materials[i]) as Material;
 	#if UNITY_EDITOR
-					materialInsts[i].hideFlags = HideFlags.DontSave;
+					materialInsts[i].name = string.Format("{0}Material_{1}_{2}", internalResourcePrefix, name, materials[i].name);
+					materialInsts[i].hideFlags = HideFlags.DontSave; 
 	#endif
 					if (assignTextureInst) {
 						int textureId = (materialPngTextureId.Length == 0) ? 0 : materialPngTextureId[i];
@@ -560,6 +632,50 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 				def.materialInst = def.material;
 			}
 		}
+
+
+#if (UNITY_EDITOR && !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2))
+		// Unity 4.3 when in 2D mode overrides imported textures with alphaIsTransparency set
+		// which naturally breaks our old demo scenes. This happens even when meta files
+		// are present :(
+		if (materialInsts != null 
+				&& materialInsts.Length > 0 
+				&& materialInsts[0] != null
+				&& materialInsts[0].mainTexture != null
+				&& materialInsts[0].shader != null
+				&& materialInsts[0].shader.name.Contains("Premul")) { // Detect premultiplied textures
+			string path = UnityEditor.AssetDatabase.GetAssetPath( materialInsts[0].mainTexture );
+			if (path.Length > 0) {
+				UnityEditor.TextureImporter importer = UnityEditor.TextureImporter.GetAtPath(path) as UnityEditor.TextureImporter;
+				if (importer != null && (importer.alphaIsTransparency || importer.grayscaleToAlpha)) {
+					if (UnityEditor.EditorUtility.DisplayDialog(
+							"Atlas texture incompatibility", 
+							string.Format("Atlas texture '{0}' for sprite collection '{1}' must be reimported to display correctly in Unity 4.3 when in 2D mode.", materialInsts[0].mainTexture.name, name), 
+							"Reimport")) {
+						List<Texture> textures = new List<Texture>();
+						for (int i = 0; i < materialInsts.Length; ++i) {
+							if (materialInsts[i] != null 
+									&& materialInsts[i].mainTexture != null 
+									&& !textures.Contains(materialInsts[i].mainTexture) // only do this once
+									&& materialInsts[i].shader != null) {
+								path = UnityEditor.AssetDatabase.GetAssetPath( materialInsts[i].mainTexture );
+								if (path.Length > 0) {
+									importer = UnityEditor.TextureImporter.GetAtPath(path) as UnityEditor.TextureImporter;
+									if (importer != null && (importer.alphaIsTransparency || importer.grayscaleToAlpha) ) {
+										importer.alphaIsTransparency = false;
+										importer.grayscaleToAlpha = false;
+										UnityEditor.EditorUtility.SetDirty(importer);
+										UnityEditor.AssetDatabase.ImportAsset(path);
+									}
+								}
+								textures.Add( materialInsts[i].mainTexture );
+							}
+						}
+					}
+				}
+			}
+		}
+#endif
 
 		tk2dEditorSpriteDataUnloader.Register(this);
 	}

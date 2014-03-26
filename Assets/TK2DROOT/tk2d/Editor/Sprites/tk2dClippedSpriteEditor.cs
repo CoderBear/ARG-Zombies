@@ -53,7 +53,9 @@ class tk2dClippedSpriteEditor : tk2dSpriteEditor
     }
 
 	public new void OnSceneGUI() {
-		if (tk2dPreferences.inst.enableSpriteHandles == false) return;
+		if (tk2dPreferences.inst.enableSpriteHandles == false || !tk2dEditorUtility.IsEditable(target)) {
+			return;
+		}
 
 		tk2dClippedSprite spr = (tk2dClippedSprite)target;
 		var sprite = spr.CurrentSprite;
@@ -64,8 +66,10 @@ class tk2dClippedSpriteEditor : tk2dSpriteEditor
 		Transform t = spr.transform;
 		Bounds b = spr.GetUntrimmedBounds();
 		Rect localRect = new Rect(b.min.x, b.min.y, b.size.x, b.size.y);
-		Rect clipRect = new Rect(b.min.x + b.size.x * spr.clipBottomLeft.x, b.min.y + b.size.y * spr.clipBottomLeft.y,
-		                         b.size.x * spr.ClipRect.width, b.size.y * spr.ClipRect.height);
+		Rect clipRect = new Rect(b.min.x + b.size.x * ((spr.scale.x > 0) ? spr.clipBottomLeft.x : (1.0f - spr.clipTopRight.x)),
+			b.min.y + b.size.y * ((spr.scale.y > 0) ? spr.clipBottomLeft.y : (1.0f - spr.clipTopRight.y)),
+			b.size.x * spr.ClipRect.width,
+			b.size.y * spr.ClipRect.height);
 
 		// Draw rect outline
 		Handles.color = new Color(1,1,1,0.5f);
@@ -107,8 +111,10 @@ class tk2dClippedSpriteEditor : tk2dSpriteEditor
 			EditorGUI.BeginChangeCheck();
 			Rect resizeRect = tk2dSceneHelper.RectControl (708090, clipRect, t);
 			if (EditorGUI.EndChangeCheck()) {
-				Rect newSprClipRect = new Rect((resizeRect.xMin - localRect.xMin) / localRect.width, (resizeRect.yMin - localRect.yMin) / localRect.height,
-				                               resizeRect.width / localRect.width, resizeRect.height / localRect.height);
+				Rect newSprClipRect = new Rect(((spr.scale.x > 0) ? (resizeRect.xMin - localRect.xMin) : (localRect.xMax - resizeRect.xMax)) / localRect.width,
+					((spr.scale.y > 0) ? (resizeRect.yMin - localRect.yMin) : (localRect.yMax - resizeRect.yMax)) / localRect.height,
+					resizeRect.width / localRect.width,
+					resizeRect.height / localRect.height);
 				if (newSprClipRect != spr.ClipRect) {
 					tk2dUndo.RecordObject (spr, "Resize");
 					spr.ClipRect = newSprClipRect;

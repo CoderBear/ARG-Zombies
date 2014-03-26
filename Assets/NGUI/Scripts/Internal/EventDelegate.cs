@@ -394,7 +394,7 @@ public class EventDelegate
 	/// Append a new event delegate to the list.
 	/// </summary>
 
-	static public void Add (List<EventDelegate> list, EventDelegate ev) { Add(list, ev, false); }
+	static public void Add (List<EventDelegate> list, EventDelegate ev) { Add(list, ev, ev.oneShot); }
 
 	/// <summary>
 	/// Append a new event delegate to the list.
@@ -402,7 +402,11 @@ public class EventDelegate
 
 	static public void Add (List<EventDelegate> list, EventDelegate ev, bool oneShot)
 	{
-		if (list != null)
+		if (ev.mRawDelegate || ev.target == null || string.IsNullOrEmpty(ev.methodName))
+		{
+			Add(list, ev.mCachedCallback, oneShot);
+		}
+		else if (list != null)
 		{
 			for (int i = 0, imax = list.Count; i < imax; ++i)
 			{

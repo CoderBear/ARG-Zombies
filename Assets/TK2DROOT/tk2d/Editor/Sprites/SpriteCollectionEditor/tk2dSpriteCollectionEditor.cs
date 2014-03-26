@@ -59,6 +59,7 @@ public class tk2dSpriteCollectionEditor : Editor
 					{
 						tk2dSpriteCollectionEditorPopup v = EditorWindow.GetWindow( typeof(tk2dSpriteCollectionEditorPopup), false, "SpriteCollection" ) as tk2dSpriteCollectionEditorPopup;
 						v.SetGenerator(gen);
+						v.Show();
 					}
 				}
 				GUILayout.FlexibleSpace();
