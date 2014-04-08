@@ -740,6 +740,7 @@
      <Compile Include="Assets\Scripts\Buttons\main menu\PlayGame.cs" />
      <Compile Include="Assets\Scripts\Buttons\main menu\Signout.cs" />
      <Compile Include="Assets\Scripts\Buttons\offlineButton.cs" />
+     <Compile Include="Assets\Scripts\Buttons\offlineButtonSpawn.cs" />
      <Compile Include="Assets\Scripts\Database\MobDB.cs" />
      <Compile Include="Assets\Scripts\Database\PlayerDB.cs" />
      <Compile Include="Assets\Scripts\GlobalConstants.cs" />
