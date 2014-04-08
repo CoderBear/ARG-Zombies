@@ -24,13 +24,6 @@ public class UIPanel : UIRect
 
 	static public BetterList<UIPanel> list = new BetterList<UIPanel>();
 
-	public enum DebugInfo
-	{
-		None,
-		Gizmos,
-		Geometry,
-	}
-
 	public enum RenderQueue
 	{
 		Automatic,
@@ -119,6 +112,13 @@ public class UIPanel : UIRect
 
 	[System.NonSerialized]
 	public Matrix4x4 worldToLocal = Matrix4x4.identity;
+
+	/// <summary>
+	/// Cached clip range passed to the draw call's shader.
+	/// </summary>
+
+	[System.NonSerialized]
+	public Vector4 drawCallClipRange = new Vector4(0f, 0f, 1f, 1f);
 
 	public delegate void OnClippingMoved (UIPanel panel);
 
@@ -333,11 +333,48 @@ public class UIPanel : UIRect
 		}
 	}
 
+	UIPanel mParentPanel = null;
+
+	/// <summary>
+	/// Reference to the parent panel, if any.
+	/// </summary>
+
+	public UIPanel parentPanel { get { return mParentPanel; } }
+
+	/// <summary>
+	/// Number of times the panel's contents get clipped.
+	/// </summary>
+
+	public int clipCount
+	{
+		get
+		{
+			int count = 0;
+			UIPanel p = this;
+
+			while (p != null)
+			{
+				if (p.mClipping == UIDrawCall.Clipping.SoftClip) ++count;
+				p = p.mParentPanel;
+			}
+			return count;
+		}
+	}
+
 	/// <summary>
 	/// Whether the panel will actually perform clipping of children.
 	/// </summary>
 
-	public bool clipsChildren { get { return mClipping == UIDrawCall.Clipping.AlphaClip || mClipping == UIDrawCall.Clipping.SoftClip; } }
+	public bool hasClipping { get { return mClipping == UIDrawCall.Clipping.SoftClip; } }
+
+	/// <summary>
+	/// Whether the panel will actually perform clipping of children.
+	/// </summary>
+
+	public bool hasCumulativeClipping { get { return clipCount != 0; } }
+
+	[System.Obsolete("Use 'hasClipping' or 'hasCumulativeClipping' instead")]
+	public bool clipsChildren { get { return hasCumulativeClipping; } }
 
 	/// <summary>
 	/// Clipping area offset used to make it possible to move clipped panels (scroll views) efficiently.
@@ -690,9 +727,41 @@ public class UIPanel : UIRect
 	public bool IsVisible (UIWidget w)
 	{
 		if ((mClipping == UIDrawCall.Clipping.None || mClipping == UIDrawCall.Clipping.ConstrainButDontClip) && !w.hideIfOffScreen)
-			return true;
+		{
+			if (mParentPanel == null || clipCount == 0) return true;
+		}
+
+		UIPanel p = this;
 		Vector3[] corners = w.worldCorners;
-		return IsVisible(corners[0], corners[1], corners[2], corners[3]);
+
+		while (p != null)
+		{
+			if (!IsVisible(corners[0], corners[1], corners[2], corners[3])) return false;
+			p = p.mParentPanel;
+		}
+		return true;
+	}
+
+	/// <summary>
+	/// Whether the specified widget is going to be affected by this panel in any way.
+	/// </summary>
+
+	public bool Affects (UIWidget w)
+	{
+		if (w == null) return false;
+
+		UIPanel expected = w.panel;
+		if (expected == null) return false;
+
+		UIPanel p = this;
+
+		while (p != null)
+		{
+			if (p == expected) return true;
+			if (!p.hasCumulativeClipping) return false;
+			p = p.mParentPanel;
+		}
+		return false;
 	}
 
 	/// <summary>
@@ -730,6 +799,28 @@ public class UIPanel : UIRect
 
 		// Only DirectX 9 needs the half-pixel offset
 		if (mHalfPixelOffset) mHalfPixelOffset = (SystemInfo.graphicsShaderLevel < 40);
+	}
+
+	/// <summary>
+	/// Remember the parent panel, if any.
+	/// </summary>
+
+	protected override void OnEnable ()
+	{
+		base.OnEnable();
+		Transform parent = cachedTransform.parent;
+		mParentPanel = (parent != null) ? NGUITools.FindInParents<UIPanel>(parent.gameObject) : null;
+	}
+
+	/// <summary>
+	/// Find the parent panel, if we have one.
+	/// </summary>
+
+	public override void ParentHasChanged ()
+	{
+		base.ParentHasChanged();
+		Transform parent = cachedTransform.parent;
+		mParentPanel = (parent != null) ? NGUITools.FindInParents<UIPanel>(parent.gameObject) : null;
 	}
 
 	/// <summary>
@@ -1161,22 +1252,25 @@ public class UIPanel : UIRect
 	void UpdateDrawCalls ()
 	{
 		Transform trans = cachedTransform;
-		Vector4 range = Vector4.zero;
 		bool isUI = usedForUI;
 
 		if (clipping != UIDrawCall.Clipping.None)
 		{
-			Vector4 cr = finalClipRegion;
-			range = new Vector4(cr.x, cr.y, cr.z * 0.5f, cr.w * 0.5f);
+			drawCallClipRange = finalClipRegion;
+			drawCallClipRange.z *= 0.5f;
+			drawCallClipRange.w *= 0.5f;
 		}
+		else drawCallClipRange = Vector4.zero;
 
-		if (range.z == 0f) range.z = Screen.width * 0.5f;
-		if (range.w == 0f) range.w = Screen.height * 0.5f;
+		// Legacy functionality
+		if (drawCallClipRange.z == 0f) drawCallClipRange.z = Screen.width * 0.5f;
+		if (drawCallClipRange.w == 0f) drawCallClipRange.w = Screen.height * 0.5f;
 
+		// DirectX 9 half-pixel offset
 		if (halfPixelOffset)
 		{
-			range.x -= 0.5f;
-			range.y += 0.5f;
+			drawCallClipRange.x -= 0.5f;
+			drawCallClipRange.y += 0.5f;
 		}
 
 		Vector3 pos;
@@ -1192,8 +1286,10 @@ public class UIPanel : UIRect
 			{
 				float x = Mathf.Round(pos.x);
 				float y = Mathf.Round(pos.y);
-				range.x += pos.x - x;
-				range.y += pos.y - y;
+
+				drawCallClipRange.x += pos.x - x;
+				drawCallClipRange.y += pos.y - y;
+
 				pos.x = x;
 				pos.y = y;
 				pos = parent.TransformPoint(pos);
@@ -1215,9 +1311,6 @@ public class UIPanel : UIRect
 			t.localScale = scale;
 
 			dc.renderQueue = (renderQueue == RenderQueue.Explicit) ? startingRenderQueue : startingRenderQueue + i;
-			dc.clipping = clipping;
-			dc.clipRange = range;
-			dc.clipSoftness = mClipSoftness;
 			dc.alwaysOnScreen = alwaysOnScreen &&
 				(mClipping == UIDrawCall.Clipping.None || mClipping == UIDrawCall.Clipping.ConstrainButDontClip);
 #if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
@@ -1266,7 +1359,7 @@ public class UIPanel : UIRect
 			mResized = true;
 		}
 
-		bool clipped = clipsChildren;
+		bool clipped = hasCumulativeClipping;
 
 		// Update all widgets
 		for (int i = 0, imax = widgets.size; i < imax; ++i)

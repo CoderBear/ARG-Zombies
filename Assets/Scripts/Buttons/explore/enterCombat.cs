@@ -11,19 +11,27 @@ public class enterCombat : MonoBehaviour {
 	private const int D20_VALUE_MAX = 20; // the highest roll on a d20
 	private const int D4_VALUE_MAX = 4; // the highest roll on a d4
 	private const int COMBATANTS_MAX = 3; // Maximum number of Combatants
+
+	private const int MOB1_POS_X = 125;
+	private const int MOB1_POS_Y = -24;
+	private const int MOB2_POS_X = 125;
+	private const int MOB2_POS_Y = -24;
 	
+	private static Vector3 MOB1_POS = new Vector3(125f,-24f,-1f);
+	private static Vector3 MOB2_POS = new Vector3(275f,-136f, -1f);
+
 	private Player goPlayer;
-	public Mob goMOB1, goMOB2;
+	public GameObject goMOB1, goMOB2;
 
 	[SerializeField]
-	private List<GameObject> spawnedMobs;
+	public List<GameObject> spawnedMobs;
 
 	public ExploreCombatUI uiObject;
 
 	// Use this for initialization
 	void Start () {
 		rand = new MersenneTwister ();
-		spawnedMobs = new List<GameObject> (2);
+		spawnedMobs = new List<GameObject> ();
 
 		// set local private player object to the singleton player.
 		goPlayer = GameObject.FindWithTag ("Player").GetComponent<Player>();
@@ -34,23 +42,29 @@ public class enterCombat : MonoBehaviour {
 	}
 
 	void OnClick() {
-		Debug.Log ("Spawning MOBs");
+		goPlayer.LastAreaVisited = Application.loadedLevelName;
+		Application.LoadLevel ("gameCombat");
+//		Debug.Log ("Spawning MOBs");
 		
 		// create the ememies that the player will combat against
 //		RandomEnemySpawn ();
-		spawnFollowers ();
-		spawnFollowers ();
-		
-		Debug.Log ("Initializing MOBs");
-		InitializeMOB ();
-		
-		Debug.Log ("goMob1 currentHealth is " + spawnedMobs[0].GetComponent<Mob>().getHP ());
-		Debug.Log ("goMOB1 Death is " + spawnedMobs [0].GetComponent<Mob> ().isDead());
-		Debug.Log ("goMob2 currentHealth is " + spawnedMobs[1].GetComponent<Mob>().getHP ());
-		Debug.Log ("goMOB2 Death is " + spawnedMobs [1].GetComponent<Mob> ().isDead());
+//		for (int i = 0; i < 2; i++) {
+//			spawnFollowers ();
+//		};
+//		spawnFollowers ();
+//		spawnCultists ();
 
-		Debug.Log ("Starting Auto-Combat");
-		DoAutoCombat ();
+//		Debug.Log ("Initializing MOBs");
+//
+//		InitializeMOB ();
+//		
+//		Debug.Log ("goMob1 currentHealth is " + spawnedMobs[0].GetComponent<Mob>().getHP ());
+//		Debug.Log ("goMOB1 Death is " + spawnedMobs [0].GetComponent<Mob> ().isDead());
+//		Debug.Log ("goMob2 currentHealth is " + spawnedMobs[1].GetComponent<Mob>().getHP ());
+//		Debug.Log ("goMOB2 Death is " + spawnedMobs [1].GetComponent<Mob> ().isDead());
+//
+//		Debug.Log ("Starting Auto-Combat");
+//		DoAutoCombat ();
 	}
 
 	/* For Initial proof of concept, battle is automated
@@ -120,10 +134,10 @@ public class enterCombat : MonoBehaviour {
 
 			// check if either player is dead or both enemies are
 			// dead and declare a winner.
-			Debug.Log ("Player Death is " + goPlayer.isDead());
-			Debug.Log ("goMOB1 Death is " + spawnedMobs [0].GetComponent<Mob> ().isDead());
-			Debug.Log("goMOB2 Health is " + spawnedMobs [1].GetComponent<Mob> ().getCurrentHP() + "/8" );
-			Debug.Log ("goMOB2 Death is " + spawnedMobs [1].GetComponent<Mob> ().isDead());
+//			Debug.Log ("Player Death is " + goPlayer.isDead());
+//			Debug.Log ("goMOB1 Death is " + spawnedMobs [0].GetComponent<Mob> ().isDead());
+//			Debug.Log("goMOB2 Health is " + spawnedMobs [1].GetComponent<Mob> ().getCurrentHP() + "/8" );
+//			Debug.Log ("goMOB2 Death is " + spawnedMobs [1].GetComponent<Mob> ().isDead());
 			if (goPlayer.isDead ()) {
 				victor = 2;
 				done = true;
@@ -182,13 +196,23 @@ public class enterCombat : MonoBehaviour {
 	}
 
 	private void spawnCultists() {
-		Instantiate (goMOB1);
-		spawnedMobs.Add (GameObject.FindGameObjectWithTag ("cultist"));
+		if(spawnedMobs.Count == 0) {
+			Instantiate(goMOB1, MOB1_POS, Quaternion.identity);
+			spawnedMobs.Add (GameObject.FindWithTag ("cultist"));
+		} else {
+			Instantiate(goMOB1, MOB2_POS, Quaternion.identity);
+			spawnedMobs.Add (GameObject.FindWithTag ("cultist"));
+		}
 	}
 
 	private void spawnFollowers () {
-		Instantiate (goMOB2);
-		spawnedMobs.Add (GameObject.FindWithTag ("follower"));
+		if(spawnedMobs.Count == 0) {
+			Instantiate(goMOB2, MOB1_POS, Quaternion.identity);
+			spawnedMobs.Add (GameObject.FindWithTag ("follower"));
+		} else {
+			Instantiate(goMOB2, MOB2_POS, Quaternion.identity);
+			spawnedMobs.Add (GameObject.FindWithTag ("follower"));
+		}
 	}
 
 	// Initialize the gameobjext according to its tag
@@ -209,6 +233,9 @@ public class enterCombat : MonoBehaviour {
 			Destroy(spawnedMobs[i]);
 		}
 		spawnedMobs.Clear ();
+
+		Destroy (GameObject.FindWithTag ("follower"));
+		Destroy (GameObject.FindGameObjectWithTag ("cultist"));
 	}
 #endregion
 
@@ -237,7 +264,11 @@ public class enterCombat : MonoBehaviour {
 	}
 
 	private void dealDamage(int index, int attack) {
-		int dmg = attack + rand.Next (DICE_VALUE_MIN, D4_VALUE_MAX);
+		int dmg = 0;
+		if(attack > 0)
+			dmg = attack + rand.Next (DICE_VALUE_MIN, D4_VALUE_MAX);
+		else
+			dmg = rand.Next (DICE_VALUE_MIN, D4_VALUE_MAX);
 
 		switch (index) {
 		case 1: //Player
