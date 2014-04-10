@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerDB : MonoBehaviour {
 
 	void Awake() {
-		DontDestroyOnLoad (this.gameObject);
+//		DontDestroyOnLoad (this.gameObject);
 	}
 	
 #region SQL Lite Query Functions

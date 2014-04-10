@@ -9,10 +9,13 @@ public class Mob : MonoBehaviour
 //	private int initMod = 0, initiative = 0;
 	private int currentHP;
 
+	[SerializeField]private HUDText hudText;
+
 	// Use this for initialization
 	void Start ()
 	{
 		db = gameObject.AddComponent<MobDB> ();
+		hudText = GetComponent<HUDText> ();
 	}
 
 	public void Initialize (int id)
@@ -36,6 +39,8 @@ public class Mob : MonoBehaviour
 #region MOB update methods
 	public void UpdateCurrentHP (int currHP)
 	{
+		//show the damage in red
+		hudText.Add (currHP, Color.red, 1f);
 		currentHP += currHP;
 
 		if (currentHP > hp)

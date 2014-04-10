@@ -17,12 +17,26 @@ public class exploreArea : MonoBehaviour {
 
 	private int roomsCleared = 0, roomsTotal = 0;
 
+	private Player player;
+	void Awake() {
+		// set local private player object to the singleton player.
+		player = GameObject.FindWithTag ("Player").GetComponent<Player>();
+	}
+
 	// Use this for initialization
 	void Start () {
 		rand = new MersenneTwister ();
 
-		roomsTotal = rand.Next (NUM_ROOMS_MIN, NUM_ROOMS_MAX);
-		labelRoomClear.text = "0 / " + roomsTotal.ToString ();
+		if(player.RoomsTotal == 0) {
+			roomsTotal = rand.Next (NUM_ROOMS_MIN, NUM_ROOMS_MAX);
+			player.RoomsTotal = roomsTotal;
+			labelRoomClear.text = "0 / " + roomsTotal.ToString ();
+		} else {
+			roomsTotal = player.RoomsTotal;
+			roomsCleared = player.RoomsLeft;
+			labelRoomClear.text = roomsCleared.ToString () + " / " + roomsTotal.ToString ();
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -36,15 +50,23 @@ public class exploreArea : MonoBehaviour {
 
 			if (fofValue <= ENCOUNTER_VALUE) { // An enounter occurs
 				spriteAlert.gameObject.SetActive (true);
+
+				// updates total and display on screen
+				roomsCleared++;
+				labelRoomClear.text = roomsCleared.ToString () + " / " + roomsTotal.ToString ();
+
+				player.RoomsLeft = roomsCleared;
+
 				uiObject.SwitchScreenUI (1);
 			} else { // the room is clear and player continues
+				// updates total and display on screen
+				roomsCleared++;
+				labelRoomClear.text = roomsCleared.ToString () + " / " + roomsTotal.ToString ();
 				labelRoomClear.gameObject.SetActive (true);
 			}
 
-			// updates total and display on screen
-			roomsCleared++;
-			labelRoomClear.text = roomsCleared.ToString () + " / " + roomsTotal.ToString ();
 		} else {
+			player.RoomsLeft = player.RoomsTotal = 0;
 			Application.LoadLevel("gameMap");
 		}
 	}

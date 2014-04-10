@@ -1,0 +1,20 @@
+{"frames": {
+
+"office.png":
+{
+	"frame": {"x":0,"y":0,"w":1000,"h":1000},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1000,"h":1000},
+	"sourceSize": {"w":1000,"h":1000}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "officeMapFP.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":1024},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b970b1bd9606c60b6044f5d03c26ca13:59cc4921768440995ad6fbf942a4ce65:20b1f7cd20e5fd3c4c8b0692b5235d40$"
+}
+}

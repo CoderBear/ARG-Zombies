@@ -2,19 +2,35 @@
 using System.Collections;
 
 public class gotoMap : MonoBehaviour {
+	Player player;
 
-	// Use this for initialization
-	void Start () {
-	
+	void Awake () {
+		// set local private player object to the singleton player.
+		player = GameObject.FindWithTag ("Player").GetComponent<Player>();
 	}
 
 	void OnClick() {
+		if(Application.loadedLevelName == "gameCombat") {
+			player.LastAreaVisited = "";
+//			player.hidePlayer();
+		}
+		player.RoomsLeft = player.RoomsTotal = 0;
 		Application.LoadLevel ("gameMap");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Escape))
-			Application.LoadLevel ("gameMap");
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			if(Application.loadedLevelName == "gameCombat") {
+				player.LastAreaVisited = "";
+//				player.hidePlayer();
+				player.RoomsLeft = player.RoomsTotal = 0;
+				Application.LoadLevel ("gameMap");
+			}
+			if(Application.loadedLevelName == "gameBuilding01") {
+				player.RoomsLeft = player.RoomsTotal = 0;
+				Application.LoadLevel ("gameMap");
+			}
+		}
 	}
 }

@@ -1,0 +1,20 @@
+{"frames": {
+
+"largewarehouse.png":
+{
+	"frame": {"x":0,"y":0,"w":2000,"h":2000},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2000,"h":2000},
+	"sourceSize": {"w":2000,"h":2000}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "warehouseMapFP.png",
+	"format": "RGBA8888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:001b6e9e24ac89b53a5c3db519406cf5:d0c86f183865991da34651fece167c58:5eeb02485ca4e2eea9e320b5394bb689$"
+}
+}

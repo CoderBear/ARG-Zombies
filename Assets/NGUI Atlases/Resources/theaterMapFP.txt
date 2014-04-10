@@ -1,0 +1,20 @@
+{"frames": {
+
+"theatre.png":
+{
+	"frame": {"x":0,"y":0,"w":1500,"h":2000},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1500,"h":2000},
+	"sourceSize": {"w":1500,"h":2000}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "theaterMapFP.png",
+	"format": "RGBA8888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:734320b826ef128ecc3112d8b6156dd5:706296f16180cc011657ee216138b592:70929caca309383da8ddb3575375b665$"
+}
+}

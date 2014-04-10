@@ -1,0 +1,20 @@
+{"frames": {
+
+"3bedroom.png":
+{
+	"frame": {"x":0,"y":0,"w":1200,"h":1280},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1200,"h":1280},
+	"sourceSize": {"w":1200,"h":1280}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "residenceMapFP.png",
+	"format": "RGBA8888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:7aa45ed3e0a0fc980224d82611906f47:c26c94babdbab74e11cd6f2f341f6c38:301446c6ec7e7e3047b085af48d9207e$"
+}
+}
