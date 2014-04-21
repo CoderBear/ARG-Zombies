@@ -53,6 +53,10 @@ public class CombatSystem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		healthBar.value = goPlayer.getHPratio();
+		healthBar.ForceUpdate ();
+		energyBar.value = goPlayer.getMPratio();
+		energyBar.ForceUpdate ();
 	}
 
 #region End Combat methods

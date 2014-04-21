@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class Player : MonoBehaviour {
@@ -95,20 +96,22 @@ public class Player : MonoBehaviour {
 	}
 
 	public void OnHealthUpdate() {
-		ratioHP = (float)hp/(float)maxHP;
-		if (ratioHP > 1) {
+		float hpF = Convert.ToSingle (hp), maxHPf = Convert.ToSingle(maxHP);
+		ratioHP = hpF / maxHPf;
+		if (ratioHP > 1f) {
 			ratioHP = 1f;
-		} else if (ratioHP < 0) {
+		} else if (ratioHP < 0f) {
 			ratioHP = 0f;
 		}
 	}
 
 	public void OnEnergyUpdate() {
-		ratioHP = (float)mp/(float)maxMP;
+		float mpF = Convert.ToSingle (mp), maxMPf = Convert.ToSingle (maxMP);
+		ratioMP = mpF / maxMPf;
 
-		if(ratioMP > 1) {
+		if(ratioMP > 1f) {
 			ratioMP = 1f;
-		} else if(ratioMP < 0) {
+		} else if(ratioMP < 0f) {
 			ratioMP = 0f;
 		}
 	}
