@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
+//todo
+//make object stay between scene changes.
+//delete object when going online to use other online button tracker.
+
 public class offlineButtonSpawn : MonoBehaviour {
 
 	public GameObject m_emptyBuilding;
@@ -9,6 +13,7 @@ public class offlineButtonSpawn : MonoBehaviour {
 	public GameObject m_NGUIMissionparent;
 	float randomRange_x = 300;
 	float randomRange_y = 225;
+	bool m_buttonsRendering = true;
 
 	GameObject [] m_buildings;
 	int maxBuildings = 5;
@@ -89,7 +94,45 @@ public class offlineButtonSpawn : MonoBehaviour {
 		return false;//if not overlapping. otherwise if statement will return true sooner
 	}
 
+	/// <summary>
+	/// turns all buttons off. used when switching scenes
+	/// </summary>
+	void buttonActiveOff() {
+		for(int i = 0; i < maxBuildings; ++i) {
+			m_buildings[i].SetActive(false);
+		}
+		m_buttonsRendering = false;
+	}
+
+	/// <summary>
+	/// turns all buttons on.
+	/// </summary>
+	void buttonActiveOn() {
+		for(int i = 0; i < maxBuildings; ++i) {
+			m_buildings[i].SetActive(true);
+		}
+		m_buttonsRendering = true;
+	}
+
+	/// <summary>
+	/// Toggles the button render on or off
+	/// </summary>
+	void toggleButtonActive() {
+		if(m_buttonsRendering) {
+			buttonActiveOff();
+		}
+		else {
+			buttonActiveOn();
+		}
+	}
+
+	void destroyThis() {
+		Destroy(this.gameObject);
+	}
+
 	void Start () {
+		DontDestroyOnLoad(this.gameObject);//ensures this game object stays throughout the session of the game after it reaches this point
+
 		m_buildings = new GameObject [maxBuildings];
 
 		loadRandomBuildings();
@@ -99,6 +142,10 @@ public class offlineButtonSpawn : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+//		if(Input.GetKeyDown(KeyCode.Space)) {//testing button stuff
+//			toggleButtonRender();
+//		}
 	}
+
+
 }
