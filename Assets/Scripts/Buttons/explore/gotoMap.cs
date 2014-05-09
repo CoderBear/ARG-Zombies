@@ -14,7 +14,7 @@ public class gotoMap : MonoBehaviour {
 			player.LastAreaVisited = "";
 //			player.hidePlayer();
 		}
-		player.RoomsLeft = player.RoomsTotal = 0;
+		//player.RoomsLeft = player.RoomsTotal = 0;
 		Application.LoadLevel ("gameMap");
 	}
 	

@@ -765,6 +765,7 @@
      <Compile Include="Assets\Scripts\UI\DymanicCombatStatUI.cs" />
      <Compile Include="Assets\Scripts\UI\ExploreCombatUI.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerVictoryUI.cs" />
+     <Compile Include="Assets\Scripts\offline_Object_Loader.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCamera.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCameraAnchor.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCameraUtil.cs" />

@@ -15,6 +15,10 @@ public class gotoMainMenu : MonoBehaviour {
 	}
 
 	void OnClick() {
+		if(GameObject.Find("Game_Building_Controller(Clone)").GetComponent<offlineButtonSpawn>() != null) {
+			offlineButtonSpawn obs = GameObject.Find("Game_Building_Controller(Clone)").GetComponent<offlineButtonSpawn>();
+			obs.destroyThis();
+		}
 		Application.LoadLevel ("mainMenu");
 	}
 }

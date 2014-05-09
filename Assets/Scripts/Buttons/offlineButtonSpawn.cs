@@ -1,51 +1,87 @@
 using UnityEngine;
 using System.Collections;
 
-//todo
-//make object stay between scene changes.
-//delete object when going online to use other online button tracker.
+struct buttonData {
+	public int m_type;
+	public Vector3 m_localPosition;
+	public enum buildingType { shop, healing, empty};
+}
 
 public class offlineButtonSpawn : MonoBehaviour {
 
+	public GameObject m_missionParent;
 	public GameObject m_emptyBuilding;
 	public GameObject m_healing;
 	public GameObject m_shop;
-	public GameObject m_NGUIMissionparent;
 	float randomRange_x = 300;
 	float randomRange_y = 225;
-	bool m_buttonsRendering = true;
 
-	GameObject [] m_buildings;
+	buttonData [] m_buildings;
+	GameObject [] m_instBuildings;
 	int maxBuildings = 5;
+
+	void setRandomBuildingData() {
+		m_buildings[0].m_type = (int)buttonData.buildingType.empty;//first building gets instantiated as empty
+		m_buildings[0].m_localPosition = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
+		for(int i = 1; i < maxBuildings; ++i) {
+			float a_buildValue = Random.value;
+			if( 0 <= a_buildValue && a_buildValue < 0.20) {//set healing
+				//TODO
+				//Debug.log the values recieved from converting the enum over to an int to see what that value is.
+				m_buildings[i].m_type = (int)buttonData.buildingType.healing;
+				m_buildings[i].m_localPosition = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
+			}
+			else if( 0.20 <= a_buildValue && a_buildValue < 0.40) {//load shop 20%
+				m_buildings[i].m_type = (int)buttonData.buildingType.shop;
+				m_buildings[i].m_localPosition = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
+			}
+			else { //load default empty building
+				m_buildings[i].m_type = (int)buttonData.buildingType.empty;
+				m_buildings[i].m_localPosition = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
+			}
+
+		}
+	}
 	/// <summary>
 	/// loads five random buildings, guaranteing that one is an empty building while the others could be healing or a shop.
 	/// </summary>
 	void loadRandomBuildings() {
-		//testing purposes. load buildings manually into array.
-		m_buildings[0] = NGUITools.AddChild(m_NGUIMissionparent, m_emptyBuilding);//(GameObject)Instantiate(m_emptyBuilding, Vector3.zero, Quaternion.identity);
-		Vector3 a_position = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
-		m_buildings[0].transform.localPosition = a_position;
-		
-		for(int range = 1; range < maxBuildings; ++range) {
+		for(int range = 0; range < maxBuildings; ++range) {
+			if(m_buildings[range].m_type == (int)buttonData.buildingType.empty) {
+				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_emptyBuilding);
+				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
+				if(range != 0) { checkBuildingPosition(range);}
+			}
+			else if(m_buildings[range].m_type == (int)buttonData.buildingType.healing) {
+				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_healing);
+				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
+				if(range != 0) { checkBuildingPosition(range);}
+			}
+			else {
+				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_shop);
+				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
+				if(range != 0) { checkBuildingPosition(range);}
+			}
+		}
+	}
 
-			float a_buildingValue = Random.value;
-			if( 0 <= a_buildingValue && a_buildingValue < 0.20) {//load healing building 20%
-				m_buildings[range] = NGUITools.AddChild(m_NGUIMissionparent, m_healing);
-				a_position = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
-				m_buildings[range].transform.localPosition = a_position;
-				checkBuildingPosition(range);
+	/// <summary>
+	/// loads all buildings into the scene again. called after object is created but only after the first scene change returns back to the offline map
+	/// </summary>
+	public void reloadBuildings() {
+		setMissionParent();//re-set's the mission parent. not doing so reloads all buttons at 0,0,0 local position in random ngui object
+		for(int range = 0; range < maxBuildings; ++range) {
+			if(m_buildings[range].m_type == (int)buttonData.buildingType.empty) {
+				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_emptyBuilding);
+				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
 			}
-			else if( 0.20 <= a_buildingValue && a_buildingValue < 0.40) {//load shop 20%
-				m_buildings[range] = NGUITools.AddChild(m_NGUIMissionparent, m_shop);
-				a_position = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
-				m_buildings[range].transform.localPosition = a_position;
-				checkBuildingPosition(range);
+			else if(m_buildings[range].m_type == (int)buttonData.buildingType.healing) {
+				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_healing);
+				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
 			}
-			else {//load default empty building
-				m_buildings[range] = NGUITools.AddChild(m_NGUIMissionparent, m_emptyBuilding);
-				a_position = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
-				m_buildings[range].transform.localPosition = a_position;
-				checkBuildingPosition(range);
+			else {
+				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_shop);
+				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
 			}
 		}
 	}
@@ -58,22 +94,13 @@ public class offlineButtonSpawn : MonoBehaviour {
 	void checkBuildingPosition(int a_range) {
 
 		for(int checker = 0; checker < a_range; ++checker) {
-			if( isBuildingOverlaping(m_buildings[checker], m_buildings[a_range])) {
+			if( isBuildingOverlaping(m_instBuildings[checker], m_instBuildings[a_range])) {
 				Debug.Log("Building overlap on building create #"+ a_range);
 				checker = -1;
 				Vector3 newPos = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
-				m_buildings[a_range].transform.localPosition = newPos;
+				m_instBuildings[a_range].transform.localPosition = newPos;
+				m_buildings[a_range].m_localPosition = newPos;
 			}
-		}
-	}
-
-	/// <summary>
-	/// Places the building at a_localPosition.
-	/// </summary>
-	/// <param name="a_localPosition">A_local position.</param>
-	void placeBuildingAt(Vector3 a_localPosition, int a_building) {
-		if(a_building >= 0 && a_building < maxBuildings) {
-			m_buildings[a_building].transform.localPosition = a_localPosition;
 		}
 	}
 
@@ -90,51 +117,32 @@ public class offlineButtonSpawn : MonoBehaviour {
 				return true;
 			}
 		}
-
 		return false;//if not overlapping. otherwise if statement will return true sooner
 	}
 
-	/// <summary>
-	/// turns all buttons off. used when switching scenes
-	/// </summary>
-	void buttonActiveOff() {
+	public bool setMissionParent() {
+		m_missionParent = GameObject.Find("Panel - Missions");
+		if(m_missionParent == null) { return false;}//returns false if mission parent fails to be set.
+		return true;//else return true that mission parent is set
+	}
+
+	public void destroyThis() {
 		for(int i = 0; i < maxBuildings; ++i) {
-			m_buildings[i].SetActive(false);
+			Destroy( m_instBuildings[i]);
+			m_instBuildings[i] = null;
 		}
-		m_buttonsRendering = false;
-	}
-
-	/// <summary>
-	/// turns all buttons on.
-	/// </summary>
-	void buttonActiveOn() {
-		for(int i = 0; i < maxBuildings; ++i) {
-			m_buildings[i].SetActive(true);
-		}
-		m_buttonsRendering = true;
-	}
-
-	/// <summary>
-	/// Toggles the button render on or off
-	/// </summary>
-	void toggleButtonActive() {
-		if(m_buttonsRendering) {
-			buttonActiveOff();
-		}
-		else {
-			buttonActiveOn();
-		}
-	}
-
-	void destroyThis() {
-		Destroy(this.gameObject);
+		Destroy(gameObject);
 	}
 
 	void Start () {
+		//scene loads with this object every time. create a check to make sure there's no otehrs and if there is, have start delete this one.
 		DontDestroyOnLoad(this.gameObject);//ensures this game object stays throughout the session of the game after it reaches this point
 
-		m_buildings = new GameObject [maxBuildings];
+		m_buildings = new buttonData [maxBuildings];
+		m_instBuildings = new GameObject [maxBuildings];
+		setMissionParent();
 
+		setRandomBuildingData();
 		loadRandomBuildings();
 	}
 
