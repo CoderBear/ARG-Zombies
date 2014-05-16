@@ -37,6 +37,7 @@ public class UIFont : MonoBehaviour
 	[HideInInspector][SerializeField] FontStyle mDynamicFontStyle = FontStyle.Normal;
 
 	// Cached value
+	[System.NonSerialized]
 	UISpriteData mSprite = null;
 	int mPMA = -1;
 	int mPacked = -1;
@@ -364,6 +365,14 @@ public class UIFont : MonoBehaviour
 				if (rep != null && rep.replacement == this) rep.replacement = null;
 				if (mReplacement != null) MarkAsChanged();
 				mReplacement = rep;
+
+				if (rep != null)
+				{
+					mPMA = -1;
+					mMat = null;
+					mFont = null;
+					mDynamicFont = null;
+				}
 				MarkAsChanged();
 			}
 		}

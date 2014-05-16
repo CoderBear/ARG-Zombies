@@ -698,6 +698,7 @@ public class UIWidgetInspector : UIRectEditor
 
 			case EventType.MouseUp:
 			{
+				if (e.button == 2) break;
 				if (GUIUtility.hotControl == id)
 				{
 					GUIUtility.hotControl = 0;

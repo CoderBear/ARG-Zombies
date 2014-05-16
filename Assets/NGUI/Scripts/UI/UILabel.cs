@@ -76,6 +76,7 @@ public class UILabel : UIWidget
 	[HideInInspector][SerializeField] bool mMultiline = true;
 
 #if DYNAMIC_FONT
+	[System.NonSerialized]
 	Font mActiveTTF = null;
 	float mDensity = 1f;
 #endif
@@ -1169,9 +1170,10 @@ public class UILabel : UIWidget
 				int h = height;
 
 				Overflow over = mOverflow;
-				mOverflow = Overflow.ShrinkContent;
-				mWidth = 100000;
+				if (over != Overflow.ResizeHeight) mWidth = 100000;
 				mHeight = 100000;
+
+				mOverflow = Overflow.ShrinkContent;
 				ProcessText(false, true);
 				mOverflow = over;
 

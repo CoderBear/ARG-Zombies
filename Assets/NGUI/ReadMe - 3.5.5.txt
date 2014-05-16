@@ -1,7 +1,7 @@
 ----------------------------------------------
             NGUI: Next-Gen UI kit
  Copyright © 2011-2014 Tasharen Entertainment
-            Version 3.5.6
+            Version 3.5.9
     http://www.tasharen.com/?page_id=197
             support@tasharen.com
 ----------------------------------------------
@@ -54,6 +54,52 @@ and it will not be included in the build of your game. It's only used in the edi
 -----------------
  Version History
 -----------------
+
+3.5.9
+- NEW: Added an event delegate drawer in case you want to use the Event Delegate in your own scripts.
+- NEW: You can now explicitly specify what the Return key will do on the input field regardless of the label's multi-line setting.
+- NEW: Added GetIndex() to UIGrid and improved its look in the inspector.
+- FIX: Scroll view will no longer jump back and forth by 1 pixel when it's not using momentum.
+- FIX: Input fields should respect the "starting value" if the "saved as" is left blank.
+- FIX: Text printing issue if the line begins with a double space.
+- FIX: You can now call UIButton.ResetDefaultColor to restore the original color, even after setting 'defaultColor' to something else.
+- FIX: UIKeyNavigation will now respect UIButton's isEnabled state if it's present.
+- FIX: UIPlaySound will now respect UIButton's isEnabled state if it's present.
+- FIX: UIDrawCall copy material creation now also copies shader keywords.
+- FIX: UICamera.inputHasFocus should now work properly again.
+- FIX: The Sorting Order will now always be exposed on the UIPanel in inspector.
+- DEL: Moving DataNode over to TNet since it makes a lot more sense to have it there instead of in NGUI.
+
+3.5.8
+- NEW: Added a generic node-based class for simple text-based serialization (DataNode).
+- NEW: UITexture now has flip options just like UISprite.
+- NEW: Moved the SetRect function from UIWidget to UIRect, making it usable by panels as well.
+- NEW: Added convenience add and remove functions to the UIGrid.
+- NEW: Added NGUIMath.ScreenToPixels for when you need to convert from screen to virtual pixels.
+- NEW: UIButton's SetState is now public, in case you need it.
+- NEW: UIInput.caret is now exposed in case you need it.
+- FIX: Re-added the "New" button to the atlas maker that was removed for no reason.
+- FIX: Added [NonSerialized] next to private variables. Unity apparently serialized private variables in prefabs (sigh).
+- FIX: "Flip" option is now exposed in inspector with tiled sprites.
+- FIX: Changed all "HIDDEN" shaders to be "Hidden" instead, effectively hiding them.
+- FIX: Text list should no longer break when a very long line of text is added.
+- FIX: DragDropItem script wasn't un-highlighting things quite right.
+- FIX: Clip softness can now be 0.
+- DEL: Localization is now a static class, and can no longer be included in the scene.
+
+3.5.7
+- NEW: Added OnDragOver/OnDragOut to the Event Trigger.
+- FIX: Event delegate compilation on platforms that don't support reflection.
+- FIX: The example tooltip should no longer go off-screen.
+- FIX: Exposed UISprite's 'flip' option to scripting.
+- FIX: Context menu 'Attach' options should now work with multiple objects selected.
+- FIX: 'Attach' menu options should now all be undo-able via CTRL+Z.
+- FIX: Exposed UIButton.state for those that may need it for any reason.
+- FIX: UICamera's raycasts can now be clipped by nested panels.
+- FIX: MakePixelPerfect should not change the width if the label is set to "resize height".
+- FIX: Made UIButton.isEnabled work with a 2D collider.
+- FIX: Unity 4.2 compatibility tweaks.
+- FIX: Clip softness can now be 0.
 
 3.5.6
 - NEW: Added basic built-in data binding support (PropertyBinding script).

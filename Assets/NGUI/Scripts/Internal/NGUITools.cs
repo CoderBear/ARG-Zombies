@@ -83,7 +83,19 @@ static public class NGUITools
 		{
 			if (mListener == null || !NGUITools.GetActive(mListener))
 			{
-				mListener = GameObject.FindObjectOfType(typeof(AudioListener)) as AudioListener;
+				AudioListener[] listeners = GameObject.FindObjectsOfType(typeof(AudioListener)) as AudioListener[];
+
+				if (listeners != null)
+				{
+					for (int i = 0; i < listeners.Length; ++i)
+					{
+						if (NGUITools.GetActive(listeners[i]))
+						{
+							mListener = listeners[i];
+							break;
+						}
+					}
+				}
 
 				if (mListener == null)
 				{
@@ -194,19 +206,19 @@ static public class NGUITools
 		for (int i = 0; i < UICamera.list.size; ++i)
 		{
 			cam = UICamera.list.buffer[i].cachedCamera;
-			if ((cam != null) && (cam.cullingMask & layerMask) != 0)
+			if (cam && (cam.cullingMask & layerMask) != 0)
 				return cam;
 		}
 
 		cam = Camera.main;
-		if (cam != null && (cam.cullingMask & layerMask) != 0) return cam;
+		if (cam && (cam.cullingMask & layerMask) != 0) return cam;
 
 		Camera[] cameras = NGUITools.FindActive<Camera>();
 
 		for (int i = 0, imax = cameras.Length; i < imax; ++i)
 		{
 			cam = cameras[i];
-			if ((cam.cullingMask & layerMask) != 0)
+			if (cam && (cam.cullingMask & layerMask) != 0)
 				return cam;
 		}
 		return null;
@@ -236,7 +248,11 @@ static public class NGUITools
 					if (Application.isPlaying) GameObject.Destroy(col);
 					else GameObject.DestroyImmediate(col);
 				}
+
 				box = go.AddComponent<BoxCollider>();
+#if !UNITY_3_5 && UNITY_EDITOR
+				UnityEditor.Undo.RegisterCreatedObjectUndo(box, "Add Collider");
+#endif
 				box.isTrigger = true;
 
 				UIWidget widget = go.GetComponent<UIWidget>();

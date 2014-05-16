@@ -256,21 +256,25 @@ public class UIPopupList : UIWidgetContainer
 
 	protected void TriggerCallbacks ()
 	{
-		current = this;
-
-		// Legacy functionality
-		if (mLegacyEvent != null) mLegacyEvent(mSelectedItem);
-
-		if (EventDelegate.IsValid(onChange))
+		if (current != this)
 		{
-			EventDelegate.Execute(onChange);
+			UIPopupList old = current;
+			current = this;
+
+			// Legacy functionality
+			if (mLegacyEvent != null) mLegacyEvent(mSelectedItem);
+
+			if (EventDelegate.IsValid(onChange))
+			{
+				EventDelegate.Execute(onChange);
+			}
+			else if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
+			{
+				// Legacy functionality support (for backwards compatibility)
+				eventReceiver.SendMessage(functionName, mSelectedItem, SendMessageOptions.DontRequireReceiver);
+			}
+			current = old;
 		}
-		else if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
-		{
-			// Legacy functionality support (for backwards compatibility)
-			eventReceiver.SendMessage(functionName, mSelectedItem, SendMessageOptions.DontRequireReceiver);
-		}
-		current = null;
 	}
 
 	/// <summary>

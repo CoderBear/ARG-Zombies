@@ -3,7 +3,7 @@
 // Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
-#if UNITY_EDITOR || (!UNITY_FLASH && !NETFX_CORE)
+#if UNITY_EDITOR || (!UNITY_FLASH && !NETFX_CORE && !UNITY_WP8)
 #define REFLECTION_SUPPORT
 #endif
 
@@ -32,10 +32,15 @@ public class EventDelegate
 		public Object obj;
 		public string field;
 
+		[System.NonSerialized]
+		public System.Type expectedType = typeof(void);
+
+		public Parameter () { }
+		public Parameter (Object obj, string field) { this.obj = obj; this.field = field; }
+
 #if REFLECTION_SUPPORT
 		// Cached values
 		[System.NonSerialized] public bool cached = false;
-		[System.NonSerialized] public System.Type expectedType = typeof(void);
 		[System.NonSerialized] public PropertyInfo propInfo;
 		[System.NonSerialized] public FieldInfo fieldInfo;
 
@@ -99,8 +104,10 @@ public class EventDelegate
 	Callback mCachedCallback;
 	bool mRawDelegate = false;
 	bool mCached = false;
+#if REFLECTION_SUPPORT
 	MethodInfo mMethod;
 	object[] mArgs;
+#endif
 
 	/// <summary>
 	/// Event delegate's target object.
@@ -118,7 +125,9 @@ public class EventDelegate
 			mCachedCallback = null;
 			mRawDelegate = false;
 			mCached = false;
+#if REFLECTION_SUPPORT
 			mMethod = null;
+#endif
 			mParameters = null;
 		}
 	}
@@ -139,7 +148,9 @@ public class EventDelegate
 			mCachedCallback = null;
 			mRawDelegate = false;
 			mCached = false;
+#if REFLECTION_SUPPORT
 			mMethod = null;
+#endif
 			mParameters = null;
 		}
 	}
@@ -333,7 +344,21 @@ public class EventDelegate
 		{
 			if (mTarget != null && !string.IsNullOrEmpty(mMethodName))
 			{
-				mMethod = mTarget.GetType().GetMethod(mMethodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+#if NETFX_CORE
+				System.Type type = mTarget.GetTypeInfo();
+#else
+				System.Type type = mTarget.GetType();
+#endif
+
+				try
+				{
+					mMethod = type.GetMethod(mMethodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+				}
+				catch (System.Exception ex)
+				{
+					Debug.LogError("Failed to bind " + type + "." + mMethodName + "\n" +  ex.Message);
+					return;
+				}
 
 				if (mMethod == null)
 				{
@@ -358,6 +383,7 @@ public class EventDelegate
 					mParameters = null;
 					return;
 				}
+				else mCachedCallback = null;
 
 				// Allocate the initial list of parameters
 				if (mParameters == null || mParameters.Length != info.Length)
@@ -385,7 +411,8 @@ public class EventDelegate
 #if !REFLECTION_SUPPORT
 		if (isValid)
 		{
-			mTarget.SendMessage(mMethodName, SendMessageOptions.DontRequireReceiver);
+			if (mRawDelegate) mCachedCallback();
+			else mTarget.SendMessage(mMethodName, SendMessageOptions.DontRequireReceiver);
 			return true;
 		}
 #else
@@ -501,8 +528,10 @@ public class EventDelegate
 		mCachedCallback = null;
 		mParameters = null;
 		mCached = false;
+#if REFLECTION_SUPPORT
 		mMethod = null;
 		mArgs = null;
+#endif
 	}
 
 	/// <summary>

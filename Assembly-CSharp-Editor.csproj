@@ -51,6 +51,7 @@
      <Compile Include="Assets\NGUI\Scripts\Editor\ActiveAnimationEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\BMFontReader.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\ComponentSelector.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Editor\EventDelegateDrawer.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\EventDelegateEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\FreeType.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\NGUIContextMenu.cs" />
