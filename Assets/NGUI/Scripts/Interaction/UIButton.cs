@@ -124,6 +124,7 @@ public class UIButton : UIButtonColor
 			{
 				mNormalSprite = value;
 				SetSprite(value);
+				NGUITools.SetDirty(mSprite);
 			}
 			else
 			{
@@ -150,6 +151,13 @@ public class UIButton : UIButtonColor
 
 	protected override void OnEnable ()
 	{
+#if UNITY_EDITOR
+		if (!Application.isPlaying)
+		{
+			mInitDone = false;
+			return;
+		}
+#endif
 		if (isEnabled)
 		{
 			if (mInitDone)

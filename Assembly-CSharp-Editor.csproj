@@ -55,6 +55,7 @@
      <Compile Include="Assets\NGUI\Scripts\Editor\EventDelegateEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\FreeType.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\NGUIContextMenu.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Editor\NGUIEditorExtensions.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\NGUIEditorTools.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\NGUIHandles.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\NGUIHelp.cs" />
@@ -82,6 +83,7 @@
      <Compile Include="Assets\NGUI\Scripts\Editor\UIAnchorEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIAtlasInspector.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIAtlasMaker.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Editor\UIBasicSpriteEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIButtonColorEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIButtonEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIButtonKeysEditor.cs" />
@@ -108,12 +110,14 @@
      <Compile Include="Assets\NGUI\Scripts\Editor\UIPlayAnimationEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIPlayTweenEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIPopupListInspector.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Editor\UIPrefabTool.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIProgressBarEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIRectEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIRootEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIScrollBarEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIScrollViewEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UISliderEditor.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Editor\UISnapshotPointEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UISpriteAnimationInspector.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UISpriteInspector.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIStretchEditor.cs" />
@@ -125,6 +129,16 @@
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWidgetContainerEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWidgetInspector.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWrapContentEditor.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Editor\PhotonNetwork\AccountService.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Editor\PhotonNetwork\PhotonConverter.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Editor\PhotonNetwork\PhotonEditor.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Editor\PhotonNetwork\PhotonViewHandler.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Editor\PhotonNetwork\PhotonViewInspector.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Editor\PhotonNetwork\PhotonViewPrefabApply.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Editor\PhotonNetwork\ServerSettingsInspector.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Editor\PlayMakerPhotonEditorUtility.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Editor\PlayMakerPhotonGameObjectProxyEditor.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Editor\PlayMakerPhotonWizard.cs" />
      <Compile Include="Assets\PlayMaker\Actions\Editor\LookAtActionEditor.cs" />
      <Compile Include="Assets\PlayMaker\Actions\Editor\MoveTowardsActionEditor.cs" />
      <Compile Include="Assets\PlayMaker\Actions\Editor\SetCameraFOVActionEditor.cs" />
@@ -247,6 +261,7 @@
      <Compile Include="Assets\sqlitekit\Editor\SQLiteKitEditorSettings.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.5.5.txt" />
+     <None Include="Assets\Photon Unity Networking\PlayMaker\ReleaseNotes.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
@@ -273,9 +288,11 @@
      <None Include="Assets\NGUI Atlases\Resources\officeMapFP.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\goodies\PackedTextMesh.shader" />
+     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.xml" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\Blend2TexVertexColor.shader" />
      <None Include="Assets\sqlitekit\Readme.txt" />
      <None Include="Assets\RAIN\Editor\Shaders\NavMeshContourShader.shader" />
+     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\release_history.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
      <None Include="Assets\NGUI Atlases\Resources\warehouseMapFP.txt" />
      <None Include="Assets\TK2DROOT\tk2dUI\Shaders\DepthMaskSolid.shader" />
@@ -315,6 +332,7 @@
      <None Include="Assets\NGUI Atlases\Resources\theaterMapFP.txt" />
      <None Include="Assets\RAIN\Editor\Shaders\AspectSphereShader.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitBlendVertexColor.shader" />
+     <None Include="Assets\Photon Unity Networking\readme.txt" />
      <None Include="Assets\RAIN\Editor\Shaders\NavMeshColliderShader.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
@@ -328,6 +346,7 @@
      <None Include="Assets\NGUI\Examples\Resources\Localization.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\NGUI Atlases\Resources\gameCombatUI.txt" />
+     <None Include="Assets\Photon Unity Networking\changelog.txt" />
  <Reference Include="PlayMaker">
  <HintPath>Assets\PlayMaker\PlayMaker.dll</HintPath>
  </Reference>
@@ -408,6 +427,12 @@
  </Reference>
  <Reference Include="UnityEditor.Android.Extensions">
  <HintPath>C:\Program Files\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\EditorExtensions\UnityEditor.Android.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>Assets\Photon Unity Networking\Editor\PhotonNetwork\Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="Photon3Unity3D">
+ <HintPath>Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

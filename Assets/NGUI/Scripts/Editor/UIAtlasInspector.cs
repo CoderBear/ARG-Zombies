@@ -261,10 +261,18 @@ public class UIAtlasInspector : Editor
 
 					if (GUILayout.Button("Save As..."))
 					{
-						string path = EditorUtility.SaveFilePanelInProject("Save As", sprite.name + ".png", "png", "Extract sprite into which file?");
+#if UNITY_3_5
+						string path = EditorUtility.SaveFilePanel("Save As",
+							NGUISettings.currentPath, sprite.name + ".png", "png");
+#else
+						string path = EditorUtility.SaveFilePanelInProject("Save As",
+							sprite.name + ".png", "png",
+							"Extract sprite into which file?", NGUISettings.currentPath);
+#endif
 
 						if (!string.IsNullOrEmpty(path))
 						{
+							NGUISettings.currentPath = System.IO.Path.GetDirectoryName(path);
 							UIAtlasMaker.SpriteEntry se = UIAtlasMaker.ExtractSprite(mAtlas, sprite.name);
 
 							if (se != null)

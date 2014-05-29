@@ -393,10 +393,8 @@ public class UIPanel : UIRect
 			if (Mathf.Abs(mClipOffset.x - value.x) > 0.001f ||
 				Mathf.Abs(mClipOffset.y - value.y) > 0.001f)
 			{
-				mResized = true;
-				mCullTime = (mCullTime == 0f) ? 0.001f : RealTime.time + 0.15f;
 				mClipOffset = value;
-				mMatrixFrame = -1;
+				InvalidateClipping();
 
 				// Call the event delegate
 				if (onClipMove != null) onClipMove(this);
@@ -404,6 +402,24 @@ public class UIPanel : UIRect
 				if (!Application.isPlaying) UpdateDrawCalls();
 #endif
 			}
+		}
+	}
+
+	/// <summary>
+	/// Invalidate the panel's clipping, calling child panels in turn.
+	/// </summary>
+
+	void InvalidateClipping ()
+	{
+		mResized = true;
+		mMatrixFrame = -1;
+		mCullTime = (mCullTime == 0f) ? 0.001f : RealTime.time + 0.15f;
+
+		for (int i = 0; i < list.size; ++i)
+		{
+			UIPanel p = list[i];
+			if (p != this && p.parentPanel == this)
+				p.InvalidateClipping();
 		}
 	}
 
@@ -653,7 +669,11 @@ public class UIPanel : UIRect
 
 	public override float CalculateFinalAlpha (int frameID)
 	{
+#if UNITY_EDITOR
+		if (mAlphaFrameID != frameID || !Application.isPlaying)
+#else
 		if (mAlphaFrameID != frameID)
+#endif
 		{
 			mAlphaFrameID = frameID;
 			UIRect pt = parent;
@@ -764,7 +784,8 @@ public class UIPanel : UIRect
 	{
 		if ((mClipping == UIDrawCall.Clipping.None || mClipping == UIDrawCall.Clipping.ConstrainButDontClip) && !w.hideIfOffScreen)
 		{
-			if (mParentPanel == null || clipCount == 0) return true;
+			if (clipCount == 0) return true;
+			if (mParentPanel != null) return mParentPanel.IsVisible(w);
 		}
 
 		UIPanel p = this;
@@ -838,12 +859,11 @@ public class UIPanel : UIRect
 	}
 
 	/// <summary>
-	/// Remember the parent panel, if any.
+	/// Find the parent panel, if we have one.
 	/// </summary>
 
-	protected override void OnEnable ()
+	void FindParent ()
 	{
-		base.OnEnable();
 		Transform parent = cachedTransform.parent;
 		mParentPanel = (parent != null) ? NGUITools.FindInParents<UIPanel>(parent.gameObject) : null;
 	}
@@ -855,8 +875,7 @@ public class UIPanel : UIRect
 	public override void ParentHasChanged ()
 	{
 		base.ParentHasChanged();
-		Transform parent = cachedTransform.parent;
-		mParentPanel = (parent != null) ? NGUITools.FindInParents<UIPanel>(parent.gameObject) : null;
+		FindParent();
 	}
 
 	/// <summary>
@@ -886,6 +905,7 @@ public class UIPanel : UIRect
 			rb.useGravity = false;
 		}
 
+		FindParent();
 		mRebuild = true;
 		mAlphaFrameID = -1;
 		mMatrixFrame = -1;
@@ -1065,8 +1085,8 @@ public class UIPanel : UIRect
 		float w = rt - lt;
 		float h = tt - bt;
 
-		float minx = Mathf.Max(20f, mClipSoftness.x);
-		float miny = Mathf.Max(20f, mClipSoftness.y);
+		float minx = Mathf.Max(2f, mClipSoftness.x);
+		float miny = Mathf.Max(2f, mClipSoftness.y);
 
 		if (w < minx) w = minx;
 		if (h < miny) h = miny;
@@ -1083,7 +1103,11 @@ public class UIPanel : UIRect
 
 	void LateUpdate ()
 	{
+#if UNITY_EDITOR
+		if (mUpdateFrame != Time.frameCount || !Application.isPlaying)
+#else
 		if (mUpdateFrame != Time.frameCount)
+#endif
 		{
 			mUpdateFrame = Time.frameCount;
 
@@ -1720,7 +1744,11 @@ public class UIPanel : UIRect
 	{
 		int frame = Time.frameCount;
 
+#if UNITY_EDITOR
+		if (mSizeFrame != frame || !Application.isPlaying)
+#else
 		if (mSizeFrame != frame)
+#endif
 		{
 			mSizeFrame = frame;
 

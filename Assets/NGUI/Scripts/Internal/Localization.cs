@@ -250,7 +250,15 @@ public static class Localization
 		if (values.size < 2) return;
 		string[] temp = new string[values.size - 1];
 		for (int i = 1; i < values.size; ++i) temp[i - 1] = values[i];
-		mDictionary.Add(values[0], temp);
+		
+		try
+		{
+			mDictionary.Add(values[0], temp);
+		}
+		catch (System.Exception ex)
+		{
+			Debug.LogError("Unable to add '" + values[0] + "' to the Localization dictionary.\n" + ex.Message);
+		}
 	}
 
 	/// <summary>
@@ -315,7 +323,14 @@ public static class Localization
 
 	static public bool Exists (string key)
 	{
-		if (mLanguageIndex != -1) return mDictionary.ContainsKey(key);
-		return mOldDictionary.ContainsKey(key);
+		// Ensure we have a language to work with
+		if (!localizationHasBeenSet) language = PlayerPrefs.GetString("Language", "English");
+
+#if UNITY_IPHONE || UNITY_ANDROID
+		string mobKey = key + " Mobile";
+		if (mDictionary.ContainsKey(mobKey)) return true;
+		else if (mOldDictionary.ContainsKey(mobKey)) return true;
+#endif
+		return mDictionary.ContainsKey(key) || mOldDictionary.ContainsKey(key);
 	}
 }

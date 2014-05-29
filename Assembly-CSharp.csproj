@@ -146,10 +146,12 @@
      <Compile Include="Assets\NGUI\Scripts\Internal\PropertyReference.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\RealTime.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\SpringPanel.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Internal\UIBasicSprite.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIDrawCall.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIEventListener.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIGeometry.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIRect.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Internal\UISnapshotPoint.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIWidget.cs" />
      <Compile Include="Assets\NGUI\Scripts\Tweening\AnimatedAlpha.cs" />
      <Compile Include="Assets\NGUI\Scripts\Tweening\AnimatedColor.cs" />
@@ -186,6 +188,83 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonGUILayoutToolBarWithPlayers.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonGUILayoutToolBarWithRooms.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkConnectManually.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkConnectUsingSettings.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkCreateRoom.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkCreateRoomAdvanced.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkDeleteRoomCustomProperty.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkDestroy.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkDestroyPlayer.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkDisconnect.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetConnectionState.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetIsConnected.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetLastDisconnectCause.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetLastMessagePlayerProperties.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetNextPlayerProperties.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetNextRoomProperties.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetPlayersCount.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetPlayersInRoomsCount.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetPlayersOnMasterCount.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetRoomProperties.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkGetRoomsCount.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkInstantiate.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkJoinRandomRoom.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkJoinRoom.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkLeaveRoom.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkSetAuthenticationValues.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkSetAutoJoinLobby.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkSetIsMessageQueueRunning.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkSetPlayerCustomProperty.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkSetPlayerName.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonNetworkSetRoomCustomProperty.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonViewDeleteOwnerCustomProperty.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonViewGetID.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonViewGetIsMine.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonViewGetIsSceneView.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonViewGetOwnerProperties.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonViewRpcBroadcastFsmEvent.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Actions\PhotonViewRpcBroadcastFsmEventToPlayer.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Scripts\PlayMakerPhotonGameObjectProxy.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Scripts\PlayMakerPhotonProxy.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Scripts\PlayMakerPhotonSynchProxy.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Scripts\PlayMakerPhotonView.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PlayMaker\Scripts\UnitySerializer.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\CustomTypes.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Enums.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Extension\PhotonView.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Extensions.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\FriendInfo.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\LoadbalancingPeer.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\NetworkingPeer.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonClasses.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonHandler.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonNetSimSettingsGui.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonNetwork.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonPlayer.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonStatsGui.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PingCloudRegions.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\RPC.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Room.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\RoomInfo.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\RpcIndexComponent.cs" />
+     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\ServerSettings.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\ConnectAndJoinRandom.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\InRoomChat.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\InputToEvent.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\ManualPhotonViewAllocator.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\MoveByKeys.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\OnAwakeUsePhotonView.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\OnClickDestroy.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\OnClickInstantiate.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\OnClickLoadSomething.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PointedAtGameObjectInfo.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\ServerTime.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\SmoothSyncMovement.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\TestBase.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\TestDontDestroyOnLoad.cs" />
+     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\TimeKeeper.cs" />
      <Compile Include="Assets\PlayMaker\Actions\ActivateGameObject.cs" />
      <Compile Include="Assets\PlayMaker\Actions\AddAnimationClip.cs" />
      <Compile Include="Assets\PlayMaker\Actions\AddComponent.cs" />
@@ -947,6 +1026,7 @@
      <Compile Include="Assets\sqlitekit\src\where_c.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.5.5.txt" />
+     <None Include="Assets\Photon Unity Networking\PlayMaker\ReleaseNotes.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
@@ -973,9 +1053,11 @@
      <None Include="Assets\NGUI Atlases\Resources\officeMapFP.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\goodies\PackedTextMesh.shader" />
+     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.xml" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\Blend2TexVertexColor.shader" />
      <None Include="Assets\sqlitekit\Readme.txt" />
      <None Include="Assets\RAIN\Editor\Shaders\NavMeshContourShader.shader" />
+     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\release_history.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
      <None Include="Assets\NGUI Atlases\Resources\warehouseMapFP.txt" />
      <None Include="Assets\TK2DROOT\tk2dUI\Shaders\DepthMaskSolid.shader" />
@@ -1015,6 +1097,7 @@
      <None Include="Assets\NGUI Atlases\Resources\theaterMapFP.txt" />
      <None Include="Assets\RAIN\Editor\Shaders\AspectSphereShader.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitBlendVertexColor.shader" />
+     <None Include="Assets\Photon Unity Networking\readme.txt" />
      <None Include="Assets\RAIN\Editor\Shaders\NavMeshColliderShader.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
@@ -1028,6 +1111,7 @@
      <None Include="Assets\NGUI\Examples\Resources\Localization.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\NGUI Atlases\Resources\gameCombatUI.txt" />
+     <None Include="Assets\Photon Unity Networking\changelog.txt" />
  <Reference Include="PlayMaker">
  <HintPath>Assets\PlayMaker\PlayMaker.dll</HintPath>
  </Reference>
@@ -1036,6 +1120,9 @@
  </Reference>
  <Reference Include="RAINMetaform">
  <HintPath>Assets\RAIN\RAINMetaform.dll</HintPath>
+ </Reference>
+ <Reference Include="Photon3Unity3D">
+ <HintPath>Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

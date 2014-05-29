@@ -123,7 +123,7 @@ static public class NGUIMath
 
 	[System.Diagnostics.DebuggerHidden]
 	[System.Diagnostics.DebuggerStepThrough]
-	static public string DecimalToHex (int num)
+	static public string DecimalToHex24 (int num)
 	{
 		num &= 0xFFFFFF;
 #if UNITY_FLASH
@@ -137,6 +137,32 @@ static public class NGUIMath
 		return sb.ToString();
 #else
 		return num.ToString("X6");
+#endif
+	}
+
+	/// <summary>
+	/// Convert a decimal value to its hex representation.
+	/// It's coded because num.ToString("X6") syntax doesn't seem to be supported by Unity's Flash. It just silently crashes.
+	/// string.Format("{0,6:X}", num).Replace(' ', '0') doesn't work either. It returns the format string, not the formatted value.
+	/// </summary>
+
+	[System.Diagnostics.DebuggerHidden]
+	[System.Diagnostics.DebuggerStepThrough]
+	static public string DecimalToHex32 (int num)
+	{
+#if UNITY_FLASH
+		StringBuilder sb = new StringBuilder();
+		sb.Append(DecimalToHexChar((num >> 28) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 24) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 20) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 16) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 12) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 8) & 0xF));
+		sb.Append(DecimalToHexChar((num >> 4) & 0xF));
+		sb.Append(DecimalToHexChar(num & 0xF));
+		return sb.ToString();
+#else
+		return num.ToString("X8");
 #endif
 	}
 
@@ -377,45 +403,84 @@ static public class NGUIMath
 
 	static public Bounds CalculateRelativeWidgetBounds (Transform relativeTo, Transform content, bool considerInactive)
 	{
+		Bounds b = new Bounds(Vector3.zero, Vector3.zero);
+
 		if (content != null)
 		{
-			UIWidget[] widgets = content.GetComponentsInChildren<UIWidget>(considerInactive);
+			bool isSet = false;
+			Matrix4x4 toLocal = relativeTo.worldToLocalMatrix;
+			CalculateRelativeWidgetBounds(content, considerInactive, true, ref toLocal, ref b, ref isSet);
+			if (isSet) return b;
+		}
+		return b;
+	}
 
-			if (widgets.Length > 0)
+	/// <summary>
+	/// Recursive function used to calculate the widget bounds.
+	/// </summary>
+
+	[System.Diagnostics.DebuggerHidden]
+	[System.Diagnostics.DebuggerStepThrough]
+	static void CalculateRelativeWidgetBounds (Transform content, bool considerInactive, bool isRoot, ref Matrix4x4 toLocal, ref Bounds b, ref bool isSet)
+	{
+		if (content == null) return;
+		if (!considerInactive && !NGUITools.GetActive(content.gameObject)) return;
+
+		// If this isn't a root node, check to see if there is a panel present
+		UIPanel p = isRoot ? null : content.GetComponent<UIPanel>();
+
+		// Ignore disabled panels as a disabled panel means invisible children
+		if (p != null && !p.enabled) return;
+
+		// If there is a clipped panel present simply include its dimensions
+		if (p != null && p.clipping != UIDrawCall.Clipping.None)
+		{
+			Vector3[] corners = p.worldCorners;
+
+			for (int j = 0; j < 4; ++j)
 			{
-				Vector3 vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-				Vector3 vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-
-				Matrix4x4 toLocal = relativeTo.worldToLocalMatrix;
-				bool isSet = false;
-				Vector3 v;
-
-				for (int i = 0, imax = widgets.Length; i < imax; ++i)
-				{
-					UIWidget w = widgets[i];
-					if (!considerInactive && !w.enabled) continue;
-
-					Vector3[] corners = w.worldCorners;
-
-					for (int j = 0; j < 4; ++j)
-					{
-						//v = root.InverseTransformPoint(corners[j]);
-						v = toLocal.MultiplyPoint3x4(corners[j]);
-						vMax = Vector3.Max(v, vMax);
-						vMin = Vector3.Min(v, vMin);
-					}
-					isSet = true;
-				}
+				Vector3 v = toLocal.MultiplyPoint3x4(corners[j]);
 
 				if (isSet)
 				{
-					Bounds b = new Bounds(vMin, Vector3.zero);
-					b.Encapsulate(vMax);
-					return b;
+					b.Encapsulate(v);
+				}
+				else
+				{
+					b = new Bounds(v, Vector3.zero);
+					isSet = true;
 				}
 			}
 		}
-		return new Bounds(Vector3.zero, Vector3.zero);
+		else // No panel present
+		{
+			// If there is a widget present, include its bounds
+			UIWidget w = content.GetComponent<UIWidget>();
+
+			if (w != null && w.enabled)
+			{
+				Vector3[] corners = w.worldCorners;
+
+				for (int j = 0; j < 4; ++j)
+				{
+					Vector3 v = toLocal.MultiplyPoint3x4(corners[j]);
+
+					if (isSet)
+					{
+						b.Encapsulate(v);
+					}
+					else
+					{
+						b = new Bounds(v, Vector3.zero);
+						isSet = true;
+					}
+				}
+			}
+
+			// Iterate through children including their bounds in turn
+			for (int i = 0, imax = content.childCount; i < imax; ++i)
+				CalculateRelativeWidgetBounds(content.GetChild(i), considerInactive, false, ref toLocal, ref b, ref isSet);
+		}
 	}
 
 	/// <summary>

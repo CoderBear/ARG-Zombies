@@ -208,13 +208,6 @@ public class UIProgressBar : UIWidgetContainer
 
 		if (Application.isPlaying)
 		{
-			if (mFG == null)
-			{
-				Debug.LogWarning("Progress bar needs a foreground widget to work with", this);
-				enabled = false;
-				return;
-			}
-
 			if (mBG != null) mBG.autoResizeBoxCollider = true;
 
 			OnStart();
@@ -334,13 +327,13 @@ public class UIProgressBar : UIWidgetContainer
 
 		if (mFG != null)
 		{
-			UISprite sprite = mFG as UISprite;
+			UIBasicSprite sprite = mFG as UIBasicSprite;
 
 			if (isHorizontal)
 			{
-				if (sprite != null && sprite.type == UISprite.Type.Filled)
+				if (sprite != null && sprite.type == UIBasicSprite.Type.Filled)
 				{
-					sprite.fillDirection = UISprite.FillDirection.Horizontal;
+					sprite.fillDirection = UIBasicSprite.FillDirection.Horizontal;
 					sprite.invert = isInverted;
 					sprite.fillAmount = value;
 				}
@@ -351,9 +344,9 @@ public class UIProgressBar : UIWidgetContainer
 						new Vector4(0f, 0f, value, 1f);
 				}
 			}
-			else if (sprite != null && sprite.type == UISprite.Type.Filled)
+			else if (sprite != null && sprite.type == UIBasicSprite.Type.Filled)
 			{
-				sprite.fillDirection = UISprite.FillDirection.Vertical;
+				sprite.fillDirection = UIBasicSprite.FillDirection.Vertical;
 				sprite.invert = isInverted;
 				sprite.fillAmount = value;
 			}

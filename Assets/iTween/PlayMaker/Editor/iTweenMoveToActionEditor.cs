@@ -30,7 +30,7 @@ public class iTweenMoveToActionEditor : CustomActionEditor
 
         if (iTween.transforms.Length >= 2)
         {
-#if UNITY_4_3
+#if UNITY_4_3 || UNITY_4_5
             Undo.RecordObject(target.Owner, Strings.Command_Adjust_iTween_Path);
 #else
             Undo.SetSnapshotTarget(target.Owner, Strings.Command_Adjust_iTween_Path);

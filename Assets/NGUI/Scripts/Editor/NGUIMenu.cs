@@ -153,7 +153,7 @@ static public class NGUIMenu
 	}
 
 #if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
-	[MenuItem("NGUI/Create/Unity 2D Sprite &#r", false, 6)]
+	[MenuItem("NGUI/Create/Unity 2D Sprite &#d", false, 6)]
 	static public void AddSprite2D ()
 	{
 		GameObject go = NGUIEditorTools.SelectedRoot(true);
@@ -408,6 +408,12 @@ static public class NGUIMenu
 	[MenuItem("Assets/NGUI/", false, 0)]
 	static public void OpenSeparator2 () { }
 
+	[MenuItem("NGUI/Open/Prefab Toolbar", false, 9)]
+	static public void OpenPrefabTool ()
+	{
+		EditorWindow.GetWindow<UIPrefabTool>(false, "Prefab Toolbar", true).Show();
+	}
+
 	[MenuItem("NGUI/Open/Panel Tool", false, 9)]
 	static public void OpenPanelWizard ()
 	{
@@ -494,6 +500,74 @@ static public class NGUIMenu
 
 	[MenuItem("NGUI/Options/Guides/Only When Needed", true, 10)]
 	static public bool TurnGuidesOffCheck () { return NGUISettings.drawGuides; }
+
+	[MenuItem("NGUI/Options/Reset Prefab Toolbar", false, 10)]
+	static public void ResetPrefabTool ()
+	{
+		if (UIPrefabTool.instance == null) OpenPrefabTool();
+		UIPrefabTool.instance.Reset();
+		UIPrefabTool.instance.Repaint();
+	}
+
+#if !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
+	[MenuItem("NGUI/Extras/Switch to 2D Colliders", false, 10)]
+	static public void SwitchTo2D ()
+	{
+		BoxCollider[] colliders = NGUITools.FindActive<BoxCollider>();
+		
+		for (int i = 0; i < colliders.Length; ++i)
+		{
+			BoxCollider c = colliders[i];
+			GameObject go = c.gameObject;
+
+			UICamera cam = UICamera.FindCameraForLayer(go.layer);
+			if (cam == null) continue;
+			if (cam.eventType == UICamera.EventType.World_3D) continue;
+			if (cam.eventType == UICamera.EventType.World_2D) continue;
+
+			cam.eventType = UICamera.EventType.UI_2D;
+
+			Vector3 center = c.center;
+			Vector3 size = c.size;
+			NGUITools.DestroyImmediate(c);
+
+			BoxCollider2D bc = go.AddComponent<BoxCollider2D>();
+			bc.size = size;
+			bc.center = center;
+			bc.isTrigger = true;
+			NGUITools.SetDirty(go);
+		}
+	}
+
+	[MenuItem("NGUI/Extras/Switch to 3D Colliders", false, 10)]
+	static public void SwitchTo3D ()
+	{
+		BoxCollider2D[] colliders = NGUITools.FindActive<BoxCollider2D>();
+
+		for (int i = 0; i < colliders.Length; ++i)
+		{
+			BoxCollider2D c = colliders[i];
+			GameObject go = c.gameObject;
+
+			UICamera cam = UICamera.FindCameraForLayer(go.layer);
+			if (cam == null) continue;
+			if (cam.eventType == UICamera.EventType.World_3D) continue;
+			if (cam.eventType == UICamera.EventType.World_2D) continue;
+
+			cam.eventType = UICamera.EventType.UI_3D;
+
+			Vector3 center = c.center;
+			Vector3 size = c.size;
+			NGUITools.DestroyImmediate(c);
+
+			BoxCollider bc = go.AddComponent<BoxCollider>();
+			bc.size = size;
+			bc.center = center;
+			bc.isTrigger = true;
+			NGUITools.SetDirty(go);
+		}
+	}
+#endif
 
 #endregion
 
