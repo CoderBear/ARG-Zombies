@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Register : MonoBehaviour {
 	
-	string registerURL = "http://192.185.41.34/~codebear/register.php";
+	string registerURL = "http://192.185.41.34/~codebear/argz/register.php";
 	public UILabel username, password, firstname, lastname, email, problem;
 	private string userName = "", passWord = "", firstName="", lastName="", eMail="";
 	private const string verifyDB = "&dbuser=codebear_coder&dbpass=J29kMMX&dbtable=codebear_argz";

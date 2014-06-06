@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class VerifyUserName : MonoBehaviour {
-	private string verifyURL = "http://192.185.41.34/~codebear/nameverify.php";
+	private string verifyURL = "http://192.185.41.34/~codebear/argz/nameverify.php";
 	private const string verifyDB = "&dbuser=codebear_coder&dbpass=J29kMMX&dbtable=codebear_argz";
 	public UILabel username, verifyStatus, problem, debug;
 	

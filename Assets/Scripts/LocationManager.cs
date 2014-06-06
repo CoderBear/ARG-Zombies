@@ -11,7 +11,7 @@ public class LocationManager : MonoBehaviour {
 //	private int locationStatus;
 	private LocationServiceStatus locationStatus;
 
-	string locationURL = "http://192.185.41.34/~codebear/gpsloc.php";
+	string locationURL = "http://192.185.41.34/~codebear/argz/gpsloc.php";
 	private const string verifyDB = "&dbuser=codebear_coder&dbpass=J29kMMX&dbtable=codebear_argz";
 
 	public UILabel problem;

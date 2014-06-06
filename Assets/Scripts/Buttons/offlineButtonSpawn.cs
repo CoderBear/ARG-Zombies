@@ -8,6 +8,11 @@ struct buttonData {
 }
 
 public class offlineButtonSpawn : MonoBehaviour {
+	private Player player;
+	void Awake() {
+		// set local private player object to the singleton player.
+		player = GameObject.FindWithTag ("Player").GetComponent<Player>();
+	}
 
 	public GameObject m_missionParent;
 	public GameObject m_emptyBuilding;
@@ -135,18 +140,19 @@ public class offlineButtonSpawn : MonoBehaviour {
 	}
 
 	void Start () {
-		//scene loads with this object every time. create a check to make sure there's no otehrs and if there is, have start delete this one.
-		DontDestroyOnLoad(this.gameObject);//ensures this game object stays throughout the session of the game after it reaches this point
+		if (player.OfflineMode)
+		{
+			//scene loads with this object every time. create a check to make sure there's no otehrs and if there is, have start delete this one.
+			DontDestroyOnLoad(this.gameObject);//ensures this game object stays throughout the session of the game after it reaches this point
 
-		m_buildings = new buttonData [maxBuildings];
-		m_instBuildings = new GameObject [maxBuildings];
-		setMissionParent();
+			m_buildings = new buttonData [maxBuildings];
+			m_instBuildings = new GameObject [maxBuildings];
+			setMissionParent();
 
-		setRandomBuildingData();
-		loadRandomBuildings();
+			setRandomBuildingData();
+			loadRandomBuildings();
+		}
 	}
-
-
 
 	// Update is called once per frame
 	void Update () {
@@ -154,6 +160,4 @@ public class offlineButtonSpawn : MonoBehaviour {
 //			toggleButtonRender();
 //		}
 	}
-
-
 }
