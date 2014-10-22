@@ -1,0 +1,33 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# Sprite sheet: gameMapOnlineUI.png (2048 x 2048)
+# $TexturePacker:SmartUpdate:f6342521a82df8f1604e0fdf701b087f:3c528c6325a8f58502df7b1e6301e530:127c125d306281428b3c05b0f0baa0b6$
+#
+
+ChatTab;1490;1971;189;75;0.5;0.5
+FIGHT;1643;1819;138;73;0.5;0.5
+FriendsTab;1681;1971;189;75;0.5;0.5
+armor;1728;1766;51;51;0.5;0.5
+backpack;1870;1737;83;83;0.5;0.5
+check;1783;1807;85;85;0.5;0.5
+consumable;1781;1754;51;51;0.5;0.5
+crafttopbar;1490;1894;179;75;0.5;0.5
+districtinfo;1643;1732;83;85;0.5;0.5
+head;1834;1768;28;37;0.5;0.5
+leftpanel;2;190;386;1134;0.49222797927461137;0.48236331569664903
+mainmenu;1872;1978;172;68;0.5;0.5
+market;1284;1860;178;75;0.5;0.5
+minimaphouse;2;34;154;154;0.5;0.5
+minimapoffice;158;34;154;154;0.5;0.5
+minimaproad;314;34;154;154;0.5;0.5
+minimaptheater;1872;1822;154;154;0.5;0.5
+minimapwarehouse;1284;1704;154;154;0.5;0.5
+mission;1284;1937;204;109;0.5;0.5
+social;1671;1894;179;75;0.5;0.5
+storage;1464;1817;177;75;0.5;0.5
+summon;1728;1713;51;51;0.5;0.5
+town_map720;2;1326;1280;720;0.5;0.5

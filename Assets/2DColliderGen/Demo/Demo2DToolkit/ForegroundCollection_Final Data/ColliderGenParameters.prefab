@@ -1,0 +1,711 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: ColliderGenParameters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d0eb25030db41a4992459414caecdde, type: 1}
+  m_Name: 
+  mStoredParameters:
+  - mSpriteIndex: 17
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 16
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 3
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 11
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 15
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 1
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 4
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 1
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 14
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 18
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 1
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 16
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 8
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 13
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 9
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 14
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 0
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 14
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 2
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 19
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 10
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 21
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 16
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: 0
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 0, y: 0}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters:
+    - mEnableRegion: 1
+      mMaxPointCount: 21
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    - mEnableRegion: 0
+      mMaxPointCount: 21
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 21
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 12
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 17
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 13
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 1
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 10
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 1
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 4
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 10
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 11
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 17
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 5
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: .100000001
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 1, y: 1}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters: []
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 28
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 6
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: 0
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 0, y: 0}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters:
+    - mEnableRegion: 1
+      mMaxPointCount: 23
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    - mEnableRegion: 0
+      mMaxPointCount: 23
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    - mEnableRegion: 0
+      mMaxPointCount: 23
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 23
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 20
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: 0
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 0, y: 0}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters:
+    - mEnableRegion: 1
+      mMaxPointCount: 16
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    - mEnableRegion: 1
+      mMaxPointCount: 13
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    - mEnableRegion: 1
+      mMaxPointCount: 9
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    - mEnableRegion: 1
+      mMaxPointCount: 4
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    - mEnableRegion: 1
+      mMaxPointCount: 4
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    - mEnableRegion: 0
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    - mEnableRegion: 1
+      mMaxPointCount: 14
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    - mEnableRegion: 1
+      mMaxPointCount: 9
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 20
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  - mSpriteIndex: 19
+    mOutlineVertexCount: -1
+    mAlphaOpaqueThreshold: 0
+    mForceConvex: 0
+    mFlipNormals: 0
+    mCustomTexture: {fileID: 0}
+    mCustomScale: {x: 0, y: 0}
+    mCustomOffset: {x: 0, y: 0}
+    mColliderRegionParameters:
+    - mEnableRegion: 1
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 0
+    - mEnableRegion: 0
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    - mEnableRegion: 0
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    - mEnableRegion: 0
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    - mEnableRegion: 0
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    - mEnableRegion: 0
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    - mEnableRegion: 0
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    - mEnableRegion: 0
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    - mEnableRegion: 0
+      mMaxPointCount: 20
+      mConvex: 0
+      mRegionUpdateCalculationNeeded: 1
+    mRegionIndependentParameters:
+      mLiveUpdate: 1
+      mAlphaOpaqueThreshold: .100000001
+      mVertexReductionDistanceTolerance: 0
+      mDefaultMaxPointCount: 20
+      mThickness: 1
+      mFlipHorizontal: 0
+      mFlipVertical: 0
+      mConvex: 0
+      mFlipInsideOutside: 0
+      mCustomRotation: 0
+      mCustomScale: {x: 1, y: 1}
+      mCustomOffset: {x: 0, y: 0, z: 0}
+      mCustomTex: {fileID: 0}
+      mIsCustomAtlasRegionUsed: 0
+      mCustomAtlasFrameTitle: 
+      mCustomAtlasFramePositionInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameSizeInPixels: {x: 0, y: 0}
+      mCustomAtlasFrameRotation: 0
+      mUpdateCalculationNeeded: 1
+    mVersionID: 1
+  mColliderGenVersion: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

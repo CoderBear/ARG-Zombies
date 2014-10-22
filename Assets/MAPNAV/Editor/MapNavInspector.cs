@@ -1,4 +1,4 @@
-//MAPNAV Navigation ToolKit v.1.0
+//MAPNAV Navigation ToolKit v.1.3.2
 using UnityEditor;
 using UnityEngine;
 
@@ -7,8 +7,23 @@ public class MapNavInspector : Editor {
 	
 	bool showZoom =true;
 	bool showTouch =true;
-	private string[] mapTypes = new string[]{"map","sat","hyb"}; //Provide here the available map-types for your maps provider.
+
+	//MapQuest
+	private string[] mapTypes = new string[]{"map","sat","hyb"}; 
 	private string[] mapSizes = new string[]{"640x640","1280x1280","1920x1920","2560x2560"};
+	
+	//Google
+	/*
+	private string[] mapTypes = new string[]{"satellite","roadmap","hybrid","terrain"};
+	private string[] mapSizes = new string[]{"640x640"};
+	*/
+
+	/*
+	//Bing
+	private string[] mapTypes = new string[]{"Aerial","AerialWithLabels","Road"};
+	private string[] mapSizes = new string[]{"834x834"}; 
+	*/
+		
 	private SerializedObject myLoc;
 	private SerializedProperty
 		simGPS,

@@ -7,11 +7,6 @@ using RAIN.Action;
 [RAINAction]
 public class ActionTemplate_CS : RAINAction
 {
-    public ActionTemplate_CS()
-    {
-        actionName = "ActionTemplate_CS";
-    }
-
     public override void Start(AI ai)
     {
         base.Start(ai);

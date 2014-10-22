@@ -2,15 +2,22 @@
 using System.Collections;
 
 public class Login : MonoBehaviour {
-	private string loginURL = "http://192.185.41.34/~codebear/argz/login.php";
+	private string loginURL = "http://192.185.41.34/~codebear/tp_argz/login.php";
 	private const string verifyDB = "&dbuser=codebear_coder&dbpass=J29kMMX&dbtable=codebear_argz";
 
 	public UILabel username, problem;
 	public UIInput password;
 	private string userName = "", passWord ="";
 	
+	private Player player;
+	void Awake() {
+		// set local private player object to the singleton player.
+		player = GameObject.FindWithTag ("Player").GetComponent<Player>();
+	}
+	
 	void OnClick ()
 	{
+		player.OfflineMode = false;
 		userName = username.text;
 		passWord = password.value;
 		StartCoroutine (handleLogin (userName, passWord));

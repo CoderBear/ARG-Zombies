@@ -3,9 +3,6 @@ import RAIN.Core
 
 [RAINAction]
 class ActionTemplate_BOO(RAINAction): 
-	def constructor():
-		actionName = "ActionTemplate_BOO"
-
 	def Start(ai as AI):
 		super.Start(ai)
 		return

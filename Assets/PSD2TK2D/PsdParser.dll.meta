@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 5fccfef5f927b3d4fbafa8482f8cb5b2
+labels:
+- psd
+- psdparser
+- psdtopng
+- psd2png
+MonoAssemblyImporter:
+  serializedVersion: 1
+  iconMap: {}
+  executionOrder: {}
+  userData: 

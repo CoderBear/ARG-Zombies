@@ -4,11 +4,6 @@ import RAIN.Action;
 @RAINAction
 class ActionTemplate_JS extends RAIN.Action.RAINAction
 {
-	function newclass()
-	{
-		actionName = "ActionTemplate_JS";
-	}
-	
 	function Start(ai:AI):void
 	{
         super.Start(ai);

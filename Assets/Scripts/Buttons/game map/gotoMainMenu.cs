@@ -3,6 +3,12 @@ using System.Collections;
 
 public class gotoMainMenu : MonoBehaviour {
 
+	private Player player;
+	void Awake() {
+		// set local private player object to the singleton player.
+		player = GameObject.FindWithTag ("Player").GetComponent<Player>();
+	}
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -15,9 +21,19 @@ public class gotoMainMenu : MonoBehaviour {
 	}
 
 	void OnClick() {
-		if(GameObject.Find("Game_Building_Controller(Clone)").GetComponent<offlineButtonSpawn>() != null) {
-			offlineButtonSpawn obs = GameObject.Find("Game_Building_Controller(Clone)").GetComponent<offlineButtonSpawn>();
-			obs.destroyThis();
+		if (player.OfflineMode)
+		{
+			if (GameObject.Find("Game_Building_Controller(Clone)").GetComponent<offlineButtonSpawn>() != null)
+			{
+				offlineButtonSpawn obs = GameObject.Find("Game_Building_Controller(Clone)").GetComponent<offlineButtonSpawn>();
+				obs.destroyThis();
+			}
+		} else {
+			if (GameObject.Find("Online_Building_Controller(Clone)").GetComponent<onlineButtonSpawn>() != null)
+			{
+				onlineButtonSpawn obs = GameObject.Find("Online_Building_Controller(Clone)").GetComponent<onlineButtonSpawn>();
+				obs.destroyThis();
+			}
 		}
 		Application.LoadLevel ("mainMenu");
 	}

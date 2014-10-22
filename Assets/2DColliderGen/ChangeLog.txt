@@ -1,0 +1,110 @@
+===========================================================
+  2D ColliderGen - ChangeLog
+===========================================================
+-----------------------------------------------------------
+Version 2.0
+-----------------------------------------------------------
+
+New Features:
+- Collider Animation support for Unity 4.3 Sprites
+  PolygonCollider2D or MeshColliders can now be
+  generated for each animation frame. Automatically
+  switches to the corresponding collider at runtime.
+
+Bugfixes:
+- Windows Phone compilation issues resolved.
+- Several minor bugs removed.
+
+-----------------------------------------------------------
+Version 1.4
+-----------------------------------------------------------
+
+New Features:
+- Added support for Unity 4.3 Sprites and PolygonCollider2D
+  SpriteRenderer components are now automatically
+  recognized by AlphaMeshCollider.
+  PolygonCollider2D can now be generated instead of
+  MeshColliders as well.
+
+Compatibility:
+- Fixed an error with Windows Phone 8 deployment.
+
+Minor Changes:
+- Removed warnings of obsolete method calls in Unity4.3.
+  
+-----------------------------------------------------------
+Version 1.3
+-----------------------------------------------------------
+
+Compatibility:
+- Windows Phone 8 deployment works now.
+
+Minor Changes:
+- Removed warnings of obsolete method calls in Unity4.
+
+-----------------------------------------------------------
+Version 1.2
+-----------------------------------------------------------
+
+New Features:
+- Added support for unlimited collider-island and –hole
+  regions within a single texture image. Islands and holes
+  can be enabled and configured via a new
+  'Holes and Islands' section.
+
+- Added support for OTTilesSprite. Simply add an
+  AlphaMeshCollider to a GameObject with an OTTilesSprite
+  component to generate colliders for it.
+
+- Added a "Custom Texture Region" section to the
+  AlphaMeshCollider parameters where you can specify a
+  custom region to be used for collider computations
+  (e.g. to use a custom frame from a texture atlas or
+   spritesheet).
+
+Bugfixes:
+- SmoothMoves related:
+  Collider scale was wrong when setting a custom image at a
+  generic object (e.g. a plain quad) which had no
+  SmoothMoves or Orthello sprite attached.
+
+  Colliders attached to SmoothMoves BoneAnimation
+  sprites can now scale along with it. Added an
+  AlphaMeshCollider toggle parameter
+  "SmoothMoves Scale Anim" to enable this behaviour.
+
+- 2D Toolkit related:
+  Changed the location of the ColliderGenTK2DParameterStore
+  code file from Editor to Scripts directory. This prevents
+  a problem that occurred with later versions of the Mono
+  Compiler. Unfortunately, all ColliderGenParameters.prefab
+  files that stored parameters for convenience of each
+  sprite in a collection are no longer compatible and will
+  be treated as non-existent.
+
+-----------------------------------------------------------
+Version 1.1
+-----------------------------------------------------------
+
+Compatibility:
+-  This version is compatible with SmoothMoves V2.2.0 again.
+   (Fixed BoneAnimation problems introduced with this
+    SmoothMoves version - member variables have changed.)
+
+New Features:
+-  Added support for OTTileMap. There is now a menu entry
+   "2D ColliderGen/Orthello Specific/Add AlphaMesh Colliders To OTTileMap".
+
+Bugfixes:
+-  Previously the bottom-left pixel was not included in the
+   outline of objects. This lead to an incorrectly bevelled
+   bottom-left corner at a square box (and the outline had
+   5 vertices instead of 4).
+   
+-  Fixed a bug with Alpha Opaque Threshold not being
+   synchronized across all instances of a collider-group.
+
+-----------------------------------------------------------
+Version 1.0
+-----------------------------------------------------------
+-  Initial Release on the Asset Store

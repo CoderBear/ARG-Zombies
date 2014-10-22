@@ -2,25 +2,26 @@
 using System.Collections;
 
 public class VerifyUserName : MonoBehaviour {
-	private string verifyURL = "http://192.185.41.34/~codebear/argz/nameverify.php";
+	private string verifyURL = "http://192.185.41.34/~codebear/tp_argz/nameverify.php";
 	private const string verifyDB = "&dbuser=codebear_coder&dbpass=J29kMMX&dbtable=codebear_argz";
-	public UILabel username, verifyStatus, problem, debug;
+	public UILabel username, useremail, verifyStatus, problem, debug;
 	
 	public UIImageButton RegisterButton;
 	public UIToggle verifyToggle;
 	
-	private string userName = "";
+	private string userName = "", eMail = "";
 	
 	void OnClick ()
 	{
 		userName = username.text;
-		StartCoroutine (handleVerify (userName));
+		eMail = useremail.text;
+		StartCoroutine (handleVerify (userName, eMail));
 	}
 	
-	IEnumerator handleVerify (string userName)
+	IEnumerator handleVerify (string userName, string mail)
 	{
 		problem.text = "Checking if username is available";
-		string verify_URL = verifyURL + "?username=" + userName + verifyDB;
+		string verify_URL = verifyURL + "?username=" + userName + "&email=" + mail + verifyDB;
 
 		WWW verifyReader = new WWW (verify_URL);
 		yield return verifyReader;

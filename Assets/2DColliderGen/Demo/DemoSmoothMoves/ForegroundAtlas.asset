@@ -1,0 +1,235 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 529336600, guid: 289bab7cc27a12745b5df9b71d7b06c4, type: 1}
+  m_Name: ForegroundAtlas
+  material: {fileID: 2100000, guid: 2f0c6f91fa1a2924a9b884376157bb53, type: 2}
+  uvs:
+  - serializedVersion: 2
+    x: 0
+    y: .206054688
+    width: .25
+    height: .25
+  - serializedVersion: 2
+    x: 0
+    y: .45703125
+    width: .25
+    height: .25
+  - serializedVersion: 2
+    x: .250976562
+    y: .45703125
+    width: .227539062
+    height: .190429688
+  - serializedVersion: 2
+    x: .71484375
+    y: .45703125
+    width: .228515625
+    height: .129882812
+  - serializedVersion: 2
+    x: .479492188
+    y: .45703125
+    width: .234375
+    height: .168945312
+  - serializedVersion: 2
+    x: .74609375
+    y: .206054688
+    width: .25
+    height: .184570312
+  - serializedVersion: 2
+    x: .250976562
+    y: .6484375
+    width: .227539062
+    height: .127929688
+  - serializedVersion: 2
+    x: .74609375
+    y: .391601562
+    width: .234375
+    height: .064453125
+  - serializedVersion: 2
+    x: 0
+    y: .708007812
+    width: .25
+    height: .25
+  - serializedVersion: 2
+    x: .713867188
+    y: .798828125
+    width: .125
+    height: .125
+  - serializedVersion: 2
+    x: .389648438
+    y: 0
+    width: .295898438
+    height: .200195312
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: .388671875
+    height: .205078125
+  - serializedVersion: 2
+    x: .501953125
+    y: .206054688
+    width: .243164062
+    height: .228515625
+  - serializedVersion: 2
+    x: .713867188
+    y: .626953125
+    width: .263671875
+    height: .083984375
+  - serializedVersion: 2
+    x: .479492188
+    y: .736328125
+    width: .120117188
+    height: .154296875
+  - serializedVersion: 2
+    x: .686523438
+    y: 0
+    width: .25
+    height: .193359375
+  - serializedVersion: 2
+    x: .250976562
+    y: .77734375
+    width: .171875
+    height: .165039062
+  - serializedVersion: 2
+    x: .479492188
+    y: .626953125
+    width: .233398438
+    height: .108398438
+  - serializedVersion: 2
+    x: 0
+    y: .958984375
+    width: .205078125
+    height: .037109375
+  - serializedVersion: 2
+    x: .713867188
+    y: .711914062
+    width: .205078125
+    height: .0859375
+  - serializedVersion: 2
+    x: .250976562
+    y: .206054688
+    width: .25
+    height: .25
+  textureGUIDs:
+  - 56e94e2fa57263f4ba560a33bcc27317
+  - 45d6becbf7d6ef4429749b6c0c93007b
+  - 115191e6b4dd8e04b8fc5a3226c0da85
+  - a0fbf681540dc3544b92bbbe8576791a
+  - 89fb10479ae3d7b428ac5617833de2e5
+  - ff0eb5cca15d5ed45942ed98f8260c45
+  - 326088ad56de9624fa00063fd2ffddf7
+  - c1e3c6256102b6b4aac24cb3dda00a57
+  - 92b22b805d66dac40910643e7b96e2c8
+  - b3a7f007aa9e5124faf4eec1c8aad1db
+  - b3d58698a7a992b42b6b01b66e6e8f73
+  - e79a37956e51f524a846ce66eb9d4b1e
+  - 35ab85219b9683f42b5265377be76141
+  - c6c43e010d6df9f4e91928189fb722c4
+  - 5418b5471aa1aa54bbdc33a979e55d28
+  - 2218f16d884c54446b1e631045f66176
+  - 028249e111fa7974d940d6d1b9f4d6c3
+  - 8ae3a822a5f51a54a88702b3dcec2e01
+  - 7dafc98ca80c84144a0191a103b606b4
+  - 99addfaeccb83aa47a20bfd21c9c6888
+  - 209a7719b33255b4e95a35a489d0b569
+  textureSizes:
+  - {x: 256, y: 256}
+  - {x: 256, y: 256}
+  - {x: 233, y: 195}
+  - {x: 234, y: 133}
+  - {x: 240, y: 173}
+  - {x: 256, y: 189}
+  - {x: 233, y: 131}
+  - {x: 240, y: 66}
+  - {x: 256, y: 256}
+  - {x: 128, y: 128}
+  - {x: 303, y: 205}
+  - {x: 398, y: 210}
+  - {x: 249, y: 234}
+  - {x: 270, y: 86}
+  - {x: 123, y: 158}
+  - {x: 256, y: 198}
+  - {x: 176, y: 169}
+  - {x: 239, y: 111}
+  - {x: 210, y: 38}
+  - {x: 210, y: 88}
+  - {x: 256, y: 256}
+  defaultPivotOffsets:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  textureNames:
+  - buddha
+  - floating_rock_u
+  - mushroom
+  - floating_rock5
+  - floating_rock_stairs
+  - base_rock1
+  - floating_rock1
+  - floating_rock4
+  - star5
+  - box
+  - techwall3
+  - techwall2
+  - base_rock2
+  - techwall1
+  - floating_rock2
+  - mushroom2
+  - rolling_rock
+  - floating_rock3
+  - help_ingame
+  - logo_ingame
+  - floating_holes
+  texturePaths:
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/buddha.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/floating_rock_u.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/mushroom.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/floating_rock5.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/floating_rock_stairs.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/base_rock1.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/floating_rock1.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/floating_rock4.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/star5.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/box.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/techwall3.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/techwall2.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/base_rock2.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/techwall1.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/floating_rock2.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/mushroom2.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/rolling_rock.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/floating_rock3.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/help_ingame.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/logo_ingame.png
+  - Assets/2DColliderGen/Demo/DemoSmoothMoves/Sprites/floating_holes.png
+  lastBuildID: 20130829010135555
+  needsRebuilt: 0
+  dataVersion: 4
+  maxAtlasSize: 1024
+  padding: 1
+  forceSquare: 0
