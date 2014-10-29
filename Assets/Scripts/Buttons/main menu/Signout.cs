@@ -15,16 +15,24 @@ public class Signout : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
+			if (!player.OfflineMode) {
 //			StartCoroutine(updateGameServerInfo());
-			Application.LoadLevel("mainLogin");
+				Input.location.Stop();
+				Application.LoadLevel ("mainLogin");
+			} else {
+				Application.LoadLevel("mainLogin");
+			}
 		}
 	}
 
 	void OnClick() {
-//		if (!player.OfflineMode) {
+		if (!player.OfflineMode) {
 //			StartCoroutine(updateGameServerInfo());
-//		}
-		Application.LoadLevel ("mainLogin");
+			Input.location.Stop();
+			Application.LoadLevel ("mainLogin");
+		} else {
+			Application.LoadLevel ("mainLogin");
+		}
 	}
 
 	IEnumerator updateGameServerInfo(){
@@ -32,5 +40,6 @@ public class Signout : MonoBehaviour {
 		Debug.Log (info_URL);
 		WWW infoReader = new WWW (info_URL);
 		yield return infoReader;
+		Application.LoadLevel ("mainLogin");
 	}
 }

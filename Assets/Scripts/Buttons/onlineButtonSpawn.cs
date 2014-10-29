@@ -90,7 +90,11 @@ public class OnlineButtonSpawn : MonoBehaviour {
 //			Debug.Log("stored lat for buttonData #" + (i+1) + " is " + y);
 			m_buildings[i].Position = new Vector3(x,y,0.0f);
 //			m_buildings[i].m_deltaPosition = playerLoc - m_buildings[i].m_position;
+#if UNITY_ANDROID&&!UNITY_EDITOR
+			m_buildings[i].DeltaPosition = SetDeltaPositionAndroid(m_buildings[i].Position);
+#else
 			m_buildings[i].DeltaPosition = SetDeltaPosition(m_buildings[i].Position);
+#endif
 //			Debug.Log("DeltaPosition.X for buttonData #" + (i+1) + " is " + m_buildings[i].DeltaPosition.x);
 			m_buildings[i].MapPosition = new Vector3(MapUtils.LonToX(m_buildings[i].Position.x), MapUtils.LatToY(m_buildings[i].Position.y),0.0f);
 //			Debug.Log("Lat->Y for buttonData #" + (i+1) + " is " + m_buildings[i].m_mapPosition.y);
@@ -217,13 +221,14 @@ public class OnlineButtonSpawn : MonoBehaviour {
 	void RetrieveGPSData()
 	{
 		currentGPSPosition = Input.location.lastData;
+		Debug.Log("currentGPSPosition is (" + currentGPSPosition.latitude + " , " + currentGPSPosition.longitude + ")");
 	}
 	
 	public void RefreshPlaces() {
 		RetrieveGPSData();
 		string radarURL;
 #if UNITY_ANDROID && !UNITY_EDITOR
-		radarURL = "https://maps.googleapis.com/maps/api/place/radarsearch/json?location=" + currentGPSPosition.latitude + "," + currentGPSPosition.longitude + "&radius=" + radarRadius + "&sensor=true&key=" + APIkey;
+		radarURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + currentGPSPosition.latitude + "," + currentGPSPosition.longitude + "&radius=" + radarRadius + "&sensor=true&key=" + APIkey;
 #else
 		radarURL = string.Format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + playerLoc.y + "," + playerLoc.x + "&radius={0}&sensor=false&key={1}", radarRadius, APIkey);
 #endif
