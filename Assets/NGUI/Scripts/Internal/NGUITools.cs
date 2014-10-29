@@ -170,6 +170,7 @@ static public class NGUITools
 
 	static public string GetHierarchy (GameObject obj)
 	{
+		if (obj == null) return "";
 		string path = obj.name;
 
 		while (obj.transform.parent != null)
@@ -186,11 +187,11 @@ static public class NGUITools
 
 	static public T[] FindActive<T> () where T : Component
 	{
-#if UNITY_3_5 || UNITY_4_0
-		return GameObject.FindSceneObjectsOfType(typeof(T)) as T[];
-#else
+//#if UNITY_3_5 || UNITY_4_0
+//        return GameObject.FindSceneObjectsOfType(typeof(T)) as T[];
+//#else
 		return GameObject.FindObjectsOfType(typeof(T)) as T[];
-#endif
+//#endif
 	}
 
 	/// <summary>
@@ -228,27 +229,56 @@ static public class NGUITools
 	/// Add a collider to the game object containing one or more widgets.
 	/// </summary>
 
-	static public BoxCollider AddWidgetCollider (GameObject go) { return AddWidgetCollider(go, false); }
+	static public void AddWidgetCollider (GameObject go) { AddWidgetCollider(go, false); }
 
 	/// <summary>
 	/// Add a collider to the game object containing one or more widgets.
 	/// </summary>
 
-	static public BoxCollider AddWidgetCollider (GameObject go, bool considerInactive)
+	static public void AddWidgetCollider (GameObject go, bool considerInactive)
 	{
 		if (go != null)
 		{
+			// 3D collider
 			Collider col = go.GetComponent<Collider>();
 			BoxCollider box = col as BoxCollider;
 
-			if (box == null)
+			if (box != null)
 			{
-				if (col != null)
-				{
-					if (Application.isPlaying) GameObject.Destroy(col);
-					else GameObject.DestroyImmediate(col);
-				}
+				UpdateWidgetCollider(box, considerInactive);
+				return;
+			}
 
+			// Is there already another collider present? If so, do nothing.
+			if (col != null) return;
+
+#if !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
+			// 2D collider
+			BoxCollider2D box2 = go.GetComponent<BoxCollider2D>();
+
+			if (box2 != null)
+			{
+				UpdateWidgetCollider(box2, considerInactive);
+				return;
+			}
+
+			UICamera ui = UICamera.FindCameraForLayer(go.layer);
+
+			if (ui != null && (ui.eventType == UICamera.EventType.World_2D || ui.eventType == UICamera.EventType.UI_2D))
+			{
+				box2 = go.AddComponent<BoxCollider2D>();
+				box2.isTrigger = true;
+#if UNITY_EDITOR
+				UnityEditor.Undo.RegisterCreatedObjectUndo(box2, "Add Collider");
+#endif
+				UIWidget widget = go.GetComponent<UIWidget>();
+				if (widget != null) widget.autoResizeBoxCollider = true;
+				UpdateWidgetCollider(box2, considerInactive);
+				return;
+			}
+			else
+#endif
+			{
 				box = go.AddComponent<BoxCollider>();
 #if !UNITY_3_5 && UNITY_EDITOR
 				UnityEditor.Undo.RegisterCreatedObjectUndo(box, "Add Collider");
@@ -257,12 +287,10 @@ static public class NGUITools
 
 				UIWidget widget = go.GetComponent<UIWidget>();
 				if (widget != null) widget.autoResizeBoxCollider = true;
+				UpdateWidgetCollider(box, considerInactive);
 			}
-
-			UpdateWidgetCollider(box, considerInactive);
-			return box;
 		}
-		return null;
+		return;
 	}
 
 	/// <summary>
@@ -282,17 +310,18 @@ static public class NGUITools
 	{
 		if (go != null)
 		{
-			UpdateWidgetCollider(go.GetComponent<BoxCollider>(), considerInactive);
+			BoxCollider bc = go.GetComponent<BoxCollider>();
+
+			if (bc != null)
+			{
+				UpdateWidgetCollider(bc, considerInactive);
+				return;
+			}
+#if !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
+			BoxCollider2D box2 = go.GetComponent<BoxCollider2D>();
+			if (box2 != null) UpdateWidgetCollider(box2, considerInactive);
+#endif
 		}
-	}
-
-	/// <summary>
-	/// Adjust the widget's collider based on the depth of the widgets, as well as the widget's dimensions.
-	/// </summary>
-
-	static public void UpdateWidgetCollider (BoxCollider bc)
-	{
-		UpdateWidgetCollider(bc, false);
 	}
 
 	/// <summary>
@@ -308,9 +337,9 @@ static public class NGUITools
 
 			if (w != null)
 			{
-				Vector4 region = w.drawingDimensions;
-				box.center = new Vector3((region.x + region.z) * 0.5f, (region.y + region.w) * 0.5f);
-				box.size = new Vector3(region.z - region.x, region.w - region.y);
+				Vector3[] corners = w.localCorners;
+				box.center = Vector3.Lerp(corners[0], corners[2], 0.5f);
+				box.size = corners[2] - corners[0];
 			}
 			else
 			{
@@ -323,6 +352,37 @@ static public class NGUITools
 #endif
 		}
 	}
+
+#if !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
+	/// <summary>
+	/// Adjust the widget's collider based on the depth of the widgets, as well as the widget's dimensions.
+	/// </summary>
+
+	static public void UpdateWidgetCollider (BoxCollider2D box, bool considerInactive)
+	{
+		if (box != null)
+		{
+			GameObject go = box.gameObject;
+			UIWidget w = go.GetComponent<UIWidget>();
+
+			if (w != null)
+			{
+				Vector3[] corners = w.localCorners;
+				box.center = Vector3.Lerp(corners[0], corners[2], 0.5f);
+				box.size = corners[2] - corners[0];
+			}
+			else
+			{
+				Bounds b = NGUIMath.CalculateRelativeWidgetBounds(go.transform, considerInactive);
+				box.center = b.center;
+				box.size = new Vector2(b.size.x, b.size.y);
+			}
+#if UNITY_EDITOR
+			NGUITools.SetDirty(box);
+#endif
+		}
+	}
+#endif
 
 	/// <summary>
 	/// Helper function that returns the string name of the type.
@@ -1120,12 +1180,14 @@ static public class NGUITools
 	/// Helper function that returns whether the specified MonoBehaviour is active.
 	/// </summary>
 
+	[System.Diagnostics.DebuggerHidden]
+	[System.Diagnostics.DebuggerStepThrough]
 	static public bool GetActive (Behaviour mb)
 	{
 #if UNITY_3_5
-		return mb != null && mb.enabled && mb.gameObject.active;
+		return mb && mb.enabled && mb.gameObject.active;
 #else
-		return mb != null && mb.enabled && mb.gameObject.activeInHierarchy;
+		return mb && mb.enabled && mb.gameObject.activeInHierarchy;
 #endif
 	}
 
@@ -1133,6 +1195,8 @@ static public class NGUITools
 	/// Unity4 has changed GameObject.active to GameObject.activeself.
 	/// </summary>
 
+	[System.Diagnostics.DebuggerHidden]
+	[System.Diagnostics.DebuggerStepThrough]
 	static public bool GetActive (GameObject go)
 	{
 #if UNITY_3_5
@@ -1146,6 +1210,8 @@ static public class NGUITools
 	/// Unity4 has changed GameObject.active to GameObject.SetActive.
 	/// </summary>
 
+	[System.Diagnostics.DebuggerHidden]
+	[System.Diagnostics.DebuggerStepThrough]
 	static public void SetActiveSelf (GameObject go, bool state)
 	{
 #if UNITY_3_5
@@ -1234,7 +1300,7 @@ static public class NGUITools
 		}
 		catch (System.Exception ex)
 		{
-			NGUIDebug.Log(ex.Message);
+			Debug.LogError(ex.Message);
 			return false;
 		}
 
@@ -1313,10 +1379,10 @@ static public class NGUITools
 	}
 
 	[System.Obsolete("Use NGUIText.EncodeColor instead")]
-	static public string EncodeColor (Color c) { return NGUIText.EncodeColor(c); }
+	static public string EncodeColor (Color c) { return NGUIText.EncodeColor24(c); }
 
 	[System.Obsolete("Use NGUIText.ParseColor instead")]
-	static public Color ParseColor (string text, int offset) { return NGUIText.ParseColor(text, offset); }
+	static public Color ParseColor (string text, int offset) { return NGUIText.ParseColor24(text, offset); }
 
 	[System.Obsolete("Use NGUIText.StripSymbols instead")]
 	static public string StripSymbols (string text) { return NGUIText.StripSymbols(text); }
@@ -1442,10 +1508,9 @@ static public class NGUITools
 	static public string GetFuncName (object obj, string method)
 	{
 		if (obj == null) return "<null>";
-		if (string.IsNullOrEmpty(method)) return "<Choose>";
 		string type = obj.GetType().ToString();
 		int period = type.LastIndexOf('.');
 		if (period > 0) type = type.Substring(period + 1);
-		return type + "." + method;
+		return string.IsNullOrEmpty(method) ? type : type + "." + method;
 	}
 }

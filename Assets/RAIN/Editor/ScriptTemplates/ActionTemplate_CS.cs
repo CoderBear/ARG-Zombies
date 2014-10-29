@@ -1,17 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using RAIN.Core;
 using RAIN.Action;
+using RAIN.Core;
 
 [RAINAction]
 public class ActionTemplate_CS : RAINAction
 {
-    public ActionTemplate_CS()
-    {
-        actionName = "ActionTemplate_CS";
-    }
-
     public override void Start(AI ai)
     {
         base.Start(ai);

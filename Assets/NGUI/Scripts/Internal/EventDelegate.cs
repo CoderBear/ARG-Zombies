@@ -3,7 +3,7 @@
 // Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
-#if UNITY_EDITOR || (!UNITY_FLASH && !NETFX_CORE && !UNITY_WP8)
+#if UNITY_EDITOR || !UNITY_FLASH
 #define REFLECTION_SUPPORT
 #endif
 
@@ -61,8 +61,13 @@ public class EventDelegate
 					if (obj != null && !string.IsNullOrEmpty(field))
 					{
 						System.Type type = obj.GetType();
+#if NETFX_CORE
+						propInfo = type.GetRuntimeProperty(field);
+						if (propInfo == null) fieldInfo = type.GetRuntimeField(field);
+#else
 						propInfo = type.GetProperty(field);
 						if (propInfo == null) fieldInfo = type.GetField(field);
+#endif
 					}
 				}
 				if (propInfo != null) return propInfo.GetValue(obj, null);
@@ -101,12 +106,12 @@ public class EventDelegate
 
 	// Private variables
 	public delegate void Callback();
-	Callback mCachedCallback;
-	bool mRawDelegate = false;
-	bool mCached = false;
+	[System.NonSerialized] Callback mCachedCallback;
+	[System.NonSerialized] bool mRawDelegate = false;
+	[System.NonSerialized] bool mCached = false;
 #if REFLECTION_SUPPORT
-	MethodInfo mMethod;
-	object[] mArgs;
+	[System.NonSerialized] MethodInfo mMethod;
+	[System.NonSerialized] object[] mArgs;
 #endif
 
 	/// <summary>
@@ -218,34 +223,22 @@ public class EventDelegate
 	/// </summary>
 
 #if REFLECTION_SUPPORT
-	#if !UNITY_EDITOR && UNITY_WP8
-		static string GetMethodName (Callback callback)
-		{
-			System.Delegate d = callback as System.Delegate;
-			return d.Method.Name;
-		}
+ #if !UNITY_EDITOR && NETFX_CORE
+	static string GetMethodName (Callback callback)
+	{
+		System.Delegate d = callback as System.Delegate;
+		return d.GetMethodInfo().Name;
+	}
 
-		static bool IsValid (Callback callback)
-		{
-			System.Delegate d = callback as System.Delegate;
-			return d != null && d.Method != null;
-		}
-	#elif !UNITY_EDITOR && UNITY_METRO
-		static string GetMethodName (Callback callback)
-		{
-			System.Delegate d = callback as System.Delegate;
-			return d.GetMethodInfo().Name;
-		}
-
-		static bool IsValid (Callback callback)
-		{
-			System.Delegate d = callback as System.Delegate;
-			return d != null && d.GetMethodInfo() != null;
-		}
-	#else
-		static string GetMethodName (Callback callback) { return callback.Method.Name; }
-		static bool IsValid (Callback callback) { return callback != null && callback.Method != null; }
-	#endif
+	static bool IsValid (Callback callback)
+	{
+		System.Delegate d = callback as System.Delegate;
+		return d != null && d.GetMethodInfo() != null;
+	}
+ #else
+	static string GetMethodName (Callback callback) { return callback.Method.Name; }
+	static bool IsValid (Callback callback) { return callback != null && callback.Method != null; }
+ #endif
 #else
 	static bool IsValid (Callback callback) { return callback != null; }
 #endif
@@ -344,15 +337,34 @@ public class EventDelegate
 		{
 			if (mTarget != null && !string.IsNullOrEmpty(mMethodName))
 			{
-#if NETFX_CORE
-				System.Type type = mTarget.GetTypeInfo();
-#else
 				System.Type type = mTarget.GetType();
-#endif
 
 				try
 				{
-					mMethod = type.GetMethod(mMethodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+#if NETFX_CORE
+					IEnumerable<MethodInfo> methods = type.GetRuntimeMethods();
+
+					foreach (MethodInfo mi in methods)
+					{
+						if (mi.Name == mMethodName)
+						{
+							mMethod = mi;
+							break;
+						}
+					}
+#else
+					for (mMethod = null; ; )
+					{
+#if UNITY_WP8
+						mMethod = type.GetMethod(mMethodName);
+#else
+						mMethod = type.GetMethod(mMethodName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+#endif
+						if (mMethod != null) break;
+						type = type.BaseType;
+						if (type == null) break;
+					}
+#endif
 				}
 				catch (System.Exception ex)
 				{
@@ -378,7 +390,12 @@ public class EventDelegate
 				if (info.Length == 0)
 				{
 					// No parameters means we can create a simple delegate for it, optimizing the call
+#if NETFX_CORE
+					mCachedCallback = (Callback)mMethod.CreateDelegate(typeof(Callback), mTarget);
+#else
 					mCachedCallback = (Callback)System.Delegate.CreateDelegate(typeof(Callback), mTarget, mMethodName);
+#endif
+
 					mArgs = null;
 					mParameters = null;
 					return;
@@ -475,8 +492,13 @@ public class EventDelegate
 				}
 				catch (System.ArgumentException ex)
 				{
-					string msg = ex.Message;
-					msg += "\nExpected: ";
+					string msg = "Error calling ";
+
+					if (mTarget == null) msg += mMethod.Name;
+					else msg += mTarget.GetType() + "." + mMethod.Name;
+					
+					msg += ": " + ex.Message;
+					msg += "\n  Expected: ";
 
 					ParameterInfo[] pis = mMethod.GetParameters();
 
@@ -491,7 +513,7 @@ public class EventDelegate
 							msg += ", " + pis[i].ParameterType;
 					}
 
-					msg += "\nGot: ";
+					msg += "\n  Received: ";
 
 					if (mParameters.Length == 0)
 					{

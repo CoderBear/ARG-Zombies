@@ -19,8 +19,8 @@ class PlayMakerGUIInspector : Editor
 	}
 
 	public override void OnInspectorGUI()
-	{
-#if UNITY_4_3
+    {
+#if UNITY_4_3 || UNITY_4_5
 	    EditorGUIUtility.labelWidth = 210;
 #else
         EditorGUIUtility.LookLikeInspector();

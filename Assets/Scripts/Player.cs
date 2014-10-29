@@ -15,6 +15,11 @@ public class Player : MonoBehaviour {
 	private int lastXP = 0, lastMoney = 0;
 	private float ratioHP = 0.0f, ratioMP = 0.0f;
 
+	public bool OfflineMode {
+		get;
+		set;
+	}
+
 	public string LastAreaVisited {
 		get;
 		set;

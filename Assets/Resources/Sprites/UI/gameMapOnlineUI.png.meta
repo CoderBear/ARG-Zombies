@@ -1,0 +1,300 @@
+fileFormatVersion: 2
+guid: 532a63f1e003a094caf641eaf1328127
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ChatTab
+    21300002: FIGHT
+    21300004: FriendsTab
+    21300006: armor
+    21300008: backpack
+    21300010: check
+    21300012: consumable
+    21300014: crafttopbar
+    21300016: districtinfo
+    21300018: head
+    21300020: leftpanel
+    21300022: mainmenu
+    21300024: market
+    21300026: minimaphouse
+    21300028: minimapoffice
+    21300030: minimaproad
+    21300032: minimaptheater
+    21300034: minimapwarehouse
+    21300036: mission
+    21300038: social
+    21300040: storage
+    21300042: summon
+    21300044: town_map720
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 4096
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: ChatTab
+      rect:
+        serializedVersion: 2
+        x: 1490
+        y: 1971
+        width: 189
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FIGHT
+      rect:
+        serializedVersion: 2
+        x: 1643
+        y: 1819
+        width: 138
+        height: 73
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: FriendsTab
+      rect:
+        serializedVersion: 2
+        x: 1681
+        y: 1971
+        width: 189
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: armor
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 1766
+        width: 51
+        height: 51
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: backpack
+      rect:
+        serializedVersion: 2
+        x: 1870
+        y: 1737
+        width: 83
+        height: 83
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: check
+      rect:
+        serializedVersion: 2
+        x: 1783
+        y: 1807
+        width: 85
+        height: 85
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: consumable
+      rect:
+        serializedVersion: 2
+        x: 1781
+        y: 1754
+        width: 51
+        height: 51
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: crafttopbar
+      rect:
+        serializedVersion: 2
+        x: 1490
+        y: 1894
+        width: 179
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: districtinfo
+      rect:
+        serializedVersion: 2
+        x: 1643
+        y: 1732
+        width: 83
+        height: 85
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: head
+      rect:
+        serializedVersion: 2
+        x: 1834
+        y: 1768
+        width: 28
+        height: 37
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: leftpanel
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 190
+        width: 386
+        height: 1134
+      alignment: 9
+      pivot: {x: .492227972, y: .482363313}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: mainmenu
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 1978
+        width: 172
+        height: 68
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: market
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 1860
+        width: 178
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: minimaphouse
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 34
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: minimapoffice
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 34
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: minimaproad
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 34
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: minimaptheater
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 1822
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: minimapwarehouse
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 1704
+        width: 154
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: mission
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 1937
+        width: 204
+        height: 109
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: social
+      rect:
+        serializedVersion: 2
+        x: 1671
+        y: 1894
+        width: 179
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: storage
+      rect:
+        serializedVersion: 2
+        x: 1464
+        y: 1817
+        width: 177
+        height: 75
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: summon
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 1713
+        width: 51
+        height: 51
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: town_map720
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 1326
+        width: 1280
+        height: 720
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

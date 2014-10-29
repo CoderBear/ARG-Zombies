@@ -2,24 +2,31 @@
 using System.Collections;
 
 public class Login : MonoBehaviour {
-	private string loginURL = "http://192.185.41.34/~codebear/login.php";
+	private string loginURL = "http://192.185.41.34/~codebear/tp_argz/login.php";
 	private const string verifyDB = "&dbuser=codebear_coder&dbpass=J29kMMX&dbtable=codebear_argz";
 
 	public UILabel username, problem;
 	public UIInput password;
 	private string userName = "", passWord ="";
 	
+	private Player player;
+	void Awake() {
+		// set local private player object to the singleton player.
+		player = GameObject.FindWithTag ("Player").GetComponent<Player>();
+	}
+	
 	void OnClick ()
 	{
+		player.OfflineMode = false;
 		userName = username.text;
 		passWord = password.value;
 		StartCoroutine (handleLogin (userName, passWord));
 	}
 	
-	IEnumerator handleLogin (string userName, string password)
+	IEnumerator handleLogin (string user, string pass)
 	{
 		problem.text = "Checking username and password..";
-		string login_URL = loginURL + "?username=" + userName + "&password=" + password + verifyDB;
+		string login_URL = loginURL + "?username=" + user + "&password=" + pass + verifyDB;
 		Debug.Log (login_URL);
 		WWW loginReader = new WWW (login_URL);
 		yield return loginReader;

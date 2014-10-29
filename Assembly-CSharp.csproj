@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_4;UNITY_4_3;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_5_5;UNITY_4_5;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,13 +39,28 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshCollider.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderCopyColliderEnabled.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderPreferences.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderRegistry.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderSmoothMovesRestore.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderUpdateOTTilesSpriteColliders.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\ColliderGenTK2DColliderGenerationData.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\ColliderGenTK2DParameterStore.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\ColliderGenTK2DParametersForSprite.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\CommonColliderGenerationData.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\IslandDetectorTestHelper.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\PolygonOutlineFromImageFrontend.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\RuntimeAlphaMeshCollider.cs" />
+     <Compile Include="Assets\2DColliderGen\Scripts\RuntimeAnimatedColliderSwitch.cs" />
+     <Compile Include="Assets\GoogleMaps\Scripts\GoogleMap.cs" />
      <Compile Include="Assets\HUD Text\Examples\Scripts\ChatManager.cs" />
      <Compile Include="Assets\HUD Text\Examples\Scripts\ChatParticipant.cs" />
      <Compile Include="Assets\HUD Text\Examples\Scripts\ColliderDisplayText.cs" />
@@ -54,6 +69,18 @@
      <Compile Include="Assets\HUD Text\Examples\Scripts\Rotate.cs" />
      <Compile Include="Assets\HUD Text\Scripts\HUDText.cs" />
      <Compile Include="Assets\HUD Text\Scripts\UIFollowTarget.cs" />
+     <Compile Include="Assets\JSON\SimpleJSON.cs" />
+     <Compile Include="Assets\MAPNAV\Demo Scenes\2D Scene\InOut.cs" />
+     <Compile Include="Assets\MAPNAV\Demo Scenes\2D Scene\Points.cs" />
+     <Compile Include="Assets\MAPNAV\Demo Scenes\2D Scene\TouchSound.cs" />
+     <Compile Include="Assets\MAPNAV\Demo Scenes\3D Scene\PlaySound.cs" />
+     <Compile Include="Assets\MAPNAV\Scripts\FixPlaneAspect.cs" />
+     <Compile Include="Assets\MAPNAV\Scripts\FixQuadAspect.cs" />
+     <Compile Include="Assets\MAPNAV\Scripts\GPS_Status.cs" />
+     <Compile Include="Assets\MAPNAV\Scripts\GetGeolocation.cs" />
+     <Compile Include="Assets\MAPNAV\Scripts\InitScreen.cs" />
+     <Compile Include="Assets\MAPNAV\Scripts\MapNav.cs" />
+     <Compile Include="Assets\MAPNAV\Scripts\SetGeolocation.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
@@ -146,10 +173,12 @@
      <Compile Include="Assets\NGUI\Scripts\Internal\PropertyReference.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\RealTime.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\SpringPanel.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Internal\UIBasicSprite.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIDrawCall.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIEventListener.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIGeometry.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIRect.cs" />
+     <Compile Include="Assets\NGUI\Scripts\Internal\UISnapshotPoint.cs" />
      <Compile Include="Assets\NGUI\Scripts\Internal\UIWidget.cs" />
      <Compile Include="Assets\NGUI\Scripts\Tweening\AnimatedAlpha.cs" />
      <Compile Include="Assets\NGUI\Scripts\Tweening\AnimatedColor.cs" />
@@ -186,6 +215,7 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+     <Compile Include="Assets\PSD2TK2D\OrthoCameraSetter.cs" />
      <Compile Include="Assets\PlayMaker\Actions\ActivateGameObject.cs" />
      <Compile Include="Assets\PlayMaker\Actions\AddAnimationClip.cs" />
      <Compile Include="Assets\PlayMaker\Actions\AddComponent.cs" />
@@ -515,7 +545,6 @@
      <Compile Include="Assets\PlayMaker\Actions\Network\StartServer.cs" />
      <Compile Include="Assets\PlayMaker\Actions\NextFrameEvent.cs" />
      <Compile Include="Assets\PlayMaker\Actions\ObjectCompare.cs" />
-     <Compile Include="Assets\PlayMaker\Actions\PRNG\RollD20.cs" />
      <Compile Include="Assets\PlayMaker\Actions\PauseMovieTexture.cs" />
      <Compile Include="Assets\PlayMaker\Actions\PerSecond.cs" />
      <Compile Include="Assets\PlayMaker\Actions\PlayAnimation.cs" />
@@ -736,6 +765,7 @@
      <Compile Include="Assets\Scripts\Buttons\AndroidHome.cs" />
      <Compile Include="Assets\Scripts\Buttons\GoRegister.cs" />
      <Compile Include="Assets\Scripts\Buttons\Login.cs" />
+     <Compile Include="Assets\Scripts\Buttons\OnlineButtonSpawn.cs" />
      <Compile Include="Assets\Scripts\Buttons\Register.cs" />
      <Compile Include="Assets\Scripts\Buttons\VerifyUserName.cs" />
      <Compile Include="Assets\Scripts\Buttons\combat\AcceptResultsButton.cs" />
@@ -759,16 +789,21 @@
      <Compile Include="Assets\Scripts\CombatSystem.cs" />
      <Compile Include="Assets\Scripts\Database\MobDB.cs" />
      <Compile Include="Assets\Scripts\Database\PlayerDB.cs" />
+     <Compile Include="Assets\Scripts\GPS\GooglePlaces.cs" />
+     <Compile Include="Assets\Scripts\GPS\LocationManager.cs" />
+     <Compile Include="Assets\Scripts\GPS\MapUtils.cs" />
+     <Compile Include="Assets\Scripts\GPS\MeshPixelTools.cs" />
+     <Compile Include="Assets\Scripts\GPS\OnlineObjectLoader.cs" />
+     <Compile Include="Assets\Scripts\GPS\mode_Obect_Loader.cs" />
+     <Compile Include="Assets\Scripts\GPS\offline_Object_Loader.cs" />
      <Compile Include="Assets\Scripts\GlobalConstants.cs" />
      <Compile Include="Assets\Scripts\Gui.cs" />
-     <Compile Include="Assets\Scripts\LocationManager.cs" />
      <Compile Include="Assets\Scripts\Mob.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\UI\DymanicCombatStatUI.cs" />
      <Compile Include="Assets\Scripts\UI\ExploreCombatUI.cs" />
      <Compile Include="Assets\Scripts\UI\PlayerVictoryUI.cs" />
-     <Compile Include="Assets\Scripts\offline_Object_Loader.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCamera.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCameraAnchor.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Code\Camera\tk2dCameraUtil.cs" />
@@ -947,6 +982,7 @@
      <Compile Include="Assets\sqlitekit\src\where_c.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.5.5.txt" />
+     <None Include="Assets\2DColliderGen\FlashDeploymentReadme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
@@ -958,6 +994,7 @@
      <None Include="Assets\TK2DROOT\tk2d\Goodies\TexturePacker\Exporter\2dtoolkit\exporter.xml" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\SolidVertexColor.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
+     <None Include="Assets\2DColliderGen\Readme.txt" />
      <None Include="Assets\NGUI Atlases\Resources\charSelect.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
@@ -969,6 +1006,7 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitPremulVertexColor.shader" />
+     <None Include="Assets\2DColliderGen\Demo\DemoOrthelloPro\ForegroundAtlas.xml" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\PremulVertexColor.shader" />
      <None Include="Assets\NGUI Atlases\Resources\officeMapFP.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
@@ -1019,23 +1057,38 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
+     <None Include="Assets\2DColliderGen\Demo\DemoReadme.txt" />
      <None Include="Assets\HUD Text\Examples\Atlases\Large.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
+     <None Include="Assets\2DColliderGen\ChangeLog.txt" />
+     <None Include="Assets\codeandweb.com\Readme.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\PlayMaker\Versions\readme.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
      <None Include="Assets\NGUI\Examples\Resources\Localization.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\NGUI Atlases\Resources\gameCombatUI.txt" />
+ <Reference Include="2DColliderGen_Runtime">
+ <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/2DColliderGen/Plugins/2DColliderGen/2DColliderGen_Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="ICSharpCode.SharpZipLib">
+ <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/JSON/ICSharpCode.SharpZipLib.dll</HintPath>
+ </Reference>
  <Reference Include="PlayMaker">
- <HintPath>Assets\PlayMaker\PlayMaker.dll</HintPath>
+ <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/PlayMaker.dll</HintPath>
+ </Reference>
+ <Reference Include="PsdParser">
+ <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PSD2TK2D/PsdParser.dll</HintPath>
  </Reference>
  <Reference Include="RAIN">
- <HintPath>Assets\RAIN\RAIN.dll</HintPath>
+ <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/RAIN/RAIN.dll</HintPath>
  </Reference>
  <Reference Include="RAINMetaform">
- <HintPath>Assets\RAIN\RAINMetaform.dll</HintPath>
+ <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/RAIN/RAINMetaform.dll</HintPath>
+ </Reference>
+ <Reference Include="Ionic.Zlib">
+ <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/UnityHTTP/external/Ionic.Zlib.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@ public class MobDB : MonoBehaviour {
 	public int getHP(int id) {
 		int num = 0;
 		string dbFile = Application.persistentDataPath + "/mobDB.db";
+		Debug.Log(dbFile);
 		SQLiteDB db = new SQLiteDB ();
 
 		db.Open (dbFile);
