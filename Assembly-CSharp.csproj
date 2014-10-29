@@ -765,6 +765,7 @@
      <Compile Include="Assets\Scripts\Buttons\AndroidHome.cs" />
      <Compile Include="Assets\Scripts\Buttons\GoRegister.cs" />
      <Compile Include="Assets\Scripts\Buttons\Login.cs" />
+     <Compile Include="Assets\Scripts\Buttons\OnlineButtonSpawn.cs" />
      <Compile Include="Assets\Scripts\Buttons\Register.cs" />
      <Compile Include="Assets\Scripts\Buttons\VerifyUserName.cs" />
      <Compile Include="Assets\Scripts\Buttons\combat\AcceptResultsButton.cs" />
@@ -783,7 +784,6 @@
      <Compile Include="Assets\Scripts\Buttons\main menu\Signout.cs" />
      <Compile Include="Assets\Scripts\Buttons\offlineButton.cs" />
      <Compile Include="Assets\Scripts\Buttons\offlineButtonSpawn.cs" />
-     <Compile Include="Assets\Scripts\Buttons\onlineButtonSpawn.cs" />
      <Compile Include="Assets\Scripts\Cameras\SmoothFollow2D.cs" />
      <Compile Include="Assets\Scripts\Cameras\TopDownCamera.cs" />
      <Compile Include="Assets\Scripts\CombatSystem.cs" />
@@ -793,9 +793,9 @@
      <Compile Include="Assets\Scripts\GPS\LocationManager.cs" />
      <Compile Include="Assets\Scripts\GPS\MapUtils.cs" />
      <Compile Include="Assets\Scripts\GPS\MeshPixelTools.cs" />
+     <Compile Include="Assets\Scripts\GPS\OnlineObjectLoader.cs" />
      <Compile Include="Assets\Scripts\GPS\mode_Obect_Loader.cs" />
      <Compile Include="Assets\Scripts\GPS\offline_Object_Loader.cs" />
-     <Compile Include="Assets\Scripts\GPS\online_Object_Loader.cs" />
      <Compile Include="Assets\Scripts\GlobalConstants.cs" />
      <Compile Include="Assets\Scripts\Gui.cs" />
      <Compile Include="Assets\Scripts\Mob.cs" />

@@ -2,51 +2,52 @@
 using System.Collections;
 using SimpleJSON; 
 
-public class onlineButtonSpawn : MonoBehaviour {
+public class OnlineButtonSpawn : MonoBehaviour {
 	 	
-	struct buttonData {
-		public int m_type;
-		public Vector3 m_position;
-//		public Vector3 m_deltaPosition;
-		public int delta_x, delta_y;
-		public Vector3 m_mapPosition;
-		public Vector3 m_localPosition;
-		public enum buildingType { shop, healing, empty};
-		public bool visited;
+	public struct ButtonData {
+		public int Type;
+		public Vector3 Position;
+		public Vector3 DeltaPosition;
+		public int DeltaX, DeltaY;
+		public Vector3 MapPosition;
+		public Vector3 LocalPosition;
+		public enum BuildingType { Shop, Healing, Empty};
+		public bool Visited;
 	}
 	
-	public GameObject m_playerSprite;
-	public GameObject m_missionParent;
-	public GameObject m_emptyBuilding;
-	public GameObject m_healing;
-	public GameObject m_shop;
+	public GameObject PlayerSprite;
+	public GameObject MissionParent;
+	public GameObject EmptyBuilding;
+	public GameObject HealingBuilding;
+	public GameObject ShopBuilding;
 //	float randomRange_x = 300;
 //	float randomRange_y = 225;
 	
-	buttonData [] m_buildings;
+	ButtonData [] m_buildings;
 	GameObject [] m_instBuildings;
 	int maxBuildings = 20;
+	[SerializeField]int ZOOM = 13;
+	[SerializeField]int SCALE = 3;
 	
-	Vector3 playerLoc = new Vector3(37.68774f,-121.8961f,0.0f);
-	float center_avg_x;
+	Vector3 playerLoc = new Vector3(-121.891326f,37.6839f,0.0f);
+	float center_avg_x, center_avg_y;
 	
 #region GooglePlaces Fields
 	JSONNode pData;
 	static int Neversleep;
 	LocationInfo currentGPSPosition;
 	float radarRadius;
-	string APIkey, radarSensor;
+	string APIkey;
 	string googleRespStr;
 #endregion
 
 	void Awake() {
 		// Initialize GooglePlaces Variables
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
-		radarRadius = 500f;
+		radarRadius = 1000f;
 		APIkey = "AIzaSyC0hSk_GN1skCDphwYspPdKs9e5GQ4-fbs";
-		radarSensor = "false";
 		
-		m_buildings = new buttonData[maxBuildings];
+		m_buildings = new ButtonData[maxBuildings];
 		m_instBuildings = new GameObject[maxBuildings];
 		RefreshPlaces();
 	}
@@ -64,21 +65,11 @@ public class onlineButtonSpawn : MonoBehaviour {
 //		
 //		m_buildings = new buttonData[maxBuildings];
 //		m_instBuildings = new GameObject[maxBuildings];
-		m_playerSprite = GameObject.Find("Sprite - Player Icon");
-		setMissionParent();
+		PlayerSprite = GameObject.Find("Sprite - Player Icon");
+		SetMissionParent();
 		
-//		RefreshPlaces();
-//		pData = new JSONNode();
-//		StopCoroutine(Radar());
-		
-//		Debug.Log(pData.ToString());
-//		Debug.Log(pData["results"][0]["geometry"]["location"]["lat"].AsFloat.ToString());
-
-//		Invoke("setBuildingData",1f);
-//		Invoke("loadBuildingData",1f);
 		setBuildingData(pData);
 		loadBuildingData();
-//		yield return null;
 	}
 	
 	// Update is called once per frame
@@ -88,25 +79,41 @@ public class onlineButtonSpawn : MonoBehaviour {
 #region Building Data Methods
 	private void setBuildingData(JSONNode data) {
 //		pData = JSON.Parse(googleRespStr);
-		float x = 0.0f, y = 0.0f;
+		float x, y;
 		for(int i = 0; i < maxBuildings; ++i) {
 //			Debug.Log("Now Initialize buttonData #" + (i+1));
-			m_buildings[i].visited = false;
+			m_buildings[i].Visited = false;
 //			Debug.Log("parsed lat for buttonData #" + (i+1) + " is " + data["results"][i]["geometry"]["location"]["lat"].AsFloat);
 			x = data["results"][i]["geometry"]["location"]["lng"].AsFloat;
-//			Debug.Log("stored lat for buttonData #" + (i+1) + " is " + x);
+//			Debug.Log("stored lng for buttonData #" + (i+1) + " is " + x);
 			y = data["results"][i]["geometry"]["location"]["lat"].AsFloat;
-			m_buildings[i].m_position = new Vector3(x,y,0.0f);
+//			Debug.Log("stored lat for buttonData #" + (i+1) + " is " + y);
+			m_buildings[i].Position = new Vector3(x,y,0.0f);
 //			m_buildings[i].m_deltaPosition = playerLoc - m_buildings[i].m_position;
-			m_buildings[i].m_mapPosition = new Vector3(MapUtils.LonToX(m_buildings[i].m_position.x), MapUtils.LatToY(m_buildings[i].m_position.y),0.0f);
-			m_buildings[i].delta_x = SetDeltaX(m_buildings[i].m_mapPosition,13);
-			m_buildings[i].delta_y = SetDeltaY(m_buildings[i].m_mapPosition,13);
+			m_buildings[i].DeltaPosition = SetDeltaPosition(m_buildings[i].Position);
+//			Debug.Log("DeltaPosition.X for buttonData #" + (i+1) + " is " + m_buildings[i].DeltaPosition.x);
+			m_buildings[i].MapPosition = new Vector3(MapUtils.LonToX(m_buildings[i].Position.x), MapUtils.LatToY(m_buildings[i].Position.y),0.0f);
+//			Debug.Log("Lat->Y for buttonData #" + (i+1) + " is " + m_buildings[i].m_mapPosition.y);
+//			m_buildings[i].DeltaX = SetDeltaX(m_buildings[i].MapPosition,18);
+			m_buildings[i].DeltaX = SetDeltaX(m_buildings[i].DeltaPosition,ZOOM);
+//			Debug.Log("Delta X buttonData #" + (i+1) + " is " + m_buildings[i].DeltaX);
+//			Debug.Log("Delta Y buttonData #" + (i+1) + " is " + m_buildings[i].delta_y);
+//			m_buildings[i].delta_y = SetDeltaY(m_buildings[i].m_mapPosition,13);
+			m_buildings[i].DeltaY = SetDeltaY(m_buildings[i].MapPosition,ZOOM);
 //			m_buildings[i].m_localPosition = new Vector3(MapUtils.LonToX(data["results"][i]["geometry"]["location"]["lat"].AsFloat), MapUtils.LatToY(data["results"][i]["geometry"]["location"]["lng"].AsFloat), 0.0f);
-			m_buildings[i].m_localPosition = new Vector3(MapUtils.adjustLonByPixels(m_buildings[i].m_position.x, m_buildings[i].delta_x, 18), MapUtils.adjustLatByPixels(m_buildings[i].m_mapPosition.y,m_buildings[i].delta_y,18),0.0f);
+//			m_buildings[i].LocalPosition = new Vector3(MapUtils.AdjustLonByPixels(m_buildings[i].Position.x, m_buildings[i].DeltaX, ZOOM), MapUtils.AdjustLatByPixels(m_buildings[i].MapPosition.y,m_buildings[i].DeltaY,18),0.0f);
+			m_buildings[i].LocalPosition = new Vector3(MapUtils.AdjustLatByPixels(m_buildings[i].MapPosition.x, m_buildings[i].DeltaX, ZOOM), MapUtils.AdjustLatByPixels(m_buildings[i].MapPosition.y,m_buildings[i].DeltaY,ZOOM),0.0f);
 //			m_buildings[i].m_localPosition.x -= (UICamera.mainCamera.rect.width/2);
-			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].m_localPosition.x);
-			Debug.Log("local position for buttonData #" + (i+1) + " is " + m_buildings[i].m_localPosition);
-			m_buildings[i].m_type = setBuildingType(data["results"][i]["types"][0].ToString());
+			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].LocalPosition.x);
+			m_buildings[i].LocalPosition.x = Mathf.RoundToInt(m_buildings[i].LocalPosition.x);
+			m_buildings[i].LocalPosition.y = Mathf.RoundToInt(m_buildings[i].LocalPosition.y);
+			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].LocalPosition.x + " after rounding to int");
+			m_buildings[i].LocalPosition.x *= SCALE;
+			m_buildings[i].LocalPosition.y *= SCALE;
+			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].LocalPosition.x + " after scaling.");
+//			Debug.Log("local Y for buttonData #" + (i+1) + " is " + m_buildings[i].m_localPosition.y);
+//			Debug.Log("local position for buttonData #" + (i+1) + " is " + m_buildings[i].m_localPosition);
+			m_buildings[i].Type = setBuildingType(data["results"][i]["types"][0].ToString());
 //			Debug.Log("Type for buttonData #" + (i+1) + " is " + m_buildings[i].m_type);
 		}
 //		loadBuildingData();
@@ -115,59 +122,59 @@ public class onlineButtonSpawn : MonoBehaviour {
 	private void loadBuildingData() {
 		Vector3 pos = new Vector3();
 		for(int i = 0; i < maxBuildings; ++i) {
-			Debug.Log("Now Initialize building Object #" + (i+1));
-			switch(m_buildings[i].m_type) {
+//			Debug.Log("Now Initialize building Object #" + (i+1));
+			switch(m_buildings[i].Type) {
 			case 0: // shop
-			m_instBuildings[i] = NGUITools.AddChild(m_missionParent, m_shop);
+			m_instBuildings[i] = NGUITools.AddChild(MissionParent, ShopBuilding);
 			m_instBuildings[i].GetComponent<UISprite>().depth = 15;
-			pos.x = m_buildings[i].m_localPosition.x * m_instBuildings[i].transform.localScale.x;
-			pos.y = m_buildings[i].m_localPosition.y * m_instBuildings[i].transform.localScale.y;
+			pos.x = m_buildings[i].LocalPosition.x * m_instBuildings[i].transform.localScale.x;
+			pos.y = m_buildings[i].LocalPosition.y * m_instBuildings[i].transform.localScale.y;
 			m_instBuildings[i].transform.localPosition = pos;
 //			m_instBuildings[i].transform.localPosition = UICamera.mainCamera.WorldToViewportPoint(m_buildings[i].m_localPosition);
 			break;
 			case 1: // healing
-			m_instBuildings[i] = NGUITools.AddChild(m_missionParent, m_healing);
-			pos.x = m_buildings[i].m_localPosition.x * m_instBuildings[i].transform.localScale.x;
-			pos.y = m_buildings[i].m_localPosition.y * m_instBuildings[i].transform.localScale.y;
+			m_instBuildings[i] = NGUITools.AddChild(MissionParent, HealingBuilding);
+			pos.x = m_buildings[i].LocalPosition.x * m_instBuildings[i].transform.localScale.x;
+			pos.y = m_buildings[i].LocalPosition.y * m_instBuildings[i].transform.localScale.y;
 			m_instBuildings[i].transform.localPosition = pos;
 			m_instBuildings[i].GetComponent<UISprite>().depth = 15;
 			break;
 			case 2: // empty building
-			m_instBuildings[i] = NGUITools.AddChild(m_missionParent, m_emptyBuilding);
-			Debug.Log("Before position for buttonData #" + (i+1) + " is " + m_buildings[i].m_localPosition);
-			pos.x = m_buildings[i].m_localPosition.x * m_instBuildings[i].transform.localScale.x;
-			Debug.Log("X after scaling for buttonData #" + (i+1) + " is " + pos.x);
-			pos.y = m_buildings[i].m_localPosition.y * m_instBuildings[i].transform.localScale.y;
+			m_instBuildings[i] = NGUITools.AddChild(MissionParent, EmptyBuilding);
+//			Debug.Log("X before scaling for buttonData #" + (i+1) + " is " + m_buildings[i].m_localPosition.x);
+			pos.x = m_buildings[i].LocalPosition.x * m_instBuildings[i].transform.localScale.x;
+//			Debug.Log("X after scaling for buttonData #" + (i+1) + " is " + pos.x);
+			pos.y = m_buildings[i].LocalPosition.y * m_instBuildings[i].transform.localScale.y;
 			m_instBuildings[i].transform.localPosition = pos;
 			m_instBuildings[i].GetComponent<UISprite>().depth = 15;
-			Debug.Log("After position for buttonData #" + (i+1) + " is " + m_instBuildings[i].transform.localPosition);
+//			Debug.Log("After position for buttonData #" + (i+1) + " is " + m_instBuildings[i].transform.localPosition.x);
 			break;
 			}
 		}
 	}
 	
-	public void reloadBuildings() {
-		setMissionParent();
+	public void ReloadBuildings() {
+		SetMissionParent();
 		for(int i = 0; i < maxBuildings; ++i) {
-			switch(m_buildings[i].m_type) {
+			switch(m_buildings[i].Type) {
 				case 0: // shop
-					m_instBuildings[i] = NGUITools.AddChild(m_missionParent, m_shop);
-					m_instBuildings[i].transform.localPosition = m_buildings[i].m_localPosition;
+					m_instBuildings[i] = NGUITools.AddChild(MissionParent, ShopBuilding);
+					m_instBuildings[i].transform.localPosition = m_buildings[i].LocalPosition;
 					break;
 				case 1: // healing
-					m_instBuildings[i] = NGUITools.AddChild(m_missionParent, m_healing);
-					m_instBuildings[i].transform.localPosition = m_buildings[i].m_localPosition;
+					m_instBuildings[i] = NGUITools.AddChild(MissionParent, HealingBuilding);
+					m_instBuildings[i].transform.localPosition = m_buildings[i].LocalPosition;
 					break;
 				case 2: // empty building
-					m_instBuildings[i] = NGUITools.AddChild(m_missionParent, m_emptyBuilding);
-					m_instBuildings[i].transform.localPosition = m_buildings[i].m_localPosition;
+					m_instBuildings[i] = NGUITools.AddChild(MissionParent, EmptyBuilding);
+					m_instBuildings[i].transform.localPosition = m_buildings[i].LocalPosition;
 					break;
 			}
 		}
 	}
 #endregion
 
-#region Buolding Check Methods
+#region Building Check Methods
 	private int setBuildingType(string type) {
 		switch(type) {
 		case "clothing_store":
@@ -178,27 +185,27 @@ public class onlineButtonSpawn : MonoBehaviour {
 		case "hardware_store":
 		case "shopping_mall":
 		case "store":
-			return (int)buttonData.buildingType.shop;
+			return (int)ButtonData.BuildingType.Shop;
 		case "dentist":
 		case "doctor":
 		case "health":
 		case "hospital":
 		case "pharmacy":
 		case "physiotherapist":
-			return (int)buttonData.buildingType.healing;
+			return (int)ButtonData.BuildingType.Healing;
 		default:
-			return (int)buttonData.buildingType.empty;
+			return (int)ButtonData.BuildingType.Empty;
 		}
 	} 
 #endregion
 
-	public bool setMissionParent() {
-		m_missionParent = GameObject.Find("Panel - Main Panel");
-		if(m_missionParent == null) { return false;}//returns false if mission parent fails to be set.
+	public bool SetMissionParent() {
+		MissionParent = GameObject.Find("Panel - Main Panel");
+		if(MissionParent == null) { return false;}//returns false if mission parent fails to be set.
 		return true;//else return true that mission parent is set
 	}
 	
-	public void destroyThis() {
+	public void DestroyThis() {
 		for(int i = 0; i < maxBuildings; ++i) {
 			Destroy( m_instBuildings[i]);
 			m_instBuildings[i] = null;
@@ -214,7 +221,12 @@ public class onlineButtonSpawn : MonoBehaviour {
 	
 	public void RefreshPlaces() {
 		RetrieveGPSData();
-		var radarURL = string.Format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.68774,-121.8961&radius={0}&sensor=false&key={1}", radarRadius, APIkey);
+		string radarURL;
+#if UNITY_ANDROID && !UNITY_EDITOR
+		radarURL = "https://maps.googleapis.com/maps/api/place/radarsearch/json?location=" + currentGPSPosition.latitude + "," + currentGPSPosition.longitude + "&radius=" + radarRadius + "&sensor=true&key=" + APIkey;
+#else
+		radarURL = string.Format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + playerLoc.y + "," + playerLoc.x + "&radius={0}&sensor=false&key={1}", radarRadius, APIkey);
+#endif
 		using (WWW googleResp = new WWW(radarURL))
 		{
 			while(!googleResp.isDone) {}
@@ -224,49 +236,121 @@ public class onlineButtonSpawn : MonoBehaviour {
 			pData = JSON.Parse(googleRespStr);
 		}
 		
-		int count = 0; float lng_sum = 0.0f;
+		int count = 0; float lng_sum = 0.0f, lat_sum = 0.0f;
 		
 		for(int i = 0; i < pData.Count; ++i) {
 			lng_sum += pData["results"][i]["geometry"]["location"]["lng"].AsFloat;
+			lat_sum += pData["results"][i]["geometry"]["location"]["lat"].AsFloat;
 			count++;
 		}
 		
-		center_avg_x = lng_sum/(float)count;
+		center_avg_x = lng_sum / (float)count;
+		center_avg_y = lat_sum / (float)count;
 	}
 	
 	int SetDeltaX(Vector3 pos, int zoom) {
 //		int xLoc = MapUtils.LonToX(playerLoc.x);
-		int xLoc = MapUtils.LonToX(center_avg_x);
-		return ((int)pos.x - xLoc) >> (21 - zoom);
+//		int xLoc = MapUtils.LonToX(center_avg_x);
+//		int xLoc = 0;
+//		return ((int)pos.x - xLoc) >> (21 - zoom);
+		return (int)pos.x >> (21 - zoom);
 	}
 	
 	int SetDeltaY(Vector3 pos, int zoom) {
 		int yLoc = MapUtils.LatToY(playerLoc.y);
 		return ((int)pos.y - yLoc) >> (21 - zoom);
 	}
-#endregion
-			
-#region Coroutine Methods
-	IEnumerator Radar ()
-	{
-#if UNITY_ANDROID && !UNITY_EDITOR
-		string radarURL = "https://maps.googleapis.com/maps/api/place/radarsearch/json?location=" + currentGPSPosition.latitude + "," + currentGPSPosition.longitude + "&radius=" + radarRadius + "&types=" + radarType + "&sensor=false" + radarSensor + "&key=" + APIkey;
-#else
-		string radarURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.68774,-121.8961&radius=" + radarRadius + "&sensor=false&key=" + APIkey;
-#endif
-		WWW googleResp = new WWW(radarURL);
-		yield return googleResp;
-		googleRespStr = googleResp.text;
-//		Debug.Log(googleRespStr);
-//		pData = JSON.Parse(googleResp.text);
-//		Debug.Log(pData.ToString());
-//		Debug.Log(pData["results"].ToString());
-//		Debug.Log(pData["results"][0]["geometry"].ToString());
-//		Debug.Log(pData["results"][0]["geometry"]["location"]["lat"].ToString());
-//		Debug.Log(pData["results"][0]["geometry"]["location"]["lat"].AsFloat.ToString());
-//		setBuildingData(pData);
-//		StopCoroutine(Radar());
-//		yield return null;
+	
+	Vector3 SetDeltaPosition(Vector3 dPos) {
+		Vector3 pos = new Vector3();
+		if(dPos.x < playerLoc.x) {
+//			Debug.Log(MapUtils.LonToX(center_avg_x) + " - " + MapUtils.LonToX(dPos.x) + " = " + (MapUtils.LonToX(center_avg_x) - MapUtils.LonToX(dPos.x)));
+			if(dPos.x < 0 && center_avg_x > 0) {
+				Debug.Log(center_avg_x + " + " + dPos.x + " = " + (center_avg_x + dPos.x));
+				Debug.Log("X is " + MapUtils.LonToX(center_avg_x + dPos.x));
+//				pos.x = MapUtils.XToLon(MapUtils.LonToX(center_avg_x) + MapUtils.LonToX(dPos.x));
+//				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
+				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
+			} else {
+				Debug.Log(center_avg_x + " - " + dPos.x + " = " + (center_avg_x - dPos.x));
+				Debug.Log("X is " + MapUtils.LonToX(center_avg_x - dPos.x));
+//				pos.x = MapUtils.XToLon(MapUtils.LonToX(center_avg_x) - MapUtils.LonToX(dPos.x));
+//				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
+				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
+			}
+		} else {
+			if(dPos.x > 0 && playerLoc.x < 0) {
+				Debug.Log(dPos.x + " + " + playerLoc.x + " = " + (dPos.x + playerLoc.x));
+//				pos.x = MapUtils.XToLon(MapUtils.LonToX(dPos.x) + MapUtils.LonToX(playerLoc.x));
+//				pos.x = MapUtils.LonToX(dPos.x + playerLoc.x);
+				pos.x = MapUtils.LonToX(dPos.x + center_avg_x);
+			} else {
+				Debug.Log(dPos.x + " - " + playerLoc.x + " = " + (dPos.x - playerLoc.x));
+//				pos.x = MapUtils.XToLon(MapUtils.LonToX(dPos.x) - MapUtils.LonToX(playerLoc.x));
+//				pos.x = MapUtils.LonToX(dPos.x - playerLoc.x);
+				pos.x = MapUtils.LonToX(dPos.x - center_avg_x);
+			}
+		}
+		
+		if(dPos.y < center_avg_y) {
+			if(dPos.y < 0  && center_avg_y > 0) {
+//				pos.y = MapUtils.YToLat(MapUtils.LatToY(center_avg_y) + MapUtils.LatToY(dPos.y));
+				pos.y = MapUtils.YToLat(MapUtils.LatToY(center_avg_y) + MapUtils.LatToY(dPos.y));
+			} else {
+//				pos.y = MapUtils.YToLat(MapUtils.LatToY(center_avg_y) - MapUtils.LatToY(dPos.y));
+				pos.y = MapUtils.YToLat(MapUtils.LatToY(center_avg_y) - MapUtils.LatToY(dPos.y));
+			}
+		} else {
+			if(dPos.y > 0 && center_avg_y < 0) {
+//				pos.y = MapUtils.YToLat(MapUtils.LatToY(dPos.y) + MapUtils.LatToY(center_avg_y));
+				pos.y = MapUtils.YToLat(MapUtils.LatToY(dPos.y) + MapUtils.LatToY(center_avg_y));
+			} else {
+//				pos.y = MapUtils.YToLat(MapUtils.LatToY(dPos.y) - MapUtils.LatToY(center_avg_y));
+				pos.y = MapUtils.YToLat(MapUtils.LatToY(dPos.y) - MapUtils.LatToY(center_avg_y));
+			}
+		}
+		
+		return pos;
+	}
+	
+	Vector3 SetDeltaPositionAndroid(Vector3 dPos) {
+		Vector3 pos = new Vector3();
+		if(dPos.x < center_avg_x) {
+			if(dPos.x < 0 && center_avg_x > 0) {
+//				pos.x = MapUtils.XToLon(MapUtils.LonToX(center_avg_x) + MapUtils.LonToX(dPos.x));
+				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
+			} else {
+//				pos.x = MapUtils.XToLon(MapUtils.LonToX(center_avg_x) - MapUtils.LonToX(dPos.x));
+				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
+			}
+		} else {
+			if(dPos.x > 0 && center_avg_x < 0) {
+//				pos.x = MapUtils.XToLon(MapUtils.LonToX(dPos.x) + MapUtils.LonToX(playerLoc.x));
+//				pos.x = MapUtils.LonToX(dPos.x + playerLoc.x);
+				pos.x = MapUtils.LonToX(dPos.x + center_avg_x);
+			} else {
+//				pos.x = MapUtils.XToLon(MapUtils.LonToX(dPos.x) - MapUtils.LonToX(playerLoc.x));
+//				pos.x = MapUtils.LonToX(dPos.x - playerLoc.x);
+				pos.x = MapUtils.LonToX(dPos.x - center_avg_x);
+			}
+		}
+		
+		if(dPos.y < center_avg_y) {
+			if(dPos.y < 0  && center_avg_y > 0) {
+				pos.y = MapUtils.YToLat(MapUtils.LatToY(center_avg_y) + MapUtils.LatToY(dPos.y));
+			} else {
+				pos.y = MapUtils.YToLat(MapUtils.LatToY(center_avg_y) - MapUtils.LatToY(dPos.y));
+			}
+		} else {
+			if(dPos.y > 0 && center_avg_y < 0) {
+				pos.y = MapUtils.YToLat(MapUtils.LatToY(dPos.y) + MapUtils.LatToY(center_avg_y));
+			} else {
+//				pos.y = MapUtils.YToLat(MapUtils.LatToY(dPos.y) - MapUtils.LatToY(center_avg_y));
+				pos.y = MapUtils.YToLat(MapUtils.LatToY(dPos.y) - MapUtils.LatToY(center_avg_y));
+			}
+		}
+		
+		return pos;
 	}
 #endregion
 }

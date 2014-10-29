@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\RAIN\Editor\ScriptTemplates\ActionTemplate_BOO.boo" />
+     <Compile Include="Assets\RAIN\Editor\ScriptTemplates\DecisionTemplate_BOO.boo" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.5.5.txt" />
      <None Include="Assets\2DColliderGen\FlashDeploymentReadme.txt" />

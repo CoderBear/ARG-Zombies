@@ -18,18 +18,19 @@ public class MapUtils {
 	}
 	
 	public static float XToLon( float x) {
-		return ((Mathf.Round(x) - GOOGLEOFFSET) / GOOGLEOFFSET_RADIUS) * 180f/ Mathf.PI;
+		return ((Mathf.Round(x) - GOOGLEOFFSET) / GOOGLEOFFSET_RADIUS) * 180f / Mathf.PI;
 	}
 	
 	public static float YToLat( float y) {
 		return (Mathf.PI / 2f - 2f * Mathf.Atan(Mathf.Exp((Mathf.Round(y) - GOOGLEOFFSET) / GOOGLEOFFSET_RADIUS))) * 180f / Mathf.PI;
 	}
 	
-	public static float adjustLonByPixels( float lon, int delta, int zoom) {
+	public static float AdjustLonByPixels( float lon, int delta, int zoom) {
 		return XToLon(LonToX(lon) + (delta << (21 - zoom)));
+//		return XToLon(lon + (delta << (21 - zoom)));
 	}
 	
-	public static float adjustLatByPixels( float lat,  int delta, int zoom) {
+	public static float AdjustLatByPixels( float lat,  int delta, int zoom) {
 		return YToLat(LatToY(lat) + (delta << (21 - zoom)));
 	}
 }

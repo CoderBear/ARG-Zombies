@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using RAIN.Core;
 using RAIN.Action;
+using RAIN.Core;
 
 [RAINAction]
 public class ActionTemplate_CS : RAINAction

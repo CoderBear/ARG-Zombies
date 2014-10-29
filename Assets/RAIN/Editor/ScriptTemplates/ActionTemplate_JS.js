@@ -1,5 +1,5 @@
-﻿import RAIN.Core;
-import RAIN.Action;
+﻿import RAIN.Action;
+import RAIN.Core;
 
 @RAINAction
 class ActionTemplate_JS extends RAIN.Action.RAINAction

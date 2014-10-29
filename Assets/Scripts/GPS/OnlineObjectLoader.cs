@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class online_Object_Loader : MonoBehaviour {
+public class OnlineObjectLoader : MonoBehaviour {
 
-	public GameObject buildingController;
+	public GameObject BuildingController;
 	
 	// Use this for initialization
 	void Start () {
@@ -17,12 +16,12 @@ public class online_Object_Loader : MonoBehaviour {
 		 */
 		GameObject a_bController = GameObject.Find("Online_Building_Controller(Clone)");
 		if(a_bController == null) {
-			GameObject abc = (GameObject)Instantiate(buildingController, Vector3.zero, Quaternion.identity);
+			GameObject abc = (GameObject)Instantiate(BuildingController, Vector3.zero, Quaternion.identity);
 			///abc.
 		}
 		else {
-			onlineButtonSpawn obs = a_bController.GetComponent<onlineButtonSpawn>();
-			obs.reloadBuildings();
+			OnlineButtonSpawn obs = a_bController.GetComponent<OnlineButtonSpawn>();
+			obs.ReloadBuildings();
 			//TODO
 			//call game building controller's script to place the buildings back in the scene.
 		}

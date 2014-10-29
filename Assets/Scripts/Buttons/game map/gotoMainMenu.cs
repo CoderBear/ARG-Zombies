@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class gotoMainMenu : MonoBehaviour {
@@ -29,10 +29,10 @@ public class gotoMainMenu : MonoBehaviour {
 				obs.destroyThis();
 			}
 		} else {
-			if (GameObject.Find("Online_Building_Controller(Clone)").GetComponent<onlineButtonSpawn>() != null)
+			if (GameObject.Find("Online_Building_Controller(Clone)").GetComponent<OnlineButtonSpawn>() != null)
 			{
-				onlineButtonSpawn obs = GameObject.Find("Online_Building_Controller(Clone)").GetComponent<onlineButtonSpawn>();
-				obs.destroyThis();
+				OnlineButtonSpawn obs = GameObject.Find("Online_Building_Controller(Clone)").GetComponent<OnlineButtonSpawn>();
+				obs.DestroyThis();
 			}
 		}
 		Application.LoadLevel ("mainMenu");

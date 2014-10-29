@@ -46,37 +46,37 @@ public class LocationManager : MonoBehaviour {
 		}
 	}
 
-	public void updateStoredLocation()
+	public void UpdateStoredLocation()
 	{
 		StartCoroutine (handleLocationUpdate (lat,lon));
 	}
 
-	public void getFourSquareVenues() {
-		int year = System.DateTime.Today.Date.Year;
-		int month = System.DateTime.Today.Month;
-		int day = System.DateTime.Today.Day;
-
-		string date = getDate (month, day, year);
-
-		string fs_link = "https://api.foursquare.com/v2/venues/search?ll="+lat+","+lon+"4&client_id=WCLUYQFPTWX3B5BOFB1DOKD1P5Y4WDRE44N5FCQASZI3303J&client_secret=3GHHLGY1N42Q4INAC10YTRN2RVVSKRXNUIWL10V2WA2QARRC&v=" + date;
-	}
-
-	private string getDate (int m, int d, int y) {
-		string mDate, dDate, yDate = "";
-
-		if (m < 10)
-			mDate = "0" + m.ToString ();
-		else
-			mDate = m.ToString ();
-
-		if (d < 10) {
-			dDate = "0" + d.ToString();
-		} else {
-			dDate = d.ToString();
-		}
-
-		return yDate.ToString () + mDate + dDate;
-	}
+//	public void GetFourSquareVenues() {
+//		int year = System.DateTime.Today.Date.Year;
+//		int month = System.DateTime.Today.Month;
+//		int day = System.DateTime.Today.Day;
+//
+//		string date = getDate (month, day, year);
+//
+//		string fs_link = "https://api.foursquare.com/v2/venues/search?ll="+lat+","+lon+"4&client_id=WCLUYQFPTWX3B5BOFB1DOKD1P5Y4WDRE44N5FCQASZI3303J&client_secret=3GHHLGY1N42Q4INAC10YTRN2RVVSKRXNUIWL10V2WA2QARRC&v=" + date;
+//	}
+//
+//	private string getDate (int m, int d, int y) {
+//		string mDate, dDate, yDate = "";
+//
+//		if (m < 10)
+//			mDate = "0" + m.ToString ();
+//		else
+//			mDate = m.ToString ();
+//
+//		if (d < 10) {
+//			dDate = "0" + d.ToString();
+//		} else {
+//			dDate = d.ToString();
+//		}
+//
+//		return yDate.ToString () + mDate + dDate;
+//	}
 	
 	public float GetLatitude() { return lat; }
 	public float GetLongitude() { return lon; }
