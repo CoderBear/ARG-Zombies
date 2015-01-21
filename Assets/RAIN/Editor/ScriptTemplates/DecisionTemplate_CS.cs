@@ -9,14 +9,14 @@ public class DecisionTemplate_CS : RAINDecision
 {
     private int _lastRunning = 0;
 
-    public override void Start(AI ai)
+    public override void Start(RAIN.Core.AI ai)
     {
         base.Start(ai);
 
         _lastRunning = 0;
     }
 
-    public override ActionResult Execute(AI ai)
+    public override ActionResult Execute(RAIN.Core.AI ai)
     {
         ActionResult tResult = ActionResult.SUCCESS;
 
@@ -30,7 +30,7 @@ public class DecisionTemplate_CS : RAINDecision
         return tResult;
     }
 
-    public override void Stop(AI ai)
+    public override void Stop(RAIN.Core.AI ai)
     {
         base.Stop(ai);
     }

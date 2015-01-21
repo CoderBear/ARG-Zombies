@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using NPack;
 using URandom;
 
@@ -18,8 +16,9 @@ public class CombatSystem : MonoBehaviour {
 	private static Vector3 PLAYER_POS = new Vector3(-400f,-45f, -0f);
 	
 	[SerializeField]private Player goPlayer;
-	public GameObject playerPF;
-	public GameObject mobCultist, mobFollower;
+	[SerializeField]GameObject goAnimation;
+	public GameObject PlayerPf;
+	public GameObject MobCultist, MobFollower;
 	private GameObject spawnedMob, spawnedPlayer;
 
 	[SerializeField]private GameObject vitoryUI;
@@ -27,17 +26,22 @@ public class CombatSystem : MonoBehaviour {
 	[SerializeField]private UIProgressBar energyBar;
 	[SerializeField]private UIPanel panel;
 	
+	string AnimToPlay;
+	
 	void Awake() {
 		// set local private player object to the singleton player.
 		goPlayer = GameObject.FindWithTag ("Player").GetComponent<Player>();
+		goAnimation = GameObject.Find("Char");
 	}
 
 	// Use this for initialization
 	void Start () {
+		goPlayer.PlayAnimations("idle");
+//		goAnimation.animation.CrossFade("idle");
 		healthBar.value = goPlayer.getHPratio();
 		energyBar.value = goPlayer.getMPratio();
 
-		spawnedPlayer = NGUITools.AddChild (panel.gameObject, playerPF);
+		spawnedPlayer = NGUITools.AddChild (panel.gameObject, PlayerPf);
 		spawnedPlayer.transform.localPosition = PLAYER_POS;
 
 		rand = new MersenneTwister ();
@@ -105,10 +109,12 @@ public class CombatSystem : MonoBehaviour {
 				Debug.Log("goMOB Health is " + spawnedMob.GetComponent<Mob> ().getCurrentHP() + "/8" );
 			}
 		}
+		while(PlayerPf.animation.IsPlaying("hit_1")) {};
 		CheckPlayerCombatResults ();
 
 		// Now monster attacks
 		if (isHit (spawnedMob.GetComponent<Mob> ().getAttack (), goPlayer.getDefense ())) {
+			PlayerPf.animation.Play("get_hit");
 			dealDamage (1, spawnedMob.GetComponent<Mob> ().getAttack ());
 			Debug.Log("Player Health is " + goPlayer.getHP() + "/13");
 		}
@@ -157,12 +163,12 @@ public class CombatSystem : MonoBehaviour {
 	}
 	
 	private void spawnCultists() {
-			spawnedMob = NGUITools.AddChild (panel.gameObject, mobCultist);
+			spawnedMob = NGUITools.AddChild (panel.gameObject, MobCultist);
 			spawnedMob.transform.localPosition = MOB1_POS;
 	}
 	
 	private void spawnFollowers () {
-		spawnedMob = NGUITools.AddChild (panel.gameObject, mobFollower); // Spawn and add to panel so it shows up in the scene on top
+		spawnedMob = NGUITools.AddChild (panel.gameObject, MobFollower); // Spawn and add to panel so it shows up in the scene on top
 		Debug.Log ("Vector3 position of pfFollower (clone) was " + spawnedMob.transform.position);
 //			GameObject.FindWithTag ("follower").transform.localPosition = MOB1_POS ; // Place newly spawned object at the correct spot on the screen.
 		spawnedMob.transform.localPosition = MOB1_POS;
@@ -194,22 +200,22 @@ public class CombatSystem : MonoBehaviour {
 		int roll = rand.Next (DICE_VALUE_MIN, D20_VALUE_MAX);
 		
 		// we chack if the roll was an Auto Miss or a Critical Hit (Auto-Hit)
-		if (roll == D20_VALUE_MAX || roll == DICE_VALUE_MIN) {
-			if (roll == D20_VALUE_MAX)
-				return true;
-			else if (roll == DICE_VALUE_MIN)
-				return false;
+		switch (roll)
+		{
+		case DICE_VALUE_MIN:
+			return false;
+		case D20_VALUE_MAX:
+			return true;
 		}
 		
 		if ((roll + attack) > defense) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 	
 	private void dealDamage(int index, int attack) {
-		int dmg = 0;
+		int dmg;
 		if(attack > 0)
 			dmg = attack + rand.Next (DICE_VALUE_MIN, D4_VALUE_MAX);
 		else
@@ -221,6 +227,8 @@ public class CombatSystem : MonoBehaviour {
 			goPlayer.UpdateCurrentHP(-dmg);
 			healthBar.value = goPlayer.getHPratio();
 			energyBar.value = goPlayer.getMPratio();
+			healthBar.ForceUpdate();
+			energyBar.ForceUpdate();
 			break;
 		case 2: // Mob
 			Debug.Log ("goMOB was dealt " + dmg + " damage");
