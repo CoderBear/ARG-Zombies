@@ -10,7 +10,8 @@ public class gotoMap : MonoBehaviour {
 	}
 
 	void OnClick() {
-		if(Application.loadedLevelName == "gameCombat") {
+//		if(Application.loadedLevelName == "gameCombat") {
+		if(Application.loadedLevelName == "combatBuilding") {
 			player.LastAreaVisited = "";
 //			player.hidePlayer();
 		}
@@ -21,7 +22,8 @@ public class gotoMap : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			if(Application.loadedLevelName == "gameCombat") {
+//			if(Application.loadedLevelName == "gameCombat") {
+			if(Application.loadedLevelName == "combatBuilding") {
 				player.LastAreaVisited = "";
 //				player.hidePlayer();
 				player.RoomsLeft = player.RoomsTotal = 0;

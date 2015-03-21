@@ -67,7 +67,8 @@ public class exploreArea : MonoBehaviour {
 
 		} else {
 			player.RoomsLeft = player.RoomsTotal = 0;
-			Application.LoadLevel("gameMap");
+			Application.LoadLevel("combatBuilding");
+//			Application.LoadLevel("gameMap");
 		}
 	}
 }

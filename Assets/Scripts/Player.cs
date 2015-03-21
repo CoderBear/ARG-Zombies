@@ -66,7 +66,7 @@ public class Player : MonoBehaviour {
 		xp = db.getXP ();
 		money = db.getMoney ();
 		
-		InitAnimations();
+//		InitAnimations();
 
 //		hudText = GetComponent<HUDText> ();
 	}

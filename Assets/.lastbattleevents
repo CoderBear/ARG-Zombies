@@ -1,0 +1,5 @@
+Assets/Events/Battle/cast.asset
+Assets/Events/Battle/use.asset
+Assets/Events/Battle/attack.asset
+Assets/Events/Battle/runToBase.asset
+Assets/Events/Battle/runToTarget.asset

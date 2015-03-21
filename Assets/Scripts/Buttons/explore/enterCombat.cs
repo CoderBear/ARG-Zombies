@@ -43,7 +43,7 @@ public class enterCombat : MonoBehaviour {
 
 	void OnClick() {
 		goPlayer.LastAreaVisited = Application.loadedLevelName;
-		Application.LoadLevel ("gameCombat");
+//		Application.LoadLevel ("gameCombat");
 //		Debug.Log ("Spawning MOBs");
 		
 		// create the ememies that the player will combat against

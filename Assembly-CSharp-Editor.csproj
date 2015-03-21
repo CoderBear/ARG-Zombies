@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;ENABLE_DUCK_TYPING</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;ENABLE_DUCK_TYPING</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -306,7 +306,6 @@
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
      <None Include="Assets\NGUI Atlases\Resources\gameMapUI.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
-     <None Include="Assets\Puppet2D\Shaders\BlackAndWhite.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitPremulVertexColor.shader" />
      <None Include="Assets\2DColliderGen\Demo\DemoOrthelloPro\ForegroundAtlas.xml" />
@@ -314,14 +313,13 @@
      <None Include="Assets\NGUI Atlases\Resources\officeMapFP.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\goodies\PackedTextMesh.shader" />
-     <None Include="Assets\Puppet2D\Shaders\VertColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\Blend2TexVertexColor.shader" />
-     <None Include="Assets\Puppet2D\Shaders\unlitTransparentDouble.shader" />
      <None Include="Assets\sqlitekit\Readme.txt" />
      <None Include="Assets\RAIN\Editor\Shaders\NavMeshContourShader.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
      <None Include="Assets\NGUI Atlases\Resources\warehouseMapFP.txt" />
      <None Include="Assets\TK2DROOT\tk2dUI\Shaders\DepthMaskSolid.shader" />
+     <None Include="Assets\RAIN\ReleaseNotes.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 1.shader" />
      <None Include="Assets\RAIN\Editor\Shaders\VisualSensorRingShader.shader" />
@@ -350,18 +348,19 @@
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\CutoutVertexColor.shader" />
+     <None Include="Assets\Puppet2D\Shaders\VertColor.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
+     <None Include="Assets\ORK Framework\README.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
      <None Include="Assets\RAIN\Editor\ScriptTemplates\BehaviorTreeTemplate.xml" />
      <None Include="Assets\PlayMaker\Resources\PlayMakerAssemblies.txt" />
      <None Include="Assets\HUD Text\Examples\Atlases\Arimo20.txt" />
-     <None Include="Assets\RAIN\ReleaseNotes.txt" />
      <None Include="Assets\NGUI Atlases\Resources\theaterMapFP.txt" />
+     <None Include="Assets\Puppet2D\Shaders\unlitTransparentDouble.shader" />
      <None Include="Assets\RAIN\Editor\Shaders\AspectSphereShader.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitBlendVertexColor.shader" />
      <None Include="Assets\RAIN\Editor\Shaders\NavMeshColliderShader.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
-     <None Include="Assets\ORK Framework\README.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
      <None Include="Assets\2DColliderGen\Demo\DemoReadme.txt" />
@@ -373,101 +372,102 @@
      <None Include="Assets\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\PlayMaker\Versions\readme.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
+     <None Include="Assets\Puppet2D\Shaders\BlackAndWhite.shader" />
      <None Include="Assets\NGUI\Examples\Resources\Localization.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\NGUI Atlases\Resources\gameCombatUI.txt" />
  <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/Editor/UnityEditor.UI.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="2DColliderGen_Runtime">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/2DColliderGen/Plugins/2DColliderGen/2DColliderGen_Runtime.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/2DColliderGen/Plugins/2DColliderGen/2DColliderGen_Runtime.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/JSON/ICSharpCode.SharpZipLib.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/JSON/ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
  <Reference Include="ORKFramework">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/ORK Framework/DLL/ORKFramework.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/ORK Framework/DLL/ORKFramework.dll</HintPath>
  </Reference>
  <Reference Include="ORKFrameworkCore">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/ORK Framework/DLL/ORKFrameworkCore.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/ORK Framework/DLL/ORKFrameworkCore.dll</HintPath>
  </Reference>
  <Reference Include="ORKFrameworkEditor">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/ORK Framework/DLL/Editor/ORKFrameworkEditor.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/ORK Framework/DLL/Editor/ORKFrameworkEditor.dll</HintPath>
  </Reference>
  <Reference Include="PlayMaker">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/PlayMaker.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/PlayMaker.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/PlayMakerEditor.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/PlayMakerEditor.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditorResources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/PlayMakerEditorResources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/PlayMakerEditorResources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.de.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/de/PlayMakerEditor.de.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/de/PlayMakerEditor.de.resources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.es-ES.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/es-ES/PlayMakerEditor.es-ES.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/es-ES/PlayMakerEditor.es-ES.resources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.fr.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/fr/PlayMakerEditor.fr.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/fr/PlayMakerEditor.fr.resources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.it.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/it/PlayMakerEditor.it.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/it/PlayMakerEditor.it.resources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.ja.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/ja/PlayMakerEditor.ja.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/ja/PlayMakerEditor.ja.resources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.nl.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/nl/PlayMakerEditor.nl.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/nl/PlayMakerEditor.nl.resources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.pt-BR.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/pt-BR/PlayMakerEditor.pt-BR.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/pt-BR/PlayMakerEditor.pt-BR.resources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.sv-SE.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/sv-SE/PlayMakerEditor.sv-SE.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/sv-SE/PlayMakerEditor.sv-SE.resources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.zh-CN.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/zh-CN/PlayMakerEditor.zh-CN.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/zh-CN/PlayMakerEditor.zh-CN.resources.dll</HintPath>
  </Reference>
  <Reference Include="PlayMakerEditor.zh-TW.resources">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/zh-TW/PlayMakerEditor.zh-TW.resources.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PlayMaker/Editor/zh-TW/PlayMakerEditor.zh-TW.resources.dll</HintPath>
  </Reference>
  <Reference Include="PsdParser">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PSD2TK2D/PsdParser.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/PSD2TK2D/PsdParser.dll</HintPath>
  </Reference>
  <Reference Include="RAIN">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/RAIN/RAIN.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/RAIN/RAIN.dll</HintPath>
  </Reference>
  <Reference Include="RAINMetaform">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/RAIN/RAINMetaform.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/RAIN/RAINMetaform.dll</HintPath>
  </Reference>
  <Reference Include="AetherUnity">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/RAIN/Editor/AetherUnity.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/RAIN/Editor/AetherUnity.dll</HintPath>
  </Reference>
  <Reference Include="LegionRestModel">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/RAIN/Editor/LegionRestModel.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/RAIN/Editor/LegionRestModel.dll</HintPath>
  </Reference>
  <Reference Include="RAINEditor">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/RAIN/Editor/RAINEditor.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/RAIN/Editor/RAINEditor.dll</HintPath>
  </Reference>
  <Reference Include="RAINUpdater">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/RAIN/Editor/RAINUpdater.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/RAIN/Editor/RAINUpdater.dll</HintPath>
  </Reference>
  <Reference Include="tk2dExternal">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/TK2DROOT/tk2d/Editor/tk2dExternal.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/TK2DROOT/tk2d/Editor/tk2dExternal.dll</HintPath>
  </Reference>
  <Reference Include="tk2dSkin">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/TK2DROOT/tk2d/Editor/tk2dSkin.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/TK2DROOT/tk2d/Editor/tk2dSkin.dll</HintPath>
  </Reference>
  <Reference Include="Ionic.Zlib">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/UnityHTTP/external/Ionic.Zlib.dll</HintPath>
+ <HintPath>/Users/mac/Desktop/ARG-Zombies/Assets/UnityHTTP/external/Ionic.Zlib.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
- <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
