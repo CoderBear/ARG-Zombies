@@ -65,7 +65,8 @@ public class OnlineButtonSpawn : MonoBehaviour {
 //		
 //		m_buildings = new buttonData[maxBuildings];
 //		m_instBuildings = new GameObject[maxBuildings];
-		PlayerSprite = GameObject.Find("Sprite - Player Icon");
+//		PlayerSprite = GameObject.Find("Sprite - Player Icon");
+		SetPlayerIcon();
 		SetMissionParent();
 		
 		setBuildingData(pData);
@@ -159,6 +160,7 @@ public class OnlineButtonSpawn : MonoBehaviour {
 	
 	public void ReloadBuildings() {
 		SetMissionParent();
+		SetPlayerIcon();
 		for(int i = 0; i < maxBuildings; ++i) {
 			switch(m_buildings[i].Type) {
 				case 0: // shop
@@ -207,6 +209,10 @@ public class OnlineButtonSpawn : MonoBehaviour {
 		MissionParent = GameObject.Find("Panel - Main Panel");
 		if(MissionParent == null) { return false;}//returns false if mission parent fails to be set.
 		return true;//else return true that mission parent is set
+	}
+	
+	public void SetPlayerIcon() {
+		PlayerSprite = GameObject.Find("Sprite - Player Icon");
 	}
 	
 	public void DestroyThis() {

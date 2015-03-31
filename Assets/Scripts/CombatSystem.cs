@@ -16,7 +16,7 @@ public class CombatSystem : MonoBehaviour {
 	private static Vector3 PLAYER_POS = new Vector3(-400f,-45f, -0f);
 	
 	[SerializeField]private Player goPlayer;
-	[SerializeField]GameObject goAnimation;
+//	[SerializeField]GameObject goAnimation;
 	public GameObject PlayerPf;
 	public GameObject MobCultist, MobFollower;
 	private GameObject spawnedMob, spawnedPlayer;
@@ -31,12 +31,12 @@ public class CombatSystem : MonoBehaviour {
 	void Awake() {
 		// set local private player object to the singleton player.
 		goPlayer = GameObject.FindWithTag ("Player").GetComponent<Player>();
-		goAnimation = GameObject.Find("Char");
+//		goAnimation = GameObject.Find("Char");
 	}
 
 	// Use this for initialization
 	void Start () {
-		goPlayer.PlayAnimations("idle");
+//		goPlayer.PlayAnimations("idle");
 //		goAnimation.animation.CrossFade("idle");
 		healthBar.value = goPlayer.getHPratio();
 		energyBar.value = goPlayer.getMPratio();

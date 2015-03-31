@@ -1,0 +1,15 @@
+10-39 notonce walk
+45-64 notonce run
+70-99 notonce idle
+105-134 notonce battleidle
+140-159 notonce battlerun
+165-199 once attack
+205-224 once damage
+230-309 once cast
+315-349 once defend
+355-379 once evade
+385-419 once item
+425-454 once death
+460-509 once revive
+515-534 notonce victory
+540-559 notonce skill

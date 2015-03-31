@@ -15,11 +15,11 @@ public class Player : MonoBehaviour {
 	private float ratioHP = 0.0f, ratioMP = 0.0f;
 	
 //	Renderer[] renderers;
-	Component[] renderers = new Component[36];
-	GameObject animationObject;
+//	Component[] renderers = new Component[36];
+//	GameObject animationObject;
 	
-	string path_to_body = "Animations/Character1.5/Body/";
-	string path_to_faces = "Animations/Character1.5/NewFaces/";
+//	string path_to_body = "Animations/Character1.5/Body/";
+//	string path_to_faces = "Animations/Character1.5/NewFaces/";
 
 	public bool OfflineMode {
 		get;
@@ -76,75 +76,75 @@ public class Player : MonoBehaviour {
 	}
 
 #region Player Animation Methods
-	public void InitAnimations() {
-		animationObject = LoadAnimations("Animations/Character1.5/Char");
-		renderers = animationObject.GetComponentsInChildren<Renderer>();
-		DontDestroyOnLoad(animationObject);
-		
-		Renderer sr =  (Renderer)renderers[5];
-		sr.materials[0].mainTexture = (Texture2D)Resources.Load(path_to_body + "chilot", typeof(Texture2D));// as Texture2D);
-		sr.materials[1].mainTexture = (Texture2D)Resources.Load(path_to_body + "corp", typeof(Texture2D));
-		sr.materials[2].mainTexture = (Texture2D)Resources.Load(path_to_faces + "cap1", typeof(Texture2D));
-		sr.materials[3].mainTexture = (Texture2D)Resources.Load(path_to_body + "pantalon_drept", typeof(Texture2D));
-		sr.materials[4].mainTexture = (Texture2D)Resources.Load(path_to_body + "pantalon_stang", typeof(Texture2D));
-		sr.materials[5].mainTexture = (Texture2D)Resources.Load(path_to_body + "picior_drept", typeof(Texture2D));
-		sr.materials[6].mainTexture = (Texture2D)Resources.Load(path_to_body + "picior_stang", typeof(Texture2D));
-		sr.materials[7].mainTexture = (Texture2D)Resources.Load(path_to_body + "mana_dreapta", typeof(Texture2D));
-		sr.materials[8].mainTexture = (Texture2D)Resources.Load(path_to_body + "mana_stanga", typeof(Texture2D));
-	}
-
-	GameObject LoadAnimations(string path) {
-		GameObject go = (GameObject)Instantiate(Resources.Load(path));
-		Hide(go);
-		go.SetActive(false);
-		return go;
-	}
-	
-	public void PlayAnimations(string name){
-		animationObject.animation.CrossFade(name);
-		animationObject.animation.Play("idle");
-	}
-	
-	public void Hide() {
-		renderers = animationObject.GetComponentsInChildren<Renderer>();
-		foreach (Renderer r in renderers)
-		{
-			r.enabled = false;
-		}
-		animationObject.SetActive(false);
-	}
-	
-	public void Hide(GameObject gObject) {
-		renderers = gObject.GetComponentsInChildren<Renderer>();
-		foreach (Renderer r in renderers)
-		{
-			r.enabled = false;
-		}
-		gObject.SetActive(false);
-	}
-	
-	public void Show() {
-		animationObject.SetActive(true);
-		renderers = animationObject.GetComponentsInChildren<Renderer>();
-		foreach (Renderer r in renderers)
-		{
-			r.enabled = true;
-		}
-	}
-	
-	public void Show(GameObject gObject) {
-		if (animationObject != gObject)
-		{
-			gObject.SetActive(false);
-			Hide();
-			renderers = gObject.GetComponentsInChildren<Renderer>();
-			foreach (Renderer r in renderers)
-			{
-				r.enabled = true;
-			}
-			animationObject = gObject;
-		}
-	}
+//	public void InitAnimations() {
+//		animationObject = LoadAnimations("Animations/Character1.5/Char");
+//		renderers = animationObject.GetComponentsInChildren<Renderer>();
+//		DontDestroyOnLoad(animationObject);
+//		
+//		Renderer sr =  (Renderer)renderers[5];
+//		sr.materials[0].mainTexture = (Texture2D)Resources.Load(path_to_body + "chilot", typeof(Texture2D));// as Texture2D);
+//		sr.materials[1].mainTexture = (Texture2D)Resources.Load(path_to_body + "corp", typeof(Texture2D));
+//		sr.materials[2].mainTexture = (Texture2D)Resources.Load(path_to_faces + "cap1", typeof(Texture2D));
+//		sr.materials[3].mainTexture = (Texture2D)Resources.Load(path_to_body + "pantalon_drept", typeof(Texture2D));
+//		sr.materials[4].mainTexture = (Texture2D)Resources.Load(path_to_body + "pantalon_stang", typeof(Texture2D));
+//		sr.materials[5].mainTexture = (Texture2D)Resources.Load(path_to_body + "picior_drept", typeof(Texture2D));
+//		sr.materials[6].mainTexture = (Texture2D)Resources.Load(path_to_body + "picior_stang", typeof(Texture2D));
+//		sr.materials[7].mainTexture = (Texture2D)Resources.Load(path_to_body + "mana_dreapta", typeof(Texture2D));
+//		sr.materials[8].mainTexture = (Texture2D)Resources.Load(path_to_body + "mana_stanga", typeof(Texture2D));
+//	}
+//
+//	GameObject LoadAnimations(string path) {
+//		GameObject go = (GameObject)Instantiate(Resources.Load(path));
+//		Hide(go);
+//		go.SetActive(false);
+//		return go;
+//	}
+//	
+//	public void PlayAnimations(string name){
+//		animationObject.animation.CrossFade(name);
+//		animationObject.animation.Play("idle");
+//	}
+//	
+//	public void Hide() {
+//		renderers = animationObject.GetComponentsInChildren<Renderer>();
+//		foreach (Renderer r in renderers)
+//		{
+//			r.enabled = false;
+//		}
+//		animationObject.SetActive(false);
+//	}
+//	
+//	public void Hide(GameObject gObject) {
+//		renderers = gObject.GetComponentsInChildren<Renderer>();
+//		foreach (Renderer r in renderers)
+//		{
+//			r.enabled = false;
+//		}
+//		gObject.SetActive(false);
+//	}
+//	
+//	public void Show() {
+//		animationObject.SetActive(true);
+//		renderers = animationObject.GetComponentsInChildren<Renderer>();
+//		foreach (Renderer r in renderers)
+//		{
+//			r.enabled = true;
+//		}
+//	}
+//	
+//	public void Show(GameObject gObject) {
+//		if (animationObject != gObject)
+//		{
+//			gObject.SetActive(false);
+//			Hide();
+//			renderers = gObject.GetComponentsInChildren<Renderer>();
+//			foreach (Renderer r in renderers)
+//			{
+//				r.enabled = true;
+//			}
+//			animationObject = gObject;
+//		}
+//	}
 #endregion
 
 #region Player Health and Mana Management Methods

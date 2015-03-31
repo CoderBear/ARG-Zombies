@@ -13,7 +13,7 @@ public class exploreArea : MonoBehaviour {
 	public ExploreCombatUI uiObject;
 
 	public UILabel labelRoomClear;
-	public UISprite spriteAlert;
+//	public UISprite spriteAlert;
 
 	private int roomsCleared = 0, roomsTotal = 0;
 
@@ -49,7 +49,7 @@ public class exploreArea : MonoBehaviour {
 			Debug.Log ("Encounter(" + roomsCleared.ToString() + ") Value: " + fofValue.ToString ());
 
 			if (fofValue <= ENCOUNTER_VALUE) { // An enounter occurs
-				spriteAlert.gameObject.SetActive (true);
+//				spriteAlert.gameObject.SetActive (true);
 
 				// updates total and display on screen
 				roomsCleared++;
@@ -67,8 +67,8 @@ public class exploreArea : MonoBehaviour {
 
 		} else {
 			player.RoomsLeft = player.RoomsTotal = 0;
-			Application.LoadLevel("combatBuilding");
-//			Application.LoadLevel("gameMap");
+//			Application.LoadLevel("combatBuilding");
+			Application.LoadLevel("gameMap");
 		}
 	}
 }

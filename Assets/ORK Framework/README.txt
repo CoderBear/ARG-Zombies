@@ -181,6 +181,167 @@ http://docs.unity3d.com/Documentation/Manual/TroubleShooting.html
 ORK Version Changelog
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Version 2.3.1:
+- new: Combatant Spawners: 'Remember Combatants' setting available. Optionally remembers the spawned combatants (status and position) and respawn times when leaving the scene. The combatants will be respawned where they where when reloading the scene.
+- new: Save Game Menu: 'Spawned Combatants' setting available in the 'Save Settings'. Optionally saves the combatants spawned by 'Combatant Spawner' components with 'Remember Combatants' enabled with the save game. Either saves the combatants of the 'Current' scene, 'All' scenes or 'None' scene at all.
+- new: Input Keys: 'Invert Axis' setting available for all input origins. Optionally inverts the input axis, i.e. 1 will become -1, -1 will become 1.
+- new: Weapons, Armors: 'Chance' settings available for random status value bonuses. Optionally only adds random bonuses to status values based on chance.
+- new: Weapons, Armors: 'Add Bonus Range' setting available for random status value bonuses. Either adds 'All' random bonuses, a 'Random' bonus (no bonus is added if chance fails), or adds the 'First' bonus due do chance settings.
+- new: Float Values: 'Random' value type available. Uses a random value between two defined values. Available throughout the framework.
+- new: GUI Boxes: Choice Settings: 'Position' choice mode available. Optionally define positions for choices. When exceeding the defined number of positions, the remaining choices will be displayed in 'List' mode.
+- new: HUDs: Combatant: 'Position' cell mode available for 'Shortcut' HUD elements. Optionally define the positions of each shorcut slot cell.
+- new: HUDs: Combatant: 'Use Auto Target' setting available for 'Shortcut' HUD elements. Optionally uses shortcuts when clicked on automatically selected targets.
+- new: HUDs: Combatant: 'Set Size' settings available for 'Shortcut' HUD element info labels. You can now optionally set the size of info labels used to display empty or assigned shortcut slots.
+- new: HUDs: Combatant: 'Use Icon' settings available for 'Shortcut' HUD element info labels. Optionally gives more control over displaying a shortcut's icon (e.g. scale mode) than using the '%i' text code in text.
+- new: HUDs: Tooltip: 'Use Bar' settings available. Tooltip HUDs can now display level points (ability, equipment) and durability (equipment) value bars instead of text.
+- new: HUDs: Tooltip: New text codes available to display level points (ability, equipment) and durability (equipment) information.
+- new: Event System: Scene Steps: 'Remove Spawned Combatants' setting available in the 'Remove Scene Data' step. Optionally removes stored data of spawned combatants from the scene. Useful if you e.g. want to clear all spawners when leaving a dungeon.
+- new: Battle Events: Battle Steps: 'Consume Costs' step available. Consumes the use costs of an action (e.g ability use costs, consumes an item). The step will consume the costs each time it's used.
+- new: Abilities, Items: Target Settings: 'Auto Target' settings available. Optionally uses status requirements and variable conditions to automatically select a target. This is used in battle menus to select the a combatant (still requires the player to accept the choice), control maps with auto target and AI target selection.
+- new: Combatants: AI Settings: 'Auto Target' setting available. Uses the 'Auto Target' settings of a used ability or item when selecting an AI target. If not used by the ability/item or not found, the nearest (if enabled) or a random target will be used.
+- new: Camera Events: 'In Blocked Controls' setting available. The camera event component will be executed while the player controls are blocked (e.g. in events). By default enabled.
+- new: Save Game Menu: 'Add Cancel' settings available in the 'Save Game Menu' and 'Load Game Menu' settings. Adding the 'Cancel' choice to the file list is now optional. By default enabled.
+- new: Menu Settings: 'Bonus Display' settings available. Define the text representation of status value bonuses and attack/defence attribute bonuses. Can be displayed in descriptions of bonus giving things using the '%bonus' text code.
+- new: Status Effects, Passive Abilities, Weapons, Amrors, Combatants, Classes: '%bonus' text code available in descriptions. Displays the status value and attack/defence attribute bonuses as defined in the 'Bonus Display' settings.
+- new: Text Codes: '#percent' text code available to display a '%' sign. Use this text code to display '%' in texts that use special text codes (e.g. '%' to display the quantity of an item).
+- change: Click Controls: All 'Enable Double Click' settings have been replaced by 'Enable Clicking' and 'Click Count' settings. You can now define the number of clicks if needed. By default set to 2 clicks (i.e. restores the old double click setting).
+- change: HUDs: Combatant: 'Enable Drop' no longer needs to be enabled to use drag+drop to change shortcuts in 'Shortcut' HUD elements.
+- fix: Group: Getting average group levels/turns no longer throws errors when no members are in a group.
+- fix: Real Time Battle Areas: Using colliders to limit the area could result in the battle not starting when spawning inside the area due to first entering with the interaction controller.
+- fix: Menu Screens: Equipment, Inventory: 'Durability' HUD info displays will now also be displayed when 'Enable Dragging', 'Enable Double Click' and 'Enable Tooltip' are disabled.
+- fix: Move AIs: Close distance target position checks could lead to the check interval not being reset, resulting in the combatant not using an updated target position.
+- fix: Mounting Objects: Setting the scale when mounting an object on another object will now use the correct scale in relation to the parent object.
+
+
+Version 2.3.0:
+- new: Group Abilities: Abilities can now optionally be learned by the group of a combatant instead of a single combatant. Group abilities are available to all members of the group and can be used like normal abilities.
+- new: Abilitiy Learning: 'Group Ability' setting available. Optionally learns the ability to the combatant's group instead to the combatant. Available throughout the framework.
+- new: Abilitiy Forgetting: 'Group Ability' setting available. Optionally forgets the ability of the combatant's group instead of the combatant. Available throughout the framework.
+- new: Shops: 'Abilities' settings available. Shops can now also sell abilities and group abilities. A bought ability will be learned by the shop's user combatant, or the user's group (when using group abilities). An ability can only be sold once per combatant/group, there is no quantity selection displayed.
+- new: Status Effect Types: 'Status Effect Types' sub-section now available in the 'Status' section. Status effect types can be used to separate status effects. Effect changes can optionally use all status effects of a selected type, the HUD can optionally display only selected status effect types.
+- new: Status Effects: 'Status Effect Type' setting available. Defines the status effect type of the status effect. The type is used to separate status effects, e.g. when displayed in a HUD or change all effects of a selected type.
+- new: Status Effect Changes: 'Use Type' and settings available when changing status effects (e.g. ability status changes, auto effects, etc.). Optionally checks uses all status effects of a selected status effect type when changing effects (e.g. remove all 'Negative' type effects).
+- new: Status Requirements: 'Status Effect Type' status check available. Checks if a status effect of the selected status effect type is or isn't applied to the combatant.
+- new: Status Requirements: 'Weapon Item Type' and 'Armor Item Type' status checks available. Checks if a weapon/armor of the selected item type is or isn't equipped on the combatant.
+- new: Classes, Combatants, Passive Abilities, Weapons, Armors, Status Effects: 'Attack Status Effects' settings available. Abilities and items can automatically use the user's attack status effect changes on the target.
+- new: Classes, Combatants, Passive Abilities, Weapons, Armors, Status Effects: 'Defence Status Effects' settings available. Abilities and items can automatically use the target's defence status effect changes on the user.
+- new: Abilities, Items: 'Use Attack Effects' and 'Use Defence Effects' settings available for value changes of active abilities and items. Optionally uses the user's 'Attack Status Effects' and the target's 'Defence Status Effects'. By default disabled.
+- new: Weapons, Armors: 'Durability' settings available for the different level settings of equipment. A weapon or armor can optionally have a durability and wear off. If an equipment is outworn (i.e. durability reaches 0), it can either not give any bonuses any more, be unequipped or destroyed. Durability can be changes using the event system.
+- new: Weapons, Armors: 'Own Outworn Text' settings available in the equipment's console texts. Optionally overrides the default console text displayed when an equipment's durability reaches 0.
+- new: Input Keys: 'Custom' input origin settings available. Input keys can now use custom scripts to get button and axis values. Calls a static function of a class using reflection - button function must return a bool value, axis function must return a float value.
+- new: Status Values: 'From Minimum' setting available for 'Experience' type status values. Optionally restarts the status value from it's minimum value when leveling up instead of continuing to grow (using the previous level's maximum value as minimum).
+- new: GUI Boxes: Choice Settings: 'Choice Mode' settings available. Choices can be displayed in 'List' and 'Circle' mode. 'List' mode displays choices in a list (as it has been until now). 'Circle' mode displays choices in a circle around a center position in the GUI box.
+- new: GUI Boxes: Choice Settings: 'Header Settings' available. A GUI box can now optionally display headers above choice buttons.
+- new: Menu System: 'Header Texts' settings available in most menu parts. Optionally display headers above the choice buttons.
+- new: Shop Layouts: 'Header Texts' settings available in 'Buy/Sell Box', 'Type Box' and 'List Box' settings. Optionally display headers above the choice buttons.
+- new: Battle Menus: 'Header Texts' settings available. Optionally display headers above the choice buttons. Sub-menus can optionally have different header texts.
+- new: Battle Menus: 'Whole Group' setting available for 'Auto' battle menu items. The 'Auto' command can now optionally be used for the whole battle group of the combatant - each member of the group will use the 'Auto' command once. Not used in 'Real Time' battles.
+- new: HUDs: Combatant, Turn Order: 'Type Display Limit' settings available for 'Status Effect' HUD elements. Optionally only displays status effects of selected status effect types. Can be used to e.g. separate positive and negative effects.
+- new: HUDs: Combatant, Turn Order: New text codes available for 'Status Value' HUD elements. '%m2' displays the minimum value, '%r' displays the remaining value to the maximum value (i.e. max - current value), '%r2' displays the remaining value to the minimum value (i.e. current - min value).
+- new: HUDs: Combatant, Turn Order: 'Check Attribute Value' settings available for 'Attack Attribute' and 'Defence Attribute' HUD elements when listing attributes. Optionally checks the value of each attribute before displaying it, e.g. to only display attributes greater than 100.
+- new: HUDs: Combatant, Turn Order: 'Relative Offset' settings available when using 'Group' combatant HUDs or turn order HUDs. The offset of the GUI boxes used for the individual HUDs can optionally be relative to the GUI box of the previous combatant. The position will be automatically adjusted, e.g. if the HUD size of one combatant is changed.
+- new: HUDs: Combatant: 'Cell Mode' settings available for 'Shortcut' HUD elements. Like choices, shortcut slots can now also either be displayed as a 'List' (like until now) or in a 'Circle' around a defined position in the HUD element.
+- new: Event System: Check Steps: 'Check Language' step available. Checks the currently used language of the game.
+- new: Event System: Animation Steps: 'Auto Animation' step available. Use this step to enable or disable the auto move animation of a combatant.
+- new: Event System: Function Steps: 'Is Static' setting available in the 'Call Function', 'Check Function' and 'Function To Variable' steps. Optionally calls a static function of a class - i.e. it doesn't require a component added to a game object.
+- new: Event System: Function Steps: 'Is Static' setting available in the 'Change Fields' and 'Check Fields' step. Optionally uses static fields/properties of a class - i.e. it doesn't require a component added to a game object.
+- new: Event System: Function Steps: 'Emit After (s)' setting available in the 'Emit Particles' step. Optionally starts/stops emitting particles on a game object after a defined amount of time.
+- new: Event System: Movement Steps: 'Ignore Y' setting available in the 'Change Position' and 'Move Into Direction' steps. Ignores the Y-axis difference when moving/facing the target, i.e. the mover will maintain its Y-axis position (unless gravity is applied). By default enabled.
+- new: Event System: Equipment Steps: 'Change Equip Durability' step available. Changes the durability of an equipment currently equipped on an equipment part or all parts of a combatant.
+- new: Event System: Equipment Steps, Check Steps: 'Check Equip Durability' step available. Checks the durability of an equipment currently equipped on an equipment part or all parts of a combatant.
+- new: Event System: Equipment Steps, Inventory Steps: 'Change Inventory Durability' step available. Changes the durability of an equipment currently placed in the inventory of a combatant.
+- new: Event System: Equipment Steps, Inventory Steps, Check Steps: 'Check Inventory Durability' step available. Checks the durability of an equipment currently placed in the inventory of a combatant.
+- new: Event System: Active Group Steps: 'Destroy Prefab' setting available in the 'Leave Active Group' and 'Leave Battle Group' steps. Optionally destroys a spawned prefab of a combatant that'll leave the group. By default enabled.
+- new: Event System: Variable Steps: 'Variable To Transform' step available. Sets a game object's position, rotation or scale to the value of a Vector3 game variable.
+- new: Battle Events: Battle Steps: 'Reconsume' setting available in the 'Calculate' step. Optionally consumes use costs or items again, even if they already have been consumed.
+- new: Battle Events: Battle Steps: 'Can Use Action' step available. Checks if the user can use the action of the battle event.
+- new: Main Menu: Custom Choices: 'Is Static' setting available for custom choices. Optionally calls a static function of a class - i.e. it doesn't require a component added to a game object.
+- new: Combatants: AI Settings: 'Real Time AI Range' settings available. Using the battle AI can optionally be limited to a defined range to the leader of the combatant's group. You can use this setting to let AI controlled player group members stop fighting when the player moves away.
+- new: Move AI: 'Prioritise Leader' settings available. Following the leader can optionally take priority over other targets when outside a defined range to the leader of the combatant's group.
+- new: Status Bonuses: 'Status Change Modifier' bonus settings available. Optionally add bonuses to status value changes by abilities or items (value change settings), the bonus can be given for positive, negative or all changes. The default change modifier is 100 (i.e. 100 %), the bonuses are added to it. E.g. adding -10 bonus to negative MP changes will reduce the MP use costs to 90 %.
+- new: Abilities, Items: 'Ignore Change Modifier' setting available for all value change settings (e.g. use costs, target changes). A status value change can optionally ignore the status change modifier bonuses and use the default 100 % modifier.
+- new: Abilities: 'Own Group Learning Text' and 'Own Group Forgetting Text' settings available in the 'Console Texts' of the ability. Optionally overrides the default console texts for learning/forgetting a group ability.
+- new: Abilities: 'Buy Price' setting available per ability level. Defines the price an ability will be sold for at shops. Can optionally be overridden by the shop's item list.
+- new: Console Settings: 'Group Ability Text' settings available in 'Learning Texts' and 'Forgetting Texts' settings. Define the console texts that will be displayed when a group ability is learned or forgotten.
+- new: Console Settings: 'Weapon Outworn Text' and 'Armor Outworn Text' settings availble in 'Inventory Texts' settings. Deinfe the console texts that will be displayed when a weapon's or armor's durability reaches 0.
+- new: Battle End: New text codes available for 'Money Text', 'Item Text', 'Status Value Text', 'Ability Learn Text' and 'Ability Tree Learn Text' settings. Use '%cn' (name), '%cd' (description) and '%ci' (icon) to display information about the combatant.
+- new: Battle End: 'Group Ability Learn Text' setting available. Will be displayed if a new group ability is learned through level up.
+- change: Status Requirements: 'Ability Check' and 'Is Valid' settings replace the old ability status check. You can know check if an ability is known to the combatant (i.e. learned, temporary or group ability), learned or a group ability. Old settings will automatically be upated.
+- change: Menu Screens: Equipment, Inventory: The 'Level Points Display' settings are now named 'HUD Info Display' and can also display durability information of an equipment.
+- fix: Combatant Spawners: Spawning single combatants on a position (i.e. not using a collider for area spawning) could result in creating multiple combatants when respawning.
+- fix: GUI System: New UI: The event system's 'Image Steps' are now working correctly when using the new UI.
+- fix: GUI System: New UI: 'Selected Choice Offset' setting is now working correctly when using the new UI.
+- fix: GUI System: Legacy GUI: The drag box will no longer be displayed twice, with one being displayed even after the drag finished.
+- fix: Event System: Movement Steps: The 'Change Position' step's movement behaved differently when enabling/disabling 'Face Direction'.
+- fix: Blocking Controls: Changing group members involving the player could result in the control components not being blocked when the control was blocked while changing members.
+- fix: Turn Based Battles: A combatant dying while having the battle menu open could result in the battle not progressing.
+
+
+Version 2.2.4:
+- new: Status Requirements: 'Inventory' status check available. The combatant (or group) must or mustn't have a defind item, weapon, armor or currency in the inventory.
+- new: Crafting System: The crafting system now also allows creating new items by adding items, equipment and currency to a combatant's crafting list. When creating using the crafting list, the first crafting recipe matching the items in the crafting list will be used. Either uses only known recipes or checks all recipes and learns unknown recipes upon successful creation.
+- new: Menu Screens: 'Crafting List' menu part available. Displays the items, equipment and currency added to the user's crafting list. When using the crafting list for crafting, the first recipe that matches the items added to the list will be used.
+- new: Menu Screens: Sub Menus: 'Crafting List' sub menu action available. Adds a selected item, equipment or currency to the user's crafting list.
+- new: Menu Screens: Bestiary (Area): 'Show OK Button' and 'Show Cancel Button' settings available. Optionally displays the ok/cancel buttons of the GUI box.
+- new: Event System: Dialogue Steps: 'Show OK Button' and 'Show Cancel Button' settings available in the 'Bestiary Dialogue' step. Optionally displays the ok/cancel buttons of the GUI box.
+- new: Event System: Dialogue Steps: 'Quest Conditions' settings available in 'Choice' type 'Show Dialogue' steps. A choice can optionally use quest or task status conditions to determine if it will be displayed.
+- new: Event System: Dialogue Steps: 'Status Requirements' settings available in 'Coice' type 'Show Dialogue' steps. A choice can optionally use status requirements to determine if it will be displayed.
+- new: Event System: Active Group Steps: 'Spawn Group Members' step available. Spawns the other members of the active player group or battle group. Requires the player to already be spawned in the scene.
+- new: Event System: Active Group Steps: 'Destroy Group Members' step available. Destroys all spawned members of the active player group except the player.
+- new: Event System: Crafting Steps: 'Add Recipe Outcome' step available. Adds the outcome of a selected crafting recipe to a combatant's inventory. This doesn't consume ingredients or checks for requirements or crafting chance.
+- new: Event System: Crafting Steps: 'Remove Needed Ingredients' step available. Removes the ingredients needed for a selected crafting recipe from a combatant's inventory.
+- new: Event System: Base Steps, Function Steps: 'Add Control Component' step available. Adds a defined component of a game object to the player or camera control list. The component will be enabled/disabled with the selected controls.
+- new: Event System: Base Steps, Function Steps: 'Remove Control Component' step available. Removes a defined component of a game object from the player or camera control list.
+- new: Value Bars: 'Hide Empty Bar' setting available. Value bars (e.g. displaying status values in HUDs) can optionally be hidden if the displayed value is at the minimum value or below.
+- new: Value Bars: 'Interpolate Colors' and 'Interpolate Empty Colors' settings available. Optionally interpolates between the colors used for the different percentages of the value bar. Only used when using colors instead of images.
+- new: HUDs: Combatant, Turn Order: 'Limit Bar Display' settings available. Status value bars can optionally be limited to a defined value range (percent or absolute values). This allows creating split value bars, e.g. 2 HP bars from 0-50 % and 50-100%.
+- new: Combatants: Death Settings: 'Variable Origin' setting available for death variable changes. The variable changes when a combatant dies can now be made on global variables, the combatant's object variables or the combatant spawner's object variables. By default using global variables.
+- new: Abilities, Weapons, Armors: 'Own Description' settings available for the different level settings of abilities, weapons and armors. Optionally overrides the description of the ability, weapon or armor with a new description for a defined level.
+- new: Abilities, Items: 'Active Time Order Changes' settings available. An ability/item can now optionally change the timebar of the target. A positive value will increase, a negative value will decrease the timebar.
+- change: HUDs: Combatant: The 'No Inner Assign' setting has been replaced by the 'Inner Assign' setting in 'Shortcut' HUD elements. When a shortcut slot is assigned from the same HUD element, you can now either 'Keep' the old assignment, 'Remove' the old assignment, 'Spap' old and new slot assignment or prevent inner assignment ('None').
+- change: Editor: Menu Screens: The 'Add Menu Part' list is now sorted alphabetically.
+- fix: GUI System: New UI: Fixed problems with drag+drop when using the new UI.
+- fix: GUI System: New UI: When first displaying a GUI box or changing focus, the selected choice will now be marked as selected object in the new UI event system.
+- fix: Turn Based Battles: Using 'Death Immediately' without 'End Immediately' could lead to starting multiple new turns while the player was dying.
+- fix: HUDs: Combatants: Only using backgrounds for 'Shortcut' element slots could result in a wrongly calculated content size, hiding parts of the HUD.
+- fix: Event System: Spawn Steps: Using the 'Spawn Prefab' step without using the audio options and spawning at a position could lead to an error.
+
+
+Version 2.2.3:
+- new: Abilities, Items: 'Use Requirement' settings available for status value changes of active abilities and items. Optionally checks 'Status Requirements' and 'Variable Conditions' on the user or target, the changes will only be performed if the check is valid.
+- new: Status Effect Changes: 'Use Requirement' settings available when changing status effects (e.g. ability status changes, auto effects, etc.). Optionally checks 'Status Requirements' and 'Variable Conditions' on the user or target, the changes will only be performed if the check is valid.
+- new: Combatants: Battle Settings: 'Use Requirement' settings available for 'Auto Start Battle' settings. Optionally checks 'Status Requirements' and 'Variable Conditions' on the user (enemy) or target (player), the auto battles will only start if the check is valid.
+- new: Combatants: Conditional Prefabs: 'Use Spawned Scale' setting available. Optionally uses the scale of the currently spawned prefab when changing prefabs. By default enabled.
+- new: Battle Events: Battle Steps: 'Change Last Target' step available. Changes the last targets of a combatant. This can influence various things, e.g. AI target selection.
+- new: Formulas: Variable Steps: 'Store Formula Value' step available. Stores the current value of the formula into a float game variable.
+- new: Text Input: 'Is Password' setting available for game options and input dialogues. Optionally uses a text input field as password input, masking the user's input with a '*'.
+- new: Music: 'Use PCM' settings available for music clip loops. Optionally checks and sets the playback position in PCM samples instead of time.
+- new: GUI System: New UI: 'Keep Prefab Height' settings available for text, toggle and slider input prefabs. Optionally keeps the height of the used prefabs instead of adjusting the height to the used font size.
+- new: Menu System: Crafting: 'Info Only' setting available in the 'Crafting Box Settings'. Optionally only displays the crafting recipe information and doesn't allow using them.
+- new: Crafting Recipes: 'Use Requirements' settings available. Optionally checks 'Status Requirements' and 'Variable Conditions' on the user of the recipe to determine if it can be used.
+- new: Event System: Crafting Steps: 'Can Use Recipe' step available. Checks if a combatant can use a selected crafting recipe.
+- new: Event System: Camera Steps: 'Change Camera Options' step available. Changes various settings on a camera that can't be changed with the 'Change Field' step.
+- new: Event System: Function Steps: 'Set Object Layer' step available. Sets the layer of a game object.
+- new: Event System: Function Steps: 'Check Object Layer' step available. Checks the layer of a game object.
+- new: Event System: Function Steps: 'Place Object' setting avaialble in the 'Mount Object' step. Placing a game object when mounting it to another object is now optional. By default enabled.
+- new: Event System: Status Steps: 'Change Defence Attribute' step available. Changes a defence attribute of a combatant permanently.
+- new: Event System: Battle Steps: 'Add Loot' step available. Adds items, weapons, armors or currency to the battle's loot.
+- new: Event System: Battle Steps: 'Add Experience Reward' step available. Adds experience to the battle's experience gains.
+- new: Event System: Status Steps: 'Revive' step available. Revives a combatant or the combatant's group. The step doesn't change 'Consumable' type status values, i.e. the combatant will die again if the status value causing the death is still the same.
+- new: Status Effects: 'Animate Damage' settings available for status conditions. Negative status changes can now optionally play a damage animation on the combatant.
+- new: Status Requirements: 'Group Leader' status check available. The combatant must or mustn't be the leader of his group.
+- new: Status Requirements: 'Group Size' status check available. The combatant's group size will be compared with a defined value.
+- change: GUI System: New UI: The GUI box instance used for a box object in the new UI can now be accessed through the 'GUIBox' property in the 'GUIBoxComponent' attached to it.
+- change: GUI Boxes: The 'Inactive Alpha' settings for choices and tabs are no longer available when using the new UI. This is handled by the prefabs used for buttons/tabs, the 'Inactive Alpha' setting wasn't used in the new UI.
+- change: Combatant Component Inspector: The inspector display of the combatant component now also displays the defence attributes of the selected combatant game object.
+- fix: Combatants: A battle action without targets (e.g. an AoE ability) could cause errors when setting the last target's of a combatant.
+- fix: Event System: Camera Steps: Changing the 'Field of View' in a 'Change Camera Position' step is working again.
+- fix: Event System: Rotation Steps: The 'Rotate To' step will now correctly rotate into the shorter direction when using fading.
+- fix: GUI System: New UI: Opening/selecting the ORK Framework editor while playing wont throw errors any longer.
+- fix: HUDs: Combatant: Using the 'Change Combatant' click type and clicking on the current player's HUD removed the player controls but didn't add them again. Changing player now only works if the combatant isn't the current player.
+- fix: Changing Player: Changing the player could result in still using the old interaction controller in some cases.
+
+
 Version 2.2.2:
 - new: Combatants: 'Shortcut List Count' setting available. A combatant can now have more than one shortcut list, each list contains of a various amount of slots. Lists can be switched using the event system.
 - new: Combatants: 'Use Class Shortcuts' setting available. A combatant can optionally use class based shortcut lists.

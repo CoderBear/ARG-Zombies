@@ -1,3 +1,10 @@
+Assets/Events/Battle/Battle End/escapeTeleport.asset
+Assets/Events/Battle/Battle End/victoryTeleport.asset
 Assets/Events/Battle/Battle End/simpleDefeat.asset
-Assets/Events/Battle/Battle End/simpleEscape.asset
 Assets/Events/Battle/Battle End/simpleVictory.asset
+Assets/Events/Battle/Battle End/simpleEscape.asset
+Assets/Events/Battle/runToTarget.asset
+Assets/Events/Battle/runToBase.asset
+Assets/Events/Battle/attack.asset
+Assets/Events/Battle/use.asset
+Assets/Events/Battle/cast.asset
