@@ -3,9 +3,9 @@ using System.Collections;
 
 public class mode_Obect_Loader : MonoBehaviour {
 
-	public GameObject onlineLoader, offlineLoader;
-	public UITexture mapTex;
-	public UISprite sprite;
+	public GameObject OnlineLoader, OfflineLoader;
+	public UITexture MapTex;
+	public UISprite SpriteOnline, SpriteOffline;
 	private Player player;
 	void Awake() {
 		// set local private player object to the singleton player.
@@ -15,13 +15,12 @@ public class mode_Obect_Loader : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if(player.OfflineMode) {
-			offlineLoader.SetActive(true);
-//			sprite.gameObject.SetActive(true);
-//			mapTex.gameObject.SetActive(false);
+			OfflineLoader.SetActive(true);
 		} else {
-			onlineLoader.SetActive(true);
-			sprite.gameObject.SetActive(false);
-			mapTex.gameObject.SetActive(true);
+			OnlineLoader.SetActive(true);
+			SpriteOffline.gameObject.SetActive(false);
+			SpriteOnline.gameObject.SetActive(true);
+			MapTex.gameObject.SetActive(true);
 		}
 	}
 	

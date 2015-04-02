@@ -1,9 +1,8 @@
 using UnityEngine;
-using System.Collections;
 
 public class offline_Object_Loader : MonoBehaviour {
 
-	public GameObject buildingController;
+	public GameObject BuildingController;
 	
 	// Use this for initialization
 	void Start () {
@@ -17,8 +16,9 @@ public class offline_Object_Loader : MonoBehaviour {
 		 */
 		GameObject a_bController = GameObject.Find("Game_Building_Controller(Clone)");
 		if(a_bController == null) {
-			GameObject abc = (GameObject)Instantiate(buildingController, Vector3.zero, Quaternion.identity);
+//			GameObject abc = (GameObject)Instantiate(buildingController, Vector3.zero, Quaternion.identity);
 			///abc.
+			Instantiate(BuildingController, Vector3.zero, Quaternion.identity);
 		}
 		else {
 			offlineButtonSpawn obs = a_bController.GetComponent<offlineButtonSpawn>();
@@ -27,10 +27,5 @@ public class offline_Object_Loader : MonoBehaviour {
 			//call game building controller's script to place the buildings back in the scene.
 		}
 		Destroy(gameObject);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }

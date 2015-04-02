@@ -1,0 +1,25 @@
+RAIN version 2.1.5 Release Notes
+--------------------------------
+
+6 amazing reasons to use RAIN:
+1) One click AI rigging
+2) Automatic Navmesh selection
+3) Custom behavior tree nodes
+4) Root motion movement control
+5) Waypoint routes
+6) Rival Theory forums (http://rivaltheory.com/forums)
+
+
+Changes and bug fixes:
+----------------------
+MoveTarget and FaceTarget are now virtual
+Fixed custom decisions not showing public Expressions
+Added OnDestroy call for EntityRig for proper cleanup when loading scenes
+Fixed zero width/height primitives on the NavMesh
+Fixed Expression type conversion in some cases (int <-> float, color)
+Fixed issue with raycast on visual sensor not ignoring self properly
+Fix for progress bar popping up when navmesh is generated via code
+Improved speed on NavMesh generation on large scenes with many trees/objects
+Changed custom templates to use full namespaces to avoid conflicts with non-namespaced assets
+Minor changes to support Unity 5 Beta
+

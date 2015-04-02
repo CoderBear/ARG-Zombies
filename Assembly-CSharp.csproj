@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_5_5;UNITY_4_5;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_3;UNITY_4_6;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_IL2CPP;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;UNITY5_SCRIPTING_IN_UNITY4;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_MONO;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -46,20 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshCollider.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderCopyColliderEnabled.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderPreferences.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderRegistry.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderSmoothMovesRestore.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\AlphaMeshColliderUpdateOTTilesSpriteColliders.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\ColliderGenTK2DColliderGenerationData.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\ColliderGenTK2DParameterStore.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\ColliderGenTK2DParametersForSprite.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\CommonColliderGenerationData.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\IslandDetectorTestHelper.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\PolygonOutlineFromImageFrontend.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\RuntimeAlphaMeshCollider.cs" />
-     <Compile Include="Assets\2DColliderGen\Scripts\RuntimeAnimatedColliderSwitch.cs" />
      <Compile Include="Assets\GoogleMaps\Scripts\GoogleMap.cs" />
      <Compile Include="Assets\HUD Text\Examples\Scripts\ChatManager.cs" />
      <Compile Include="Assets\HUD Text\Examples\Scripts\ChatParticipant.cs" />
@@ -215,7 +201,6 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
-     <Compile Include="Assets\PSD2TK2D\OrthoCameraSetter.cs" />
      <Compile Include="Assets\PlayMaker\Actions\ActivateGameObject.cs" />
      <Compile Include="Assets\PlayMaker\Actions\AddAnimationClip.cs" />
      <Compile Include="Assets\PlayMaker\Actions\AddComponent.cs" />
@@ -762,6 +747,109 @@
      <Compile Include="Assets\PlayMaker\Actions\iTween\iTweenShakeScale.cs" />
      <Compile Include="Assets\PlayMaker\Actions\iTween\iTweenStop.cs" />
      <Compile Include="Assets\PlayMaker\Include\iTweenFSMEvents.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_BakeAnimation.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_Bakedmesh.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_EditSkinWeights.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_FFDLineDisplay.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_FFDStoreData.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_GlobalControl.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_HiddenBone.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_IKHandle.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_ParentControl.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_SkinnedVertices.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_SortingLayer.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_SplineControl.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Puppet2D_VertHandler.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Delaunay\DelaunayTriangle.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Delaunay\Sweep\AdvancingFront.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Delaunay\Sweep\AdvancingFrontNode.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Delaunay\Sweep\DTSweep.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Delaunay\Sweep\DTSweepConstraint.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Delaunay\Sweep\DTSweepContext.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Delaunay\Sweep\DTSweepPointComparator.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Delaunay\Sweep\PointOnEdgeException.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\ITriangulatable.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Orientation.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Polygon\Polygon.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Polygon\PolygonPoint.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Polygon\PolygonSet.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Puppet2D_Triangulator.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Puppet2D_Triangulator2.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Sets\ConstrainedPointSet.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Sets\PointSet.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\BoundingBox.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\ColorManager.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\ExtensionMethods.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\GDI\RenderControl.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\GDI\TMeshRenderer.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\GDI\VoronoiRenderer.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\IMeshRenderer.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\RenderData.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\RenderManager.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\MeshRenderer.Core\Zoom.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Algorithm\Dwyer.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Algorithm\ITriangulator.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Algorithm\Incremental.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Algorithm\SweepLine.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\BadTriQueue.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Behavior.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Carver.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Data\BadSubseg.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Data\BadTriangle.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Data\Osub.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Data\Otri.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Data\Segment.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Data\Triangle.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Data\Vertex.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Enums.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Geometry\BoundingBox.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Geometry\Edge.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Geometry\EdgeEnumerator.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Geometry\ISegment.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Geometry\ITriangle.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Geometry\InputGeometry.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Geometry\Point.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Geometry\RegionPointer.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\IO\DataReader.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\IO\DebugWriter.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\IO\FileReader.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\IO\FileWriter.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\IO\IGeometryFormat.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\IO\IMeshFormat.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\IO\InputTriangle.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\IO\TriangleFormat.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Log\ILog.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Log\ILogItem.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Log\SimpleLog.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Log\SimpleLogItem.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Mesh.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\NewLocation.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Primitives.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Properties\AssemblyInfo.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Quality.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Sampler.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Smoothing\ISmoother.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Smoothing\SimpleSmoother.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\AdjacencyMatrix.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\BoundedVoronoi.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\CuthillMcKee.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\IVoronoi.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\QuadTree.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\QualityMeasure.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\RegionIterator.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\Statistic.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\Voronoi.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\Tools\VoronoiRegion.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Triangle.NET\Triangle\TriangleLocator.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\TriangulationConstraint.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\TriangulationContext.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\TriangulationMode.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\TriangulationPoint.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\TriangulationUtil.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Util\FixedArray3.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Util\FixedBitArray3.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Util\PointGenerator.cs" />
+     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Util\PolygonGenerator.cs" />
      <Compile Include="Assets\Scripts\Buttons\AndroidHome.cs" />
      <Compile Include="Assets\Scripts\Buttons\GoRegister.cs" />
      <Compile Include="Assets\Scripts\Buttons\Login.cs" />
@@ -772,6 +860,7 @@
      <Compile Include="Assets\Scripts\Buttons\combat\BasicAttackButton.cs" />
      <Compile Include="Assets\Scripts\Buttons\combat\CombatInventoryButton.cs" />
      <Compile Include="Assets\Scripts\Buttons\combat\SpecialAttackButton.cs" />
+     <Compile Include="Assets\Scripts\Buttons\explore\GotoCombat.cs" />
      <Compile Include="Assets\Scripts\Buttons\explore\combatResultsButton.cs" />
      <Compile Include="Assets\Scripts\Buttons\explore\enterCombat.cs" />
      <Compile Include="Assets\Scripts\Buttons\explore\exploreArea.cs" />
@@ -982,7 +1071,6 @@
      <Compile Include="Assets\sqlitekit\src\where_c.cs" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.5.5.txt" />
-     <None Include="Assets\2DColliderGen\FlashDeploymentReadme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
@@ -994,7 +1082,6 @@
      <None Include="Assets\TK2DROOT\tk2d\Goodies\TexturePacker\Exporter\2dtoolkit\exporter.xml" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\SolidVertexColor.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
-     <None Include="Assets\2DColliderGen\Readme.txt" />
      <None Include="Assets\NGUI Atlases\Resources\charSelect.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font (AlphaClip).shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
@@ -1004,14 +1091,17 @@
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
      <None Include="Assets\NGUI Atlases\Resources\gameMapUI.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (AlphaClip) .shader" />
+     <None Include="Assets\Puppet2D\Shaders\BlackAndWhite.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitPremulVertexColor.shader" />
-     <None Include="Assets\2DColliderGen\Demo\DemoOrthelloPro\ForegroundAtlas.xml" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\PremulVertexColor.shader" />
+     <None Include="Assets\Tutorial Resources\Models\egg_entity.txt" />
      <None Include="Assets\NGUI Atlases\Resources\officeMapFP.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (AlphaClip).shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\goodies\PackedTextMesh.shader" />
+     <None Include="Assets\Puppet2D\Shaders\VertColor.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\Blend2TexVertexColor.shader" />
+     <None Include="Assets\Puppet2D\Shaders\unlitTransparentDouble.shader" />
      <None Include="Assets\sqlitekit\Readme.txt" />
      <None Include="Assets\RAIN\Editor\Shaders\NavMeshContourShader.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
@@ -1050,18 +1140,18 @@
      <None Include="Assets\RAIN\Editor\ScriptTemplates\BehaviorTreeTemplate.xml" />
      <None Include="Assets\PlayMaker\Resources\PlayMakerAssemblies.txt" />
      <None Include="Assets\HUD Text\Examples\Atlases\Arimo20.txt" />
+     <None Include="Assets\RAIN\ReleaseNotes.txt" />
      <None Include="Assets\NGUI Atlases\Resources\theaterMapFP.txt" />
      <None Include="Assets\RAIN\Editor\Shaders\AspectSphereShader.shader" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\LitBlendVertexColor.shader" />
      <None Include="Assets\RAIN\Editor\Shaders\NavMeshColliderShader.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
+     <None Include="Assets\ORK Framework\README.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
-     <None Include="Assets\2DColliderGen\Demo\DemoReadme.txt" />
      <None Include="Assets\HUD Text\Examples\Atlases\Large.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
-     <None Include="Assets\2DColliderGen\ChangeLog.txt" />
      <None Include="Assets\codeandweb.com\Readme.txt" />
      <None Include="Assets\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\PlayMaker\Versions\readme.txt" />
@@ -1069,11 +1159,17 @@
      <None Include="Assets\NGUI\Examples\Resources\Localization.txt" />
      <None Include="Assets\TK2DROOT\tk2d\Shaders\AdditiveVertexColor.shader" />
      <None Include="Assets\NGUI Atlases\Resources\gameCombatUI.txt" />
- <Reference Include="2DColliderGen_Runtime">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/2DColliderGen/Plugins/2DColliderGen/2DColliderGen_Runtime.dll</HintPath>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.3/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
  <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/JSON/ICSharpCode.SharpZipLib.dll</HintPath>
+ </Reference>
+ <Reference Include="ORKFramework">
+ <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/ORK Framework/DLL/ORKFramework.dll</HintPath>
+ </Reference>
+ <Reference Include="ORKFrameworkCore">
+ <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/ORK Framework/DLL/ORKFrameworkCore.dll</HintPath>
  </Reference>
  <Reference Include="PlayMaker">
  <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/PlayMaker.dll</HintPath>

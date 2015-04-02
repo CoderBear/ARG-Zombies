@@ -16,8 +16,9 @@ public class OnlineObjectLoader : MonoBehaviour {
 		 */
 		GameObject a_bController = GameObject.Find("Online_Building_Controller(Clone)");
 		if(a_bController == null) {
-			GameObject abc = (GameObject)Instantiate(BuildingController, Vector3.zero, Quaternion.identity);
+//			GameObject abc = (GameObject)Instantiate(BuildingController, Vector3.zero, Quaternion.identity);
 			///abc.
+			Instantiate(BuildingController, Vector3.zero, Quaternion.identity);
 		}
 		else {
 			OnlineButtonSpawn obs = a_bController.GetComponent<OnlineButtonSpawn>();
