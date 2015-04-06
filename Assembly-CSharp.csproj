@@ -853,7 +853,6 @@
      <Compile Include="Assets\Scripts\Buttons\AndroidHome.cs" />
      <Compile Include="Assets\Scripts\Buttons\GoRegister.cs" />
      <Compile Include="Assets\Scripts\Buttons\Login.cs" />
-     <Compile Include="Assets\Scripts\Buttons\OnlineButtonSpawn.cs" />
      <Compile Include="Assets\Scripts\Buttons\Register.cs" />
      <Compile Include="Assets\Scripts\Buttons\VerifyUserName.cs" />
      <Compile Include="Assets\Scripts\Buttons\combat\AcceptResultsButton.cs" />
@@ -873,6 +872,7 @@
      <Compile Include="Assets\Scripts\Buttons\main menu\Signout.cs" />
      <Compile Include="Assets\Scripts\Buttons\offlineButton.cs" />
      <Compile Include="Assets\Scripts\Buttons\offlineButtonSpawn.cs" />
+     <Compile Include="Assets\Scripts\Buttons\onlineButtonSpawn.cs" />
      <Compile Include="Assets\Scripts\Cameras\SmoothFollow2D.cs" />
      <Compile Include="Assets\Scripts\Cameras\TopDownCamera.cs" />
      <Compile Include="Assets\Scripts\CombatSystem.cs" />

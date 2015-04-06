@@ -1,8 +1,9 @@
+Assets/Events/Battle/Battle End/defeatTeleport.asset
+Assets/Events/Battle/Battle End/escapeTeleport.asset
+Assets/Events/Battle/Battle End/simpleDefeat.asset
+Assets/Events/Battle/Battle End/victoryTeleport.asset
 Assets/Events/Battle/Start/simpleStart2.asset
 Assets/Events/Battle/Start/teleportStart.asset
-Assets/Events/Battle/Battle End/escapeTeleport.asset
-Assets/Events/Battle/Battle End/victoryTeleport.asset
-Assets/Events/Battle/Battle End/simpleDefeat.asset
 Assets/Events/Battle/Battle End/simpleVictory.asset
 Assets/Events/Battle/Battle End/simpleEscape.asset
 Assets/Events/Battle/Start/simpleStart.asset
