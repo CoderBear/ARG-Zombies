@@ -51,7 +51,7 @@ public class Puppet2D_FFD : Editor
 
         SpriteRenderer spriteRenderer = newCtrl.AddComponent<SpriteRenderer>();
         spriteRenderer.sortingLayerName = Puppet2D_Editor._controlSortingLayer;
-        string path = ("Assets/Puppet2D/Textures/GUI/ffdBone.psd");
+        string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/ffdBone.psd");
 
         Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
         spriteRenderer.sprite = sprite;

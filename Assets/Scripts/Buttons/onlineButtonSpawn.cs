@@ -23,7 +23,7 @@ public class OnlineButtonSpawn : MonoBehaviour {
 //	float randomRange_x = 300;
 //	float randomRange_y = 225;
 	
-	ButtonData [] m_buildings;
+	public ButtonData [] m_buildings;
 	GameObject [] m_instBuildings;
 	int maxBuildings = 20;
 	[SerializeField]int ZOOM = 13;
@@ -31,6 +31,8 @@ public class OnlineButtonSpawn : MonoBehaviour {
 	
 	Vector3 playerLoc = new Vector3(-121.891326f,37.6839f,0.0f);
 	float center_avg_x, center_avg_y;
+	
+	Player player;
 	
 #region GooglePlaces Fields
 	JSONNode pData;
@@ -42,6 +44,7 @@ public class OnlineButtonSpawn : MonoBehaviour {
 #endregion
 
 	void Awake() {
+		player = GameObject.FindWithTag ("Player").GetComponent<Player>();
 		// Initialize GooglePlaces Variables
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		radarRadius = 1000f;
@@ -109,13 +112,13 @@ public class OnlineButtonSpawn : MonoBehaviour {
 //			m_buildings[i].LocalPosition = new Vector3(MapUtils.AdjustLonByPixels(m_buildings[i].Position.x, m_buildings[i].DeltaX, ZOOM), MapUtils.AdjustLatByPixels(m_buildings[i].MapPosition.y,m_buildings[i].DeltaY,18),0.0f);
 			m_buildings[i].LocalPosition = new Vector3(MapUtils.AdjustLatByPixels(m_buildings[i].MapPosition.x, m_buildings[i].DeltaX, ZOOM), MapUtils.AdjustLatByPixels(m_buildings[i].MapPosition.y,m_buildings[i].DeltaY,ZOOM),0.0f);
 //			m_buildings[i].m_localPosition.x -= (UICamera.mainCamera.rect.width/2);
-			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].LocalPosition.x);
+//			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].LocalPosition.x);
 			m_buildings[i].LocalPosition.x = Mathf.RoundToInt(m_buildings[i].LocalPosition.x);
 			m_buildings[i].LocalPosition.y = Mathf.RoundToInt(m_buildings[i].LocalPosition.y);
-			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].LocalPosition.x + " after rounding to int");
+//			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].LocalPosition.x + " after rounding to int");
 			m_buildings[i].LocalPosition.x *= SCALE;
 			m_buildings[i].LocalPosition.y *= SCALE;
-			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].LocalPosition.x + " after scaling.");
+//			Debug.Log("local X for buttonData #" + (i+1) + " is " + m_buildings[i].LocalPosition.x + " after scaling.");
 //			Debug.Log("local Y for buttonData #" + (i+1) + " is " + m_buildings[i].m_localPosition.y);
 //			Debug.Log("local position for buttonData #" + (i+1) + " is " + m_buildings[i].m_localPosition);
 			m_buildings[i].Type = setBuildingType(data["results"][i]["types"][0].ToString());
@@ -152,6 +155,8 @@ public class OnlineButtonSpawn : MonoBehaviour {
 			pos.y = m_buildings[i].LocalPosition.y * m_instBuildings[i].transform.localScale.y;
 			m_instBuildings[i].transform.localPosition = pos;
 			m_instBuildings[i].GetComponent<UISprite>().depth = 15;
+			m_instBuildings[i].GetComponent<ExploredBuilding>().Index = i;
+			m_instBuildings[i].GetComponent<ExploredBuilding>().Disabled = false;
 //			Debug.Log("After position for buttonData #" + (i+1) + " is " + m_instBuildings[i].transform.localPosition.x);
 			break;
 			}
@@ -159,21 +164,36 @@ public class OnlineButtonSpawn : MonoBehaviour {
 	}
 	
 	public void ReloadBuildings() {
+		// Mark a building as explored.
+		if(player.ExploredBuildingComplete) {
+			m_buildings[player.ExploredBuildingNumber].Visited = true;
+			player.ExploredBuildingComplete = false;
+		}
 		SetMissionParent();
 		SetPlayerIcon();
 		for(int i = 0; i < maxBuildings; ++i) {
 			switch(m_buildings[i].Type) {
 				case 0: // shop
 					m_instBuildings[i] = NGUITools.AddChild(MissionParent, ShopBuilding);
+					m_instBuildings[i].GetComponent<ExploredBuilding>().Index = i;
+					m_instBuildings[i].GetComponent<UISprite>().depth = 15;
 					m_instBuildings[i].transform.localPosition = m_buildings[i].LocalPosition;
 					break;
 				case 1: // healing
 					m_instBuildings[i] = NGUITools.AddChild(MissionParent, HealingBuilding);
+					m_instBuildings[i].GetComponent<ExploredBuilding>().Index = i;
+					m_instBuildings[i].GetComponent<UISprite>().depth = 15;
 					m_instBuildings[i].transform.localPosition = m_buildings[i].LocalPosition;
 					break;
 				case 2: // empty building
 					m_instBuildings[i] = NGUITools.AddChild(MissionParent, EmptyBuilding);
+					m_instBuildings[i].GetComponent<ExploredBuilding>().Index = i;
+					m_instBuildings[i].GetComponent<UISprite>().depth = 15;
 					m_instBuildings[i].transform.localPosition = m_buildings[i].LocalPosition;
+					if(m_buildings[i].Visited) {
+						m_instBuildings[i].GetComponent<UISprite>().color = Color.gray;
+						m_instBuildings[i].GetComponent<ExploredBuilding>().Disabled = true;
+					}
 					break;
 			}
 		}
@@ -243,7 +263,7 @@ public class OnlineButtonSpawn : MonoBehaviour {
 			while(!googleResp.isDone) {}
 			
 			googleRespStr = googleResp.text;
-			Debug.Log(googleRespStr);
+//			Debug.Log(googleRespStr);
 			pData = JSON.Parse(googleRespStr);
 		}
 		
@@ -277,26 +297,26 @@ public class OnlineButtonSpawn : MonoBehaviour {
 		if(dPos.x < playerLoc.x) {
 //			Debug.Log(MapUtils.LonToX(center_avg_x) + " - " + MapUtils.LonToX(dPos.x) + " = " + (MapUtils.LonToX(center_avg_x) - MapUtils.LonToX(dPos.x)));
 			if(dPos.x < 0 && center_avg_x > 0) {
-				Debug.Log(center_avg_x + " + " + dPos.x + " = " + (center_avg_x + dPos.x));
-				Debug.Log("X is " + MapUtils.LonToX(center_avg_x + dPos.x));
+//				Debug.Log(center_avg_x + " + " + dPos.x + " = " + (center_avg_x + dPos.x));
+//				Debug.Log("X is " + MapUtils.LonToX(center_avg_x + dPos.x));
 //				pos.x = MapUtils.XToLon(MapUtils.LonToX(center_avg_x) + MapUtils.LonToX(dPos.x));
 //				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
 				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
 			} else {
-				Debug.Log(center_avg_x + " - " + dPos.x + " = " + (center_avg_x - dPos.x));
-				Debug.Log("X is " + MapUtils.LonToX(center_avg_x - dPos.x));
+//				Debug.Log(center_avg_x + " - " + dPos.x + " = " + (center_avg_x - dPos.x));
+//				Debug.Log("X is " + MapUtils.LonToX(center_avg_x - dPos.x));
 //				pos.x = MapUtils.XToLon(MapUtils.LonToX(center_avg_x) - MapUtils.LonToX(dPos.x));
 //				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
 				pos.x = MapUtils.LonToX(center_avg_x + dPos.x);
 			}
 		} else {
 			if(dPos.x > 0 && playerLoc.x < 0) {
-				Debug.Log(dPos.x + " + " + playerLoc.x + " = " + (dPos.x + playerLoc.x));
+//				Debug.Log(dPos.x + " + " + playerLoc.x + " = " + (dPos.x + playerLoc.x));
 //				pos.x = MapUtils.XToLon(MapUtils.LonToX(dPos.x) + MapUtils.LonToX(playerLoc.x));
 //				pos.x = MapUtils.LonToX(dPos.x + playerLoc.x);
 				pos.x = MapUtils.LonToX(dPos.x + center_avg_x);
 			} else {
-				Debug.Log(dPos.x + " - " + playerLoc.x + " = " + (dPos.x - playerLoc.x));
+//				Debug.Log(dPos.x + " - " + playerLoc.x + " = " + (dPos.x - playerLoc.x));
 //				pos.x = MapUtils.XToLon(MapUtils.LonToX(dPos.x) - MapUtils.LonToX(playerLoc.x));
 //				pos.x = MapUtils.LonToX(dPos.x - playerLoc.x);
 				pos.x = MapUtils.LonToX(dPos.x - center_avg_x);

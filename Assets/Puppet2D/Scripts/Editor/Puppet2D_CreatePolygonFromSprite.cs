@@ -47,24 +47,24 @@ public class Puppet2D_CreatePolygonFromSprite : Editor {
 		mr = MeshedSprite.AddComponent<MeshRenderer>();
 		mesh = new Mesh();
 
-		if(AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Models/"+transform.name+"_MESH.asset",typeof(Mesh)))
+		if(AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Models/"+transform.name+"_MESH.asset",typeof(Mesh)))
 		{
 			if(EditorUtility.DisplayDialog("Overwrite Asset?","Do you want to overwrite the current Mesh & Material?","Yes, Overwrite","No, Create New Mesh & Material"))
 			{
-				//mf.mesh = AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Models/"+transform.name+"_MESH.asset",typeof(Mesh))as Mesh;
-				string meshPath = ("Assets/Puppet2D/Models/"+transform.name+"_MESH.asset");
+				//mf.mesh = AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Models/"+transform.name+"_MESH.asset",typeof(Mesh))as Mesh;
+				string meshPath = (Puppet2D_Editor._puppet2DPath+"/Models/"+transform.name+"_MESH.asset");
 				AssetDatabase.CreateAsset(mesh,meshPath);
 				overwrite = true;
 			}
 			else
 			{
-				string meshPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Puppet2D/Models/"+transform.name+"_MESH.asset");
+				string meshPath = AssetDatabase.GenerateUniqueAssetPath(Puppet2D_Editor._puppet2DPath+"/Models/"+transform.name+"_MESH.asset");
 				AssetDatabase.CreateAsset(mesh,meshPath);
 			}
 		}
 		else
 		{
-			string meshPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Puppet2D/Models/"+transform.name+"_MESH.asset");
+			string meshPath = AssetDatabase.GenerateUniqueAssetPath(Puppet2D_Editor._puppet2DPath+"/Models/"+transform.name+"_MESH.asset");
 			AssetDatabase.CreateAsset(mesh,meshPath);
 		}
 
@@ -98,13 +98,13 @@ public class Puppet2D_CreatePolygonFromSprite : Editor {
 
 		if(overwrite)
 		{
-			mr.material = AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Models/Materials/"+transform.name+"_MAT.mat",typeof(Material)) as Material;
+			mr.material = AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Models/Materials/"+transform.name+"_MAT.mat",typeof(Material)) as Material;
 		}
 		else
 		{
 
 			Material newMat = new Material(Shader.Find("Unlit/Transparent"));
-			string materialPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Puppet2D/Models/Materials/"+transform.name+"_MAT.mat");
+			string materialPath = AssetDatabase.GenerateUniqueAssetPath(Puppet2D_Editor._puppet2DPath+"/Models/Materials/"+transform.name+"_MAT.mat");
 			AssetDatabase.CreateAsset(newMat, materialPath);
 			mr.material = newMat;
 		}
@@ -454,24 +454,24 @@ public class Puppet2D_CreatePolygonFromSprite : Editor {
         mr = MeshedSprite.AddComponent<MeshRenderer>();
         mesh = new Mesh();
 
-        if(AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Models/"+FFDGameObject.transform.name+"_MESH.asset",typeof(Mesh)))
+        if(AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Models/"+FFDGameObject.transform.name+"_MESH.asset",typeof(Mesh)))
         {
             if(EditorUtility.DisplayDialog("Overwrite Asset?","Do you want to overwrite the current Mesh & Material?","Yes, Overwrite","No, Create New Mesh & Material"))
             {
-                //mf.mesh = AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Models/"+transform.name+"_MESH.asset",typeof(Mesh))as Mesh;
-                string meshPath = ("Assets/Puppet2D/Models/"+FFDGameObject.transform.name+"_MESH.asset");
+                //mf.mesh = AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Models/"+transform.name+"_MESH.asset",typeof(Mesh))as Mesh;
+                string meshPath = (Puppet2D_Editor._puppet2DPath+"/Models/"+FFDGameObject.transform.name+"_MESH.asset");
                 AssetDatabase.CreateAsset(mesh,meshPath);
                 overwrite = true;
             }
             else
             {
-                string meshPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Puppet2D/Models/"+FFDGameObject.transform.name+"_MESH.asset");
+                string meshPath = AssetDatabase.GenerateUniqueAssetPath(Puppet2D_Editor._puppet2DPath+"/Models/"+FFDGameObject.transform.name+"_MESH.asset");
                 AssetDatabase.CreateAsset(mesh,meshPath);
             }
         }
         else
         {
-            string meshPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Puppet2D/Models/"+FFDGameObject.transform.name+"_MESH.asset");
+            string meshPath = AssetDatabase.GenerateUniqueAssetPath(Puppet2D_Editor._puppet2DPath+"/Models/"+FFDGameObject.transform.name+"_MESH.asset");
             AssetDatabase.CreateAsset(mesh,meshPath);
         }
 
@@ -488,13 +488,13 @@ public class Puppet2D_CreatePolygonFromSprite : Editor {
 
         if(overwrite)
         {
-            mr.material = AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Models/Materials/"+FFDGameObject.transform.name+"_MAT.mat",typeof(Material)) as Material;
+            mr.material = AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Models/Materials/"+FFDGameObject.transform.name+"_MAT.mat",typeof(Material)) as Material;
         }
         else
         {
 
             Material newMat = new Material(Shader.Find("Unlit/Transparent"));
-            string materialPath = AssetDatabase.GenerateUniqueAssetPath("Assets/Puppet2D/Models/Materials/"+FFDGameObject.transform.name+"_MAT.mat");
+            string materialPath = AssetDatabase.GenerateUniqueAssetPath(Puppet2D_Editor._puppet2DPath+"/Models/Materials/"+FFDGameObject.transform.name+"_MAT.mat");
             AssetDatabase.CreateAsset(newMat, materialPath);
             mr.material = newMat;
         }

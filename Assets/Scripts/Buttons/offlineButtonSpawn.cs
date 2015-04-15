@@ -5,6 +5,7 @@ struct buttonData {
 	public int m_type;
 	public Vector3 m_localPosition;
 	public enum buildingType { shop, healing, empty};
+	public bool Visited;
 }
 
 public class offlineButtonSpawn : MonoBehaviour {
@@ -21,15 +22,19 @@ public class offlineButtonSpawn : MonoBehaviour {
 	float randomRange_x = 300;
 	float randomRange_y = 225;
 
-	buttonData [] m_buildings;
+	[SerializeField] buttonData [] m_buildings;
 	GameObject [] m_instBuildings;
 	int maxBuildings = 5;
+	int emptyTotal, emptyCurrent;
 
 	void setRandomBuildingData() {
+		m_buildings[0].Visited = false;
 		m_buildings[0].m_type = (int)buttonData.buildingType.empty;//first building gets instantiated as empty
+		emptyTotal++;
 		m_buildings[0].m_localPosition = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
 		for(int i = 1; i < maxBuildings; ++i) {
 			float a_buildValue = Random.value;
+			m_buildings[i].Visited = false;
 			if( 0 <= a_buildValue && a_buildValue < 0.20) {//set healing
 				//TODO
 				//Debug.log the values recieved from converting the enum over to an int to see what that value is.
@@ -42,6 +47,7 @@ public class offlineButtonSpawn : MonoBehaviour {
 			}
 			else { //load default empty building
 				m_buildings[i].m_type = (int)buttonData.buildingType.empty;
+				emptyTotal++;
 				m_buildings[i].m_localPosition = new Vector3(Random.Range(-randomRange_x, randomRange_x), Random.Range(-randomRange_y, randomRange_y), 0);
 			}
 
@@ -54,16 +60,20 @@ public class offlineButtonSpawn : MonoBehaviour {
 		for(int range = 0; range < maxBuildings; ++range) {
 			if(m_buildings[range].m_type == (int)buttonData.buildingType.empty) {
 				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_emptyBuilding);
+				m_instBuildings[range].GetComponent<ExploredBuilding>().Index = range;
+				m_instBuildings[range].GetComponent<ExploredBuilding>().Disabled = false;
 				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
 				if(range != 0) { checkBuildingPosition(range);}
 			}
 			else if(m_buildings[range].m_type == (int)buttonData.buildingType.healing) {
 				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_healing);
+				m_instBuildings[range].GetComponent<ExploredBuilding>().Index = range;
 				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
 				if(range != 0) { checkBuildingPosition(range);}
 			}
 			else {
 				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_shop);
+				m_instBuildings[range].GetComponent<ExploredBuilding>().Index = range;
 				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
 				if(range != 0) { checkBuildingPosition(range);}
 			}
@@ -74,21 +84,41 @@ public class offlineButtonSpawn : MonoBehaviour {
 	/// loads all buildings into the scene again. called after object is created but only after the first scene change returns back to the offline map
 	/// </summary>
 	public void reloadBuildings() {
-		setMissionParent();//re-set's the mission parent. not doing so reloads all buttons at 0,0,0 local position in random ngui object
-		for(int range = 0; range < maxBuildings; ++range) {
-			if(m_buildings[range].m_type == (int)buttonData.buildingType.empty) {
-				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_emptyBuilding);
-				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
-			}
-			else if(m_buildings[range].m_type == (int)buttonData.buildingType.healing) {
-				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_healing);
-				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
-			}
-			else {
-				m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_shop);
-				m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
-			}
+		if(player.ExploredBuildingComplete) {
+			m_buildings[player.ExploredBuildingNumber].Visited = true;
+			player.ExploredBuildingComplete = false;
+			emptyCurrent++;
 		}
+		setMissionParent();//re-set's the mission parent. not doing so reloads all buttons at 0,0,0 local position in random ngui object
+		
+		if(emptyCurrent != emptyTotal) {
+			for(int range = 0; range < maxBuildings; ++range) {
+				if(m_buildings[range].m_type == (int)buttonData.buildingType.empty) {
+					m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_emptyBuilding);
+					m_instBuildings[range].GetComponent<ExploredBuilding>().Index = range;
+					m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
+					if(m_buildings[range].Visited) {
+						m_instBuildings[range].GetComponent<UISprite>().color = Color.gray;
+						m_instBuildings[range].GetComponent<ExploredBuilding>().Disabled = true;
+					}
+				}
+				else if(m_buildings[range].m_type == (int)buttonData.buildingType.healing) {
+					m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_healing);
+					m_instBuildings[range].GetComponent<ExploredBuilding>().Index = range;
+					m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
+				}
+				else {
+					m_instBuildings[range] = NGUITools.AddChild(m_missionParent, m_shop);
+					m_instBuildings[range].GetComponent<ExploredBuilding>().Index = range;
+					m_instBuildings[range].transform.localPosition = m_buildings[range].m_localPosition;
+				}
+			}
+		} else {
+			emptyTotal = emptyCurrent = 0;
+			setRandomBuildingData();
+			loadRandomBuildings();
+		}
+		
 	}
 
 	/// <summary>

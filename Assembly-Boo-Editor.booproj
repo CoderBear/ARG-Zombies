@@ -195,9 +195,6 @@
  <Reference Include="PlayMakerEditor.zh-TW.resources">
  <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PlayMaker/Editor/zh-TW/PlayMakerEditor.zh-TW.resources.dll</HintPath>
  </Reference>
- <Reference Include="PsdParser">
- <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/PSD2TK2D/PsdParser.dll</HintPath>
- </Reference>
  <Reference Include="RAIN">
  <HintPath>E:/My Docs/GitHub/ARG-Zombies/Assets/RAIN/RAIN.dll</HintPath>
  </Reference>

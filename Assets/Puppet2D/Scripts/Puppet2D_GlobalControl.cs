@@ -42,6 +42,7 @@ public class Puppet2D_GlobalControl : MonoBehaviour {
 		if (AutoRefresh)
 		{
             _Ikhandles.Clear();
+			_SplineControls.Clear();
             _ParentControls.Clear();
             _Controls.Clear();
             _Bones.Clear();
@@ -54,6 +55,7 @@ public class Puppet2D_GlobalControl : MonoBehaviour {
 	public void Refresh() 
 	{
         _Ikhandles.Clear();
+		_SplineControls.Clear();
         _ParentControls.Clear();
         _Controls.Clear();
         _Bones.Clear();
@@ -80,7 +82,8 @@ public class Puppet2D_GlobalControl : MonoBehaviour {
 	{ 
 
         _Ikhandles.Clear();
-        _ParentControls.Clear();
+		_SplineControls.Clear();
+		_ParentControls.Clear();
         _Controls.Clear();
         _Bones.Clear();   
         _FFDControls.Clear();  
@@ -95,6 +98,7 @@ public class Puppet2D_GlobalControl : MonoBehaviour {
         if (AutoRefresh)
         {
             _Ikhandles.Clear();
+			_SplineControls.Clear();
             _ParentControls.Clear();
             _Controls.Clear();
             _Bones.Clear();
@@ -297,6 +301,9 @@ public class Puppet2D_GlobalControl : MonoBehaviour {
             if (ffdCtrl)
                 _ffdControls.Add(ffdCtrl);
 
+			Puppet2D_SplineControl splineCtrl = Go.transform.GetComponent<Puppet2D_SplineControl>();
+			if (splineCtrl)
+				_SplineControls.Add(splineCtrl);
 
 			TraverseHierarchy(child);
 

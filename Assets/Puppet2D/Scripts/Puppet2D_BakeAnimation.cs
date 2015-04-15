@@ -29,10 +29,13 @@ public class Puppet2D_BakeAnimation : MonoBehaviour {
 
 	private float frameTime;
 
+	static private string _puppet2DPath;
+
+
 	// Use this for initialization
 	public void Run () 
 	{
-
+		RecursivelyFindFolderPath ("Assets");
 		Debug.Log("Baking the following animations....");
 		List<AnimationClip> animClips = GetAnimationLengths();
 		bones = GetListBones () ;
@@ -353,11 +356,11 @@ public class Puppet2D_BakeAnimation : MonoBehaviour {
 	}
 	void SaveAnimationClip(AnimationClip a) 
 	{
-		if(!Directory.Exists("Assets/Puppet2D/Animation/Baked")) {
-			AssetDatabase.CreateFolder("Assets/Puppet2D/Animation", "Baked");
+		if(!Directory.Exists(_puppet2DPath+"/Animation/Baked")) {
+			AssetDatabase.CreateFolder(_puppet2DPath+"/Animation", "Baked");
 			AssetDatabase.Refresh();
 		}
-		string path = AssetDatabase.GenerateUniqueAssetPath("Assets/Puppet2D/Animation/Baked/"+a.name+".asset");
+		string path = AssetDatabase.GenerateUniqueAssetPath(_puppet2DPath+"/Animation/Baked/"+a.name+".asset");
 		AssetDatabase.CreateAsset(a, path);
 
 		//ModelImporter modelImporter = AssetImporter.GetAtPath(path) as ModelImporter;
@@ -378,7 +381,7 @@ public class Puppet2D_BakeAnimation : MonoBehaviour {
 			string path = AssetDatabase.GetAssetPath(controller.animationClips[i]);
 			clip = (AnimationClip)Resources.LoadAssetAtPath(path, typeof(AnimationClip));
 			
-			//clip = (AnimationClip)Resources.LoadAssetAtPath("Assets/Puppet2D/Animation/" + m.GetState(i).GetMotion().name + ".anim", typeof(AnimationClip));
+			//clip = (AnimationClip)Resources.LoadAssetAtPath(_puppet2DPath+"/Animation/" + m.GetState(i).GetMotion().name + ".anim", typeof(AnimationClip));
 			animationClips.Add(clip);
 
 			
@@ -401,7 +404,7 @@ public class Puppet2D_BakeAnimation : MonoBehaviour {
 					string path = AssetDatabase.GetAssetPath(m.GetState(i).GetMotion());
 					clip = (AnimationClip)Resources.LoadAssetAtPath(path, typeof(AnimationClip));
 
-					//clip = (AnimationClip)Resources.LoadAssetAtPath("Assets/Puppet2D/Animation/" + m.GetState(i).GetMotion().name + ".anim", typeof(AnimationClip));
+					//clip = (AnimationClip)Resources.LoadAssetAtPath(_puppet2DPath+"/Animation/" + m.GetState(i).GetMotion().name + ".anim", typeof(AnimationClip));
 					animationClips.Add(clip);
 				}
 				if (clip)
@@ -418,7 +421,22 @@ public class Puppet2D_BakeAnimation : MonoBehaviour {
 		return animationClips;
 		#endif
 	}
-
+	private static void RecursivelyFindFolderPath(string dir)
+	{
+		string[] paths = Directory.GetDirectories(dir);
+		foreach(string s in paths)
+		{
+			if(s.Contains("Puppet2D"))
+			{
+				_puppet2DPath = s;
+				break;
+			}
+			else
+			{
+				RecursivelyFindFolderPath(s);
+			}
+		}
+	}
 
 }
 #endif

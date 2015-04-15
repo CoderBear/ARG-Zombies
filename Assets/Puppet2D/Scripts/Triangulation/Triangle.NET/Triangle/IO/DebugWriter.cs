@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+
 namespace TriangleNet.IO
 {
     using System;
@@ -107,10 +108,11 @@ namespace TriangleNet.IO
             
 			if (stream != null)
             {
+				/*
                 stream.Flush();
                 stream.Dispose();
                 stream = null;
-				#if DEBUG
+				#if UNITY_EDITOR
                 string header = "#!N" + this.iteration + Environment.NewLine;
 
                 using (var gzFile = new FileStream(path, FileMode.Create))
@@ -126,7 +128,7 @@ namespace TriangleNet.IO
                         
                     }
                 }
-				#endif
+				#endif*/
                 File.Delete(this.tmpFile);
             }
         }

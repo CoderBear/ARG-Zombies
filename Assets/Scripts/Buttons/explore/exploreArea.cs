@@ -46,7 +46,7 @@ public class exploreArea : MonoBehaviour {
 	void OnClick() {
 		if (roomsCleared < roomsTotal) {
 			int fofValue = rand.Next (ENCOUNTER_VALUE_MAX);
-			Debug.Log ("Encounter(" + roomsCleared.ToString() + ") Value: " + fofValue.ToString ());
+			Debug.Log(string.Format("Encounter({0}) Value: {1}", roomsCleared, fofValue.ToString()));
 
 			if (fofValue <= ENCOUNTER_VALUE) { // An enounter occurs
 //				spriteAlert.gameObject.SetActive (true);
@@ -67,11 +67,12 @@ public class exploreArea : MonoBehaviour {
 
 		} else {
 			player.RoomsLeft = player.RoomsTotal = 0;
+			player.ExploredBuildingComplete = true;
 			if(player.OfflineMode) {
 				Application.LoadLevel ("gameMap");
 			} else {
-//				Application.LoadLevel("gameMapOnline");
-				Application.LoadLevel("gameMapOnlineOld");
+				Application.LoadLevel("gameMapOnline");
+//				Application.LoadLevel("gameMapOnlineOld");
 			}
 		}
 	}

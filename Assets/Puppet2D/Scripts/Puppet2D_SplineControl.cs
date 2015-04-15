@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditorInternal;
@@ -17,10 +18,14 @@ public class Puppet2D_SplineControl : MonoBehaviour {
 
     private List<Vector3> outCoordinates =new List<Vector3>();
 	public List<GameObject> bones = new List<GameObject>();
+	static private string _puppet2DPath;
+
     #if UNITY_EDITOR
     public List<GameObject> Create()
     {
-        bones.Clear();
+		RecursivelyFindFolderPath ("Assets");
+
+		bones.Clear();
 
         CatmullRom(_splineCTRLS, out outCoordinates, numberBones);
 
@@ -32,7 +37,7 @@ public class Puppet2D_SplineControl : MonoBehaviour {
             SpriteRenderer spriteRenderer = newGO.AddComponent<SpriteRenderer>();          
             string path = "";
 
-            path = ("Assets/Puppet2D/Textures/GUI/BoneNoJoint.psd");
+            path = (_puppet2DPath+"/Textures/GUI/BoneNoJoint.psd");
 
             Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
             spriteRenderer.sprite = sprite;
@@ -48,7 +53,7 @@ public class Puppet2D_SplineControl : MonoBehaviour {
             SpriteRenderer spriteRendererInvisbile = newInvisibleBone.AddComponent<SpriteRenderer>();
             newInvisibleBone.transform.position = new Vector3(10000, 10000, 10000);
 
-            path = ("Assets/Puppet2D/Textures/GUI/BoneJoint.psd");
+            path = (_puppet2DPath+"/Textures/GUI/BoneJoint.psd");
             Sprite boneHiddenSprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
             spriteRendererInvisbile.sprite = boneHiddenSprite;
             newInvisibleBone.transform.parent = newGO.transform.parent;
@@ -151,5 +156,21 @@ public class Puppet2D_SplineControl : MonoBehaviour {
 		result.z = p0.z * t0 + p1.z * t1 + p2.z * t2 + p3.z * t3;
 		
 		return result;
+	}
+	private static void RecursivelyFindFolderPath(string dir)
+	{
+		string[] paths = Directory.GetDirectories(dir);
+		foreach(string s in paths)
+		{
+			if(s.Contains("Puppet2D"))
+			{
+				_puppet2DPath = s;
+				break;
+			}
+			else
+			{
+				RecursivelyFindFolderPath(s);
+			}
+		}
 	}
 }

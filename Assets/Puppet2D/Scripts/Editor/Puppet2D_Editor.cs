@@ -5,6 +5,7 @@ using UnityEditorInternal;
 using System.Reflection;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
 
 public class Puppet2D_Editor : EditorWindow 
 {
@@ -66,6 +67,9 @@ public class Puppet2D_Editor : EditorWindow
 	public static List<List<string>> selectedControls = new List<List<string>>();
     public static List<List<string>> selectedControlsData = new List<List<string>>();
 
+	static public string _puppet2DPath;
+
+
     public enum GUIChoice
     {
 
@@ -87,6 +91,8 @@ public class Puppet2D_Editor : EditorWindow
     }
 	void OnEnable() 
 	{
+		RecursivelyFindFolderPath ("Assets");
+
 		BoneSize = EditorPrefs.GetFloat("Puppet2D_EditorBoneSize", 0.85f);
 		ControlSize = EditorPrefs.GetFloat("Puppet2D_EditorControlSize", 0.85f);
 		VertexHandleSize = EditorPrefs.GetFloat("Puppet2D_EditorVertexHandleSize", 0.8f);
@@ -102,19 +108,19 @@ public class Puppet2D_Editor : EditorWindow
 	
 	void OnGUI () 
 	{
-        string path = ("Assets/Puppet2D/Textures/GUI/BoneNoJoint.psd");
-        string path2 = ("Assets/Puppet2D/Textures/GUI/BoneScaled.psd");
-        string path3 = ("Assets/Puppet2D/Textures/GUI/BoneJoint.psd");
-		string path4 = ("Assets/Puppet2D/Textures/GUI/Bone.psd");
+        string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/BoneNoJoint.psd");
+        string path2 = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/BoneScaled.psd");
+        string path3 = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/BoneJoint.psd");
+		string path4 = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/Bone.psd");
         boneNoJointSprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
         boneSprite =AssetDatabase.LoadAssetAtPath(path2, typeof(Sprite)) as Sprite;
         boneHiddenSprite =AssetDatabase.LoadAssetAtPath(path3, typeof(Sprite)) as Sprite;
 		boneOriginal =AssetDatabase.LoadAssetAtPath(path4, typeof(Sprite)) as Sprite;
-        Texture aTexture = AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Textures/GUI/GUI_Bones.png", typeof(Texture))as Texture;
-        Texture puppetManTexture = AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Textures/GUI/GUI_puppetman.png", typeof(Texture))as Texture;
-        Texture rigTexture = AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Textures/GUI/GUI_Rig.png", typeof(Texture))as Texture;
-        Texture ControlTexture = AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Textures/GUI/parentControl.psd", typeof(Texture))as Texture;
-        Texture VertexTexture = AssetDatabase.LoadAssetAtPath("Assets/Puppet2D/Textures/GUI/VertexHandle.psd", typeof(Texture))as Texture;
+        Texture aTexture = AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Textures/GUI/GUI_Bones.png", typeof(Texture))as Texture;
+        Texture puppetManTexture = AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Textures/GUI/GUI_puppetman.png", typeof(Texture))as Texture;
+        Texture rigTexture = AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Textures/GUI/GUI_Rig.png", typeof(Texture))as Texture;
+        Texture ControlTexture = AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Textures/GUI/parentControl.psd", typeof(Texture))as Texture;
+        Texture VertexTexture = AssetDatabase.LoadAssetAtPath(Puppet2D_Editor._puppet2DPath+"/Textures/GUI/VertexHandle.psd", typeof(Texture))as Texture;
 
 
         string[] sortingLayers = GetSortingLayerNames();
@@ -902,60 +908,93 @@ public class Puppet2D_Editor : EditorWindow
 
 	void ChangeBoneSize ()
 	{
-		string path = ("Assets/Puppet2D/Textures/GUI/BoneNoJoint.psd");
+		string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/BoneNoJoint.psd");
 		Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
 		TextureImporter textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(sprite)) as TextureImporter;
-		textureImporter.spritePixelsToUnits = (1-BoneSize)*(1-BoneSize)*1000f;
+		#if UNITY_5_0
+			textureImporter.spritePixelsPerUnit = (1-BoneSize)*(1-BoneSize)*1000f;
+		#else
+			textureImporter.spritePixelsToUnits = (1-BoneSize)*(1-BoneSize)*1000f;
+		#endif
 		AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
 
 	}
 
 	void ChangeControlSize ()
 	{
-		string path = ("Assets/Puppet2D/Textures/GUI/IKControl.psd");
+		string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/IKControl.psd");
 		Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
 		TextureImporter textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(sprite)) as TextureImporter;
-		textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#if UNITY_5_0
+			textureImporter.spritePixelsPerUnit = (1-ControlSize)*(1-ControlSize)*1000f;
+		#else
+			textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#endif
+
 		AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
 
-		path = ("Assets/Puppet2D/Textures/GUI/orientControl.psd");
+		path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/orientControl.psd");
 		sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
 		textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(sprite)) as TextureImporter;
-		textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#if UNITY_5_0
+			textureImporter.spritePixelsPerUnit = (1-ControlSize)*(1-ControlSize)*1000f;
+		#else
+			textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#endif
 		AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
 
-		path = ("Assets/Puppet2D/Textures/GUI/parentControl.psd");
+		path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/parentControl.psd");
 		sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
 		textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(sprite)) as TextureImporter;
-		textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#if UNITY_5_0
+			textureImporter.spritePixelsPerUnit = (1-ControlSize)*(1-ControlSize)*1000f;
+		#else
+			textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#endif
 		AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
 
-        path = ("Assets/Puppet2D/Textures/GUI/splineControl.psd");
+        path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/splineControl.psd");
         sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
         textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(sprite)) as TextureImporter;
-        textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#if UNITY_5_0
+			textureImporter.spritePixelsPerUnit = (1-ControlSize)*(1-ControlSize)*1000f;
+		#else
+			textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#endif
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
 
-        path = ("Assets/Puppet2D/Textures/GUI/splineMiddleControl.psd");
+        path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/splineMiddleControl.psd");
         sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
         textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(sprite)) as TextureImporter;
-        textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#if UNITY_5_0
+			textureImporter.spritePixelsPerUnit = (1-ControlSize)*(1-ControlSize)*1000f;
+		#else
+			textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#endif
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
 
-        path = ("Assets/Puppet2D/Textures/GUI/ffdBone.psd");
+        path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/ffdBone.psd");
         sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
         textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(sprite)) as TextureImporter;
-        textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
-        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+		#if UNITY_5_0
+			textureImporter.spritePixelsPerUnit = (1-ControlSize)*(1-ControlSize)*1000f;
+		#else
+			textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#endif        
+		AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
 
 	}
 
 	void ChangeVertexHandleSize ()
 	{
-		string path = ("Assets/Puppet2D/Textures/GUI/VertexHandle.psd");
+		string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/VertexHandle.psd");
 		Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
 		TextureImporter textureImporter = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(sprite)) as TextureImporter;
-		textureImporter.spritePixelsToUnits = (1-VertexHandleSize)*(1-VertexHandleSize)*1000f;
+		#if UNITY_5_0
+		textureImporter.spritePixelsPerUnit = (1-ControlSize)*(1-ControlSize)*1000f;
+		#else
+		textureImporter.spritePixelsToUnits = (1-ControlSize)*(1-ControlSize)*1000f;
+		#endif
 		AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
 	}
    
@@ -989,6 +1028,24 @@ public class Puppet2D_Editor : EditorWindow
 
 
     }
+
+	private static void RecursivelyFindFolderPath(string dir)
+	{
+		string[] paths = Directory.GetDirectories(dir);
+		foreach(string s in paths)
+		{
+			if(s.Contains("Puppet2D"))
+			{
+				_puppet2DPath = s;
+				break;
+			}
+			else
+			{
+				RecursivelyFindFolderPath(s);
+			}
+		}
+	}
+
 	void OnSelectionChange()
 	{
 		if( SkinWeightsPaint)

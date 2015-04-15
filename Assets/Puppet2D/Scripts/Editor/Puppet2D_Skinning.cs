@@ -406,7 +406,9 @@ public class Puppet2D_Skinning : Editor
 
                 if (Puppet2D_Editor._numberBonesToSkinToIndex == 1)
                 {
-                    weights [j].boneIndex0 = index;
+					renderer.quality = SkinQuality.Bone2;
+
+					weights [j].boneIndex0 = index;
                     weights [j].weight0 = weight1;
                     weights [j].boneIndex1 = index2;
                     weights [j].weight1 = weight2;
@@ -490,6 +492,7 @@ public class Puppet2D_Skinning : Editor
                 }
                 else
                 {
+					renderer.quality = SkinQuality.Bone1;
 
 					weights [j].boneIndex0 = index;
 					weights [j].weight0 = 1;
@@ -513,6 +516,11 @@ public class Puppet2D_Skinning : Editor
             mesh.AddComponent<Puppet2D_SortingLayer>();
 
 
+			sharedMesh.colors = new Color[sharedMesh.vertices.Length];
+			EditorUtility.SetDirty(mesh);
+			EditorUtility.SetDirty(sharedMesh);
+			AssetDatabase.SaveAssets();
+			EditorApplication.SaveAssets();
 
         }
         foreach (Transform bone in selectedBones) 
@@ -521,9 +529,14 @@ public class Puppet2D_Skinning : Editor
                 bone.GetComponent<SpriteRenderer> ().sprite = Puppet2D_Editor.boneSprite;
         }
         if (selectedMeshes.Count > 0)
+		{
             return selectedMeshes[0];
+		}
         else
             return null;
+
+		//FinishEditingWeights();
+
     }
 
     [MenuItem ("GameObject/Puppet2D/Skin/Edit Skin Weights")]
@@ -559,7 +572,7 @@ public class Puppet2D_Skinning : Editor
                     Undo.SetTransformParent(handle.transform, sel.transform, "parent handle");
 
                     SpriteRenderer spriteRenderer = Undo.AddComponent<SpriteRenderer>(handle);
-                    string path = ("Assets/Puppet2D/Textures/GUI/VertexHandle.psd");
+                    string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/VertexHandle.psd");
                     Sprite sprite = AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
                     spriteRenderer.sprite = sprite;
                     spriteRenderer.sortingLayerName = Puppet2D_Editor._controlSortingLayer;

@@ -641,8 +641,8 @@ namespace Poly2Tri.Triangulation.Delaunay.Sweep
                 }
                 else
                 {
-                    if (tcx.IsDebugEnabled)
-                        Console.WriteLine("[FLIP] - flipping and continuing with triangle still crossing edge");
+//                    if (tcx.IsDebugEnabled)
+//                        Console.WriteLine("[FLIP] - flipping and continuing with triangle still crossing edge");
                             // TODO: remove
                     Orientation o = TriangulationUtil.Orient2d(eq, op, ep);
                     t = NextFlipTriangle(tcx, o, t, ot, p, op);

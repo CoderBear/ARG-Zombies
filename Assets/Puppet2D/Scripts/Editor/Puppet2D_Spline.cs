@@ -32,7 +32,7 @@ public class Puppet2D_Spline : Editor {
             tangentCtrl.transform.parent = splineStoreData.FFDCtrls[splineStoreData.FFDCtrls.Count -2].transform;
             tangentCtrl.transform.localPosition = Vector3.zero;
             SpriteRenderer spriteRenderer = splineStoreData.FFDCtrls[splineStoreData.FFDCtrls.Count -2].GetComponent<SpriteRenderer>();
-            string path = ("Assets/Puppet2D/Textures/GUI/splineControl.psd");       
+            string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/splineControl.psd");       
             Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
             spriteRenderer.sprite = sprite;
 
@@ -116,9 +116,9 @@ public class Puppet2D_Spline : Editor {
 
         SpriteRenderer spriteRenderer = newCtrl.AddComponent<SpriteRenderer>();
         spriteRenderer.sortingLayerName = Puppet2D_Editor._controlSortingLayer;
-        string path = ("Assets/Puppet2D/Textures/GUI/splineMiddleControl.psd");
+        string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/splineMiddleControl.psd");
         if(splineStoreData.FFDCtrls.Count==2)        
-            path = ("Assets/Puppet2D/Textures/GUI/splineControl.psd");
+            path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/splineControl.psd");
 
         Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
         spriteRenderer.sprite = sprite;

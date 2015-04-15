@@ -40,6 +40,13 @@ public class Player : MonoBehaviour {
 		get;
 		set;
 	}
+	
+	public int ExploredBuildingNumber {
+		get;
+		set;
+	}
+	
+	public bool ExploredBuildingComplete { get; set; }
 
 	void Awake() {
 		DontDestroyOnLoad (this.gameObject);

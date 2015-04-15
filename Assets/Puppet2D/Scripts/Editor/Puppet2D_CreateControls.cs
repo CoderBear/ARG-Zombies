@@ -117,7 +117,7 @@ public class Puppet2D_CreateControls : Editor {
         poleVector.name = (bone.name+"_POLE");
 
         SpriteRenderer spriteRenderer = control.AddComponent<SpriteRenderer>();
-        string path = ("Assets/Puppet2D/Textures/GUI/IKControl.psd");
+        string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/IKControl.psd");
         Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
         spriteRenderer.sprite = sprite;
         spriteRenderer.sortingLayerName = Puppet2D_Editor._controlSortingLayer;
@@ -229,7 +229,7 @@ public class Puppet2D_CreateControls : Editor {
         controlGroup.transform.rotation = bone.transform.rotation;
 
         SpriteRenderer spriteRenderer = control.AddComponent<SpriteRenderer>();
-        string path = ("Assets/Puppet2D/Textures/GUI/ParentControl.psd");
+        string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/ParentControl.psd");
         Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
         spriteRenderer.sprite = sprite;
         spriteRenderer.sortingLayerName = Puppet2D_Editor._controlSortingLayer;
@@ -334,7 +334,7 @@ public class Puppet2D_CreateControls : Editor {
         controlGroup.transform.position = bone.transform.position;
         controlGroup.transform.rotation = bone.transform.rotation;
         SpriteRenderer spriteRenderer = control.AddComponent<SpriteRenderer>();
-        string path = ("Assets/Puppet2D/Textures/GUI/OrientControl.psd");
+        string path = (Puppet2D_Editor._puppet2DPath+"/Textures/GUI/OrientControl.psd");
         Sprite sprite =AssetDatabase.LoadAssetAtPath(path, typeof(Sprite)) as Sprite;
         spriteRenderer.sprite = sprite;
         spriteRenderer.sortingLayerName = Puppet2D_Editor._controlSortingLayer;
@@ -407,7 +407,7 @@ public class Puppet2D_CreateControls : Editor {
             Animator animator = go.GetComponent("Animator") as Animator;
             animator.avatar = avatar;
 
-            string path = AssetDatabase.GenerateUniqueAssetPath("Assets/Puppet2D/Animation/"+avatar.name+".asset");
+            string path = AssetDatabase.GenerateUniqueAssetPath(Puppet2D_Editor._puppet2DPath+"/Animation/"+avatar.name+".asset");
             AssetDatabase.CreateAsset(avatar, path);
 
         }
